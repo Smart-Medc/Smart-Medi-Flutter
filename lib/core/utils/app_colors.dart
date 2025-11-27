@@ -15,6 +15,7 @@ class AppColors {
   static const secondaryBackgroundDarkMode = Color(0xff161D27);
 
   /// text colors
-  static const text3 = Color(0xff22262E);
-  static const text4 = Color(0xff898E92);
+  static const textColor3 = Color(0xff22262E);
+  static const textColor4 = Color(0xff898E92);
+  static const formFieldHintColor = Color(0xff667085);
 }
