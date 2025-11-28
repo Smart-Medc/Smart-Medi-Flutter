@@ -9,6 +9,8 @@ class AppColors {
   static const backgroundLightMode = Colors.white;
   static const secondaryBackgroundLightMode = Color(0xffE1E1E1);
   static const iconBackgroundLightMode = Color(0xffE1E1E1);
+  static const formFieldFillColor = Color(0xffE7E7E7);
+  static const formFieldStrokeColor = Color(0xffC8C8C8);
 
   /// Dark Mode Colors
   static const backgroundDarMode = Color(0xff0E121B);
