@@ -20,10 +20,10 @@ class SmartMedi extends StatelessWidget {
         return MaterialApp.router(
           routerConfig: AppRouter.router,
           debugShowCheckedModeBanner: false,
-          color: Colors.white,
+          color: const Color(0xffF4F4F4),
           theme: ThemeData(
             // textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: const Color(0xffF4F4F4),
           ),
         );
       },

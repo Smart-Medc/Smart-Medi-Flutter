@@ -4,7 +4,7 @@ class AppColors {
   static const primaryColor = Color(0xff3C83F5);
 
   /// Light Mode Colors
-  static const primaryLightMode = Color(0xffC2D9FF);
+  static const primaryLightMode = Color(0xff3C83F5);
   static const secondaryLightMode = Color(0xff224680);
   static const backgroundLightMode = Colors.white;
   static const secondaryBackgroundLightMode = Color(0xffE1E1E1);

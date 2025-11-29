@@ -93,6 +93,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       children: [
         TextFormField(
           controller: widget.controller,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: widget.validator,
           readOnly: widget.isDate || widget.isDropdown,
           obscureText: widget.isPassword ? _isObscured : false,
