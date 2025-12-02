@@ -11,7 +11,6 @@ class SignUpBody extends StatelessWidget {
     return Padding(
       padding:  EdgeInsets.all(25.w),
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             40.verticalSpace,

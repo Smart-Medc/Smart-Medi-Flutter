@@ -7,7 +7,8 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 
 class OtpFields extends StatefulWidget {
-  const OtpFields({super.key});
+  const OtpFields({super.key,required this.isComingFromSignUp});
+  final bool isComingFromSignUp;
 
   @override
   State<OtpFields> createState() => _OtpFieldsState();
@@ -90,7 +91,7 @@ class _OtpFieldsState extends State<OtpFields> {
           onPressed: () {
             final String otp = _controllers.map((c) => c.text).join();
             // Handle OTP verification
-            GoRouter.of(context).push(AppRoutes.resetPassView);
+            widget.isComingFromSignUp ? GoRouter.of(context).push(AppRoutes.completeProfileView) : GoRouter.of(context).push(AppRoutes.resetPassView);
           },
         ),
       ],

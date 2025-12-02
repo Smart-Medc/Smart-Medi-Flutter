@@ -8,7 +8,7 @@ abstract class AppRoutes {
   static const String forgetPasswordView = '/forgetPasswordView';
   static const String otpVerificationView = '/otpVerificationView';
   static const String resetPassView = '/resetPassView';
-  static const String paymentView = '/paymentView';
+  static const String completeProfileView = '/completeProfileView';
 
   //home
   static const String homeView = '/homeView';

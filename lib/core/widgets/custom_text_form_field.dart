@@ -166,12 +166,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       _dropdownOpen = false;
                     });
                   },
-                  child: Padding(
+                  child: Container(
+                    width: double.infinity,
                     padding: EdgeInsets.symmetric(
-                        vertical: 10.h, horizontal: 12.w),
+                      vertical: 12.h,
+                      horizontal: 12.w,
+                    ),
                     child: Text(
                       item,
-                      style: TextStyle(fontSize: 14.sp),
+                      style: AppStyles.textStyle16W400Black,
                     ),
                   ),
                 ),

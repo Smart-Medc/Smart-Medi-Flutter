@@ -6,7 +6,8 @@ import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.d
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_fields.dart';
 
 class OtpVerificationBody extends StatelessWidget {
-  const OtpVerificationBody({super.key});
+  const OtpVerificationBody({super.key,required this.isComingFromSignUp});
+  final bool isComingFromSignUp;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class OtpVerificationBody extends StatelessWidget {
             subTitle: 'We will send you one-time password to your email',
           ),
           30.verticalSpace,
-          const OtpFields(),
+          OtpFields(isComingFromSignUp: isComingFromSignUp,),
           32.verticalSpace,
           RichText(
             text: TextSpan(

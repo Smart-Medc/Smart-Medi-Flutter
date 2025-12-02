@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
@@ -89,6 +91,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           12.verticalSpace,
           Row(
             children: [
+              4.horizontalSpace,
               SizedBox(
                 height: 15.h,
                 width: 15.h,
@@ -112,7 +115,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
           CustomButton(
             text: 'Sign up',
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                GoRouter.of(context).push(AppRoutes.otpVerificationView,extra: {
+                  'isComingFromSignUp' : true,
+                });
+              }
             },
           ),
         ],

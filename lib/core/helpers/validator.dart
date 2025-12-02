@@ -94,4 +94,11 @@ class Validator {
       return 'Please enter a valid email or phone number';
     }
   }
+
+  static String? requiredValidator(String? value,String? data) {
+    if (value == null || value.isEmpty) {
+      return data;
+    }
+    return null;
+  }
 }
