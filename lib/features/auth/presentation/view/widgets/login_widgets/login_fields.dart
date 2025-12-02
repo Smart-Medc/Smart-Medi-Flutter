@@ -53,9 +53,14 @@ class _LoginFieldsState extends State<LoginFields> {
           12.verticalSpace,
           Align(
             alignment: Alignment.centerRight,
-            child: Text(
-              'Forget Password?',
-              style: AppStyles.textStyle16W400Black,
+            child: InkWell(
+              onTap: (){
+                GoRouter.of(context).push(AppRoutes.forgetPasswordView);
+              },
+              child: Text(
+                'Forget Password?',
+                style: AppStyles.textStyle16W400Black,
+              ),
             ),
           ),
           48.verticalSpace,
