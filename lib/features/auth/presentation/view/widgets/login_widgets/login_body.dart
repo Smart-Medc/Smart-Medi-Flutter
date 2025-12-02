@@ -19,7 +19,6 @@ class LoginBody extends StatelessWidget {
             const LoginFields(),
             40.verticalSpace,
             const AuthFooter(isLogin: true,),
-        
           ],
         ),
       ),

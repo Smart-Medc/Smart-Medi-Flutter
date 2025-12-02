@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
@@ -60,7 +62,9 @@ class _LoginFieldsState extends State<LoginFields> {
           CustomButton(
             text: 'Login',
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                GoRouter.of(context).push(AppRoutes.otpVerificationView);
+              }
             },
           ),
         ],

@@ -8,7 +8,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required this.text,
-    this.height = 55, // raw value because we will apply .h inside build
+    this.height = 56, // raw value because we will apply .h inside build
     this.borderRadius = 10, // same, will apply .r
     this.backgroundColor,
     this.onPressed,
