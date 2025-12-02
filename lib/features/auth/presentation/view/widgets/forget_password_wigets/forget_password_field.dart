@@ -24,6 +24,7 @@ class _ForgetPasswordFieldState extends State<ForgetPasswordField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         authFieldTitle('Email'),
+        4.verticalSpace,
         CustomTextFormField(hintText: 'example@gmail.com', controller: _emailController,validator: Validator.emailValidator,),
         42.verticalSpace,
         const CustomButton(text: 'Send Code'),

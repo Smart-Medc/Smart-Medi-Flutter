@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 
@@ -88,7 +90,7 @@ class _OtpFieldsState extends State<OtpFields> {
           onPressed: () {
             final String otp = _controllers.map((c) => c.text).join();
             // Handle OTP verification
-            print('OTP: $otp');
+            GoRouter.of(context).push(AppRoutes.resetPassView);
           },
         ),
       ],
