@@ -6,6 +6,7 @@ import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/otp_verification_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/reset_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
+import 'package:smart_medi/features/home/presentation/views/home_view.dart';
 
 abstract class AppRouter {
 
@@ -22,6 +23,7 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.forgetPasswordView, builder: (context, state) => const ForgetPasswordView()),
       GoRoute(path: AppRoutes.resetPassView, builder: (context, state) => const ResetPasswordView()),
       GoRoute(path: AppRoutes.completeProfileView, builder: (context, state) => const CompleteProfileView()),
+      GoRoute(path: AppRoutes.homeView, builder: (context, state) => const HomeView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),
