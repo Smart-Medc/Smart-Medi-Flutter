@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
       height: height.h,
       width: double.infinity,
       child: Material(
-        color: backgroundColor ?? AppColors.primaryLightMode,
+        color: backgroundColor ?? AppColors.primaryLightColor,
         borderRadius: BorderRadius.circular(borderRadius.r),
         child: InkWell(
           borderRadius: BorderRadius.circular(borderRadius.r),

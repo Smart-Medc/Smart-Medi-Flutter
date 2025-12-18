@@ -46,7 +46,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: _selectedGender == 'Male'
-                        ? AppColors.primaryLightMode
+                        ? AppColors.primaryLightColor
                         : AppColors.formFieldStrokeColor,
                     width: 2,
                   ),
@@ -58,7 +58,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                           height: 14.h,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primaryLightMode,
+                            color: AppColors.primaryLightColor,
                           ),
                         ),
                       )
@@ -89,7 +89,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: _selectedGender == 'Female'
-                        ? AppColors.primaryLightMode
+                        ? AppColors.primaryLightColor
                         : AppColors.formFieldStrokeColor,
                     width: 2,
                   ),
@@ -101,7 +101,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                           height: 14.h,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primaryLightMode,
+                            color: AppColors.primaryLightColor,
                           ),
                         ),
                       )

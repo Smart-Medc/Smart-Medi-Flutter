@@ -76,4 +76,42 @@ class AppStyles {
     fontWeight: FontWeight.w700,
     color: Colors.black,
   );
+
+
+  /// home Style
+  static final TextStyle textStyle24W700Black = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.w700,
+    color: const Color(0xff141414),
+  );
+  static final TextStyle textStyle18W400Brown = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xff7D7D7D),
+  );
+  static final TextStyle textStyle15W600Black = TextStyle(
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
+  static final TextStyle textStyle10W400Brown = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xff848484),
+  );
+  static final TextStyle textStyle10W500Black = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
+  static final TextStyle textStyle12W600Black = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600,
+    color: const Color(0xff1F1F1F),
+  );
+  static final TextStyle textStyle10W400textColor2 = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.w400,
+    color: Color(0xff3C83F5),
+  );
 }

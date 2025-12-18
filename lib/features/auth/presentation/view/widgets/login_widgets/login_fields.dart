@@ -68,7 +68,7 @@ class _LoginFieldsState extends State<LoginFields> {
             text: 'Login',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                GoRouter.of(context).push(AppRoutes.homeView);
+                GoRouter.of(context).pushReplacement(AppRoutes.homeView);
               }
             },
           ),

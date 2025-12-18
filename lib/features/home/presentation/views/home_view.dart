@@ -8,6 +8,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
+        backgroundColor: Color(0xffF4F4F4),
         body: HomeBody(),
         drawer: AppDrawer(),
       ),

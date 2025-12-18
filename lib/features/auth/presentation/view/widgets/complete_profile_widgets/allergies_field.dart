@@ -50,7 +50,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: AppColors.primaryLightMode,
+                color: AppColors.primaryLightColor,
                 width: 1,
               ),
             ),
@@ -87,7 +87,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: _noKnownAllergies
-                        ? AppColors.primaryLightMode
+                        ? AppColors.primaryLightColor
                         : AppColors.formFieldStrokeColor,
                     width: 2,
                   ),
@@ -99,7 +99,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
                           height: 12.h,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primaryLightMode,
+                            color: AppColors.primaryLightColor,
                           ),
                         ),
                       )

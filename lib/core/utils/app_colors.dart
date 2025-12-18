@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const primaryColor = Color(0xff3C83F5);
-
-  /// Light Mode Colors
-  static const primaryLightMode = Color(0xff3C83F5);
-  static const secondaryLightMode = Color(0xff224680);
-  static const backgroundLightMode = Colors.white;
-  static const secondaryBackgroundLightMode = Color(0xffE1E1E1);
-  static const iconBackgroundLightMode = Color(0xffE1E1E1);
+  static const primaryLightColor = Color(0xffC2D9FF);
+  static const primaryDarkColor = Color(0xff224680);
+  static const firstBackgroundColor = Color(0xffF3F3F3);
+  static const secondBackgroundColor = Color(0xffE7E7E7);
+  static const primary = Color(0xffE1E1E1);
   static const formFieldFillColor = Color(0xffE7E7E7);
   static const formFieldStrokeColor = Color(0xffC8C8C8);
-
-  /// Dark Mode Colors
   static const backgroundDarMode = Color(0xff0E121B);
   static const secondaryBackgroundDarkMode = Color(0xff161D27);
 

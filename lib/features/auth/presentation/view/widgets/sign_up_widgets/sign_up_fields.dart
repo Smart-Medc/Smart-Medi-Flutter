@@ -116,7 +116,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
             text: 'Sign up',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                GoRouter.of(context).push(AppRoutes.otpVerificationView,extra: {
+                GoRouter.of(context).pushReplacement(AppRoutes.otpVerificationView,extra: {
                   'isComingFromSignUp' : true,
                 });
               }
