@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/utils/app_images.dart';
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
 
@@ -15,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
           const Spacer(),
           CircleAvatar(
             radius: 20.r,
-            backgroundImage: const AssetImage('assets/images/facebook_icon.png'),
+            backgroundImage: const AssetImage(AppImages.profileImage),
           ),
         ],
       ),

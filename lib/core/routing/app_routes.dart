@@ -2,7 +2,7 @@ abstract class AppRoutes {
   //onboarding
   static const String onboardingView = '/onboardingView';
 
-  //Auth
+  // auth
   static const String loginView = '/loginView';
   static const String signUpView = '/signUpView';
   static const String forgetPasswordView = '/forgetPasswordView';
@@ -10,8 +10,9 @@ abstract class AppRoutes {
   static const String resetPassView = '/resetPassView';
   static const String completeProfileView = '/completeProfileView';
 
-  //home
+  // home
   static const String homeView = '/homeView';
-  static const String seeAllView = '/seeAllView';
-  static const String programDetailsView = '/programDetailsView';
+
+  // medical records
+  static const String medicalRecords = '/medicalRecords';
 }

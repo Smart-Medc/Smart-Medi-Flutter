@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
-import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_field_title.dart';
@@ -71,7 +70,7 @@ class _CompleteProfileFieldsState extends State<CompleteProfileFields> {
             },
           ),
           16.verticalSpace,
-          const Divider(color: AppColors.formFieldFillColor,),
+          const Divider(color: Colors.red,), // todo change when the design system is ready
           16.verticalSpace,
           EmergencyContact(
             contactNameController: contactNameController,

@@ -112,6 +112,6 @@ class AppStyles {
   static final TextStyle textStyle10W400textColor2 = TextStyle(
     fontSize: 10.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xff3C83F5),
+    color: AppColors.textColor2,
   );
 }

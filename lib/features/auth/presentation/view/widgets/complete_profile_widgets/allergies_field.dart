@@ -38,12 +38,13 @@ class _AllergiesFieldState extends State<AllergiesField> {
             hintStyle: AppStyles.textStyle14W400formFieldHintColor,
             filled: true,
             fillColor: _noKnownAllergies
-                ? AppColors.formFieldFillColor.withValues(alpha: 0.5)
-                : AppColors.formFieldFillColor,
+                ? AppColors.secondBackgroundColor.withValues(alpha: 0.5)
+                : AppColors.secondBackgroundColor,  // todo change when the design system is ready
+
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: AppColors.formFieldStrokeColor,
+                color: Colors.red ,// todo change when the design system is ready
                 width: 1,
               ),
             ),
@@ -57,7 +58,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: AppColors.formFieldStrokeColor,
+                color: Colors.red ,// todo change when the design system is ready
                 width: 1,
               ),
             ),
@@ -88,7 +89,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
                   border: Border.all(
                     color: _noKnownAllergies
                         ? AppColors.primaryLightColor
-                        : AppColors.formFieldStrokeColor,
+                        : Colors.red, // todo change when the design system is ready
                     width: 2,
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 class QuickActionsItem extends StatelessWidget {
   const QuickActionsItem({super.key, required this.title, required this.subtitle, required this.icon, required this.containerColor, required this.iconColor});
@@ -18,7 +17,7 @@ class QuickActionsItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: AppColors.formFieldStrokeColor,
+          color: Colors.red , // todo change when the design system is ready
         ),
         boxShadow: [
           BoxShadow(

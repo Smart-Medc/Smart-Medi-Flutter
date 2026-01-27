@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/home/presentation/views/widgets/app_drawer.dart';
+import 'package:smart_medi/core/widgets/app_drawer.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_body.dart';
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -10,7 +10,7 @@ class HomeView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Color(0xffF4F4F4),
         body: HomeBody(),
-        drawer: AppDrawer(),
+        drawer: AppDrawer(selectedItem: DrawerItem.home,),
       ),
     );
   }

@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 
+enum DrawerItem {
+  home,
+  medicalRecords,
+  medications,
+  journal,
+  aiAssistant,
+  appointments,
+  dataSharing,
+  notifications,
+  settings,
+}
+
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  const AppDrawer({super.key, required this.selectedItem});
+
+  final DrawerItem selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -51,17 +67,19 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.home_outlined,
             title: 'Home',
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to home
-            }, isSelected: true,
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push(AppRoutes.homeView);
+            },
+            isSelected: selectedItem == DrawerItem.home,
           ),
           _DrawerItem(
             icon: Icons.medical_information_outlined,
-            title: 'Medical Record',
+            title: 'Medical Records',
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to medical record
-            }, isSelected: false,
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push(AppRoutes.medicalRecords);
+            },
+            isSelected: selectedItem == DrawerItem.medicalRecords,
           ),
           _DrawerItem(
             icon: Icons.medication_outlined,
@@ -69,7 +87,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to medications
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.medications,
           ),
           _DrawerItem(
             icon: Icons.book_outlined,
@@ -77,7 +96,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to journal
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.journal,
           ),
           _DrawerItem(
             icon: Icons.smart_toy_outlined,
@@ -85,7 +105,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to AI assistant
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.aiAssistant,
           ),
           _DrawerItem(
             icon: Icons.calendar_today_outlined,
@@ -93,7 +114,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to appointments
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.appointments,
           ),
           _DrawerItem(
             icon: Icons.share_outlined,
@@ -101,7 +123,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to data sharing
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.dataSharing,
           ),
           _DrawerItem(
             icon: Icons.notifications_outlined,
@@ -109,7 +132,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to notifications
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.notifications,
           ),
           _DrawerItem(
             icon: Icons.settings_outlined,
@@ -117,7 +141,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to settings
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.settings,
           ),
           73.verticalSpace,
           Divider(thickness: .2,),

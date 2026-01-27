@@ -107,18 +107,18 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             hintText: widget.hintText,
             hintStyle: AppStyles.textStyle14W400formFieldHintColor,
             filled: true,
-            fillColor: AppColors.formFieldFillColor,
+            fillColor: Colors.red , // todo change when the design system is ready
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: AppColors.formFieldStrokeColor,
+                color: Colors.red, // todo change when the design system is ready
                 width: 1.sp,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: AppColors.formFieldStrokeColor,
+                color: Colors.red ,// todo change when the design system is ready
                 width: 1.sp,
               ),
             ),

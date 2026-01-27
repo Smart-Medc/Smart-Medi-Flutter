@@ -47,7 +47,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                   border: Border.all(
                     color: _selectedGender == 'Male'
                         ? AppColors.primaryLightColor
-                        : AppColors.formFieldStrokeColor,
+                        :Colors.red ,// todo change when the design system is ready
                     width: 2,
                   ),
                 ),
@@ -90,7 +90,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
                   border: Border.all(
                     color: _selectedGender == 'Female'
                         ? AppColors.primaryLightColor
-                        : AppColors.formFieldStrokeColor,
+                        : Colors.red,           // todo change when the design system is ready
                     width: 2,
                   ),
                 ),
