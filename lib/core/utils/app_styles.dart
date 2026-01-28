@@ -5,113 +5,70 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 class AppStyles {
 
   /// auth Style
-  static final TextStyle textStyle40W700TextColor3 = TextStyle(
+  static final TextStyle authTitleBold40Black = TextStyle(
     fontSize: 40.sp,
-    fontWeight: FontWeight.w700,
-    color: AppColors.textColor3,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textBlack,
   );
-
-  static final TextStyle textStyle14W400TextColor3 = TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textColor3,
-  );
-
-  static final TextStyle textStyle14W400formFieldHintColor = TextStyle(
-    fontSize: 14.sp,
-    fontWeight: FontWeight.w400,
-    color: AppColors.formFieldHintColor,
-  );
-
-  static final TextStyle textStyle16W400Black = TextStyle(
-    fontSize: 16.sp,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-
-  static final TextStyle textStyle22W700White = TextStyle(
-    fontSize: 22.sp,
-    fontWeight: FontWeight.w700,
-    color: Colors.white,
-  );
-
-  static final TextStyle textStyle20W400Black = TextStyle(
-    fontSize: 20.sp,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
-  );
-
-  static final TextStyle textStyle18W700Black = TextStyle(
+  static final TextStyle authTitleBold18Black = TextStyle(
     fontSize: 18.sp,
-    fontWeight: FontWeight.w700,
-    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textBlack,
   );
-
-  static final TextStyle textStyle14W400Black = TextStyle(
+  static final TextStyle authTitleBold24Black = TextStyle(
+    fontSize: 24.sp,
+    fontWeight: FontWeight.bold,
+    color: AppColors.textBlack,
+  );
+  static final TextStyle authRegular14Black = TextStyle(
     fontSize: 14.sp,
-    fontWeight: FontWeight.w400,
-    color: Colors.black,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textBlack,
+  );
+  static final TextStyle authHintRegular12DarkGrey = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textDarkGrey,
   );
 
-  static final TextStyle textStyle22W500Black = TextStyle(
-    fontSize: 22.sp,
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
-  );
 
-  static final TextStyle textStyle22W700Black = TextStyle(
-    fontSize: 22.sp,
-    fontWeight: FontWeight.w700,
-    color: Colors.black,
-  );
 
-  static final TextStyle textStyle16W400TextColor3 = TextStyle(
-    fontSize: 16.sp,
-    fontWeight: FontWeight.w400,
-    color: AppColors.textColor3,
-  );
-
-  static final TextStyle textStyle28W700Black = TextStyle(
-    fontSize: 28.sp,
-    fontWeight: FontWeight.w700,
-    color: Colors.black,
-  );
 
 
   /// home Style
-  static final TextStyle textStyle24W700Black = TextStyle(
+  static final TextStyle homeTitleBold24Black = TextStyle(
     fontSize: 24.sp,
-    fontWeight: FontWeight.w700,
-    color: const Color(0xff141414),
+    fontWeight: FontWeight.bold,
+    color: AppColors.textBlack,
   );
-  static final TextStyle textStyle18W400Brown = TextStyle(
-    fontSize: 18.sp,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff7D7D7D),
+  static final TextStyle homeDescRegular16LightGrey = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textLightGrey,
   );
-  static final TextStyle textStyle15W600Black = TextStyle(
+
+  /// home Boxs Style
+  static final TextStyle boxTitleSemiBold15Black = TextStyle(
     fontSize: 15.sp,
-    fontWeight: FontWeight.w600,
-    color: Colors.black,
+    fontWeight: FontWeight.w700,
+    color: AppColors.textBlack,
   );
-  static final TextStyle textStyle10W400Brown = TextStyle(
-    fontSize: 10.sp,
-    fontWeight: FontWeight.w400,
-    color: const Color(0xff848484),
-  );
-  static final TextStyle textStyle10W500Black = TextStyle(
-    fontSize: 10.sp,
-    fontWeight: FontWeight.w500,
-    color: Colors.black,
-  );
-  static final TextStyle textStyle12W600Black = TextStyle(
+  static final TextStyle boxSmallTitleSemiBold12Black = TextStyle(
     fontSize: 12.sp,
-    fontWeight: FontWeight.w600,
-    color: const Color(0xff1F1F1F),
+    fontWeight: FontWeight.w700,
+    color: AppColors.textBlack,
   );
-  static final TextStyle textStyle10W400textColor2 = TextStyle(
+  static final TextStyle boxDescRegular10DarkGrey = TextStyle(
     fontSize: 10.sp,
-    fontWeight: FontWeight.w400,
-    color: Color(0xff3C83F5),
+    fontWeight: FontWeight.normal,
+    color: AppColors.textDarkGrey,
   );
+  static final TextStyle boxDescRegular10Black = TextStyle(
+    fontSize: 10.sp,
+    fontWeight: FontWeight.normal,
+    color: AppColors.textBlack,
+  );
+
+
+
 }
