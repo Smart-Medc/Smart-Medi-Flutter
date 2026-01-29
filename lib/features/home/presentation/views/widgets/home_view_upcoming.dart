@@ -44,9 +44,9 @@ class HomeViewUpcoming extends StatelessWidget {
               children: [
                 Text('Dr.Ammar Abo shakha',style: AppStyles.textStyle12W600Black,),
                 4.verticalSpace,
-                Text('Tomorrow 2:00 PM',style: AppStyles.textStyle10W400Brown,),
+                Text('Tomorrow 2:00 PM',style: AppStyles.textStyle10W400LightGrey,),
                 4.verticalSpace,
-                Text('Annual Checkup',style: AppStyles.textStyle10W400textColor2,),
+                Text('Annual Checkup',style: AppStyles.textStyle10W400TextBlue,),
               ],
             ),
           )

@@ -9,9 +9,9 @@ class AuthHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(title,style: AppStyles.textStyle40W700TextColor3,textAlign: TextAlign.center,),
+        Text(title,style: AppStyles.textStyle40W700Black,textAlign: TextAlign.center,),
         23.verticalSpace,
-        Text(subTitle,style: AppStyles.textStyle14W400TextColor3,textAlign: TextAlign.center,)
+        Text(subTitle,style: AppStyles.textStyle14W400Black,textAlign: TextAlign.center,)
       ],
     );
   }

@@ -13,7 +13,7 @@ class MedicalRecordsSummary extends StatelessWidget {
       children: [
         Text(
           'Summary',
-          style: AppStyles.textStyle24W700Black,
+          style: AppStyles.textStyle24W600Black,
         ),
         12.verticalSpace,
         Container(
@@ -63,7 +63,7 @@ class MedicalRecordsSummary extends StatelessWidget {
           children: [
             Text(
               title,
-              style: AppStyles.textStyle10W400Brown,
+              style: AppStyles.textStyle10W400LightGrey,
             ),
             Text(
               '${title != 'Storage Used' ? value.toInt() : value}${title == 'Storage Used' ? ' GB' : ''}',

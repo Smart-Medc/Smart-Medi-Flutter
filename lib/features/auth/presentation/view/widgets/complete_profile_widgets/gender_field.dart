@@ -67,7 +67,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
               SizedBox(width: 8.w),
               Text(
                 'Male',
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
             ],
           ),
@@ -110,7 +110,7 @@ class _GenderSelectionFieldState extends State<GenderSelectionField> {
               SizedBox(width: 8.w),
               Text(
                 'Female',
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
             ],
           ),

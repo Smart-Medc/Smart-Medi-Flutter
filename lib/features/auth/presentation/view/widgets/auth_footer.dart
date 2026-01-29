@@ -31,7 +31,7 @@ class AuthFooter extends StatelessWidget {
             children: [
               TextSpan(
                 text: "Don't have an account? ",
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
               TextSpan(
                 text: isLogin ? 'Sign up' : 'Login',

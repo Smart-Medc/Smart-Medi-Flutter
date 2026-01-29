@@ -35,31 +35,28 @@ class _AllergiesFieldState extends State<AllergiesField> {
           style: AppStyles.textStyle14W400Black,
           decoration: InputDecoration(
             hintText: 'List any known allergies (medications, food, environmental)',
-            hintStyle: AppStyles.textStyle14W400formFieldHintColor,
+            hintStyle: AppStyles.textStyle12W400DarkGrey,
             filled: true,
-            fillColor: _noKnownAllergies
-                ? AppColors.secondBackgroundColor.withValues(alpha: 0.5)
-                : AppColors.secondBackgroundColor,  // todo change when the design system is ready
-
+            // fillColor: _noKnownAllergies
+            //     ? AppColors.formFieldBGColor.withValues(alpha: 0.5)
+            //     : AppColors.formFieldBGColor,
+            fillColor: AppColors.formFieldBGColor,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: Colors.red ,// todo change when the design system is ready
-                width: 1,
+                color: AppColors.grey,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: AppColors.primaryLightColor,
-                width: 1,
+                color: AppColors.grey,
               ),
             ),
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.r),
               borderSide: const BorderSide(
-                color: Colors.red ,// todo change when the design system is ready
-                width: 1,
+                color: Colors.grey ,
               ),
             ),
             contentPadding: EdgeInsets.symmetric(
@@ -88,7 +85,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: _noKnownAllergies
-                        ? AppColors.primaryLightColor
+                        ? AppColors.primaryColor
                         : Colors.red, // todo change when the design system is ready
                     width: 2,
                   ),
@@ -109,7 +106,7 @@ class _AllergiesFieldState extends State<AllergiesField> {
               SizedBox(width: 8.w),
               Text(
                 'No Known Allergies',
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
             ],
           ),

@@ -52,7 +52,7 @@ class _OtpFieldsState extends State<OtpFields> {
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 maxLength: 1,
-                style: AppStyles.textStyle28W700Black,
+                style: AppStyles.textStyle24W700Black,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                 ],

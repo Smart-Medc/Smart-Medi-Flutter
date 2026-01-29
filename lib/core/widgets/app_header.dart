@@ -9,8 +9,8 @@ class AppHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title,style: AppStyles.textStyle24W700Black,),
-        Text(subtitle,style: AppStyles.textStyle18W400Brown,),
+        Text(title,style: AppStyles.textStyle24W600Black,),
+        Text(subtitle,style: AppStyles.textStyle16W400LightGrey,),
       ],
     );
   }

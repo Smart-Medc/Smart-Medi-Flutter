@@ -26,11 +26,11 @@ class OtpVerificationBody extends StatelessWidget {
           RichText(
             text: TextSpan(
               text: 'Didn’t you receive the OTP? ',
-              style: AppStyles.textStyle14W400TextColor3,
+              style: AppStyles.textStyle14W400Black,
               children: [
                 TextSpan(
                   text: 'Resend OTP',
-                  style: AppStyles.textStyle14W400TextColor3.copyWith(
+                  style: AppStyles.textStyle14W400Black.copyWith(
                     color: const Color(0xff0098FF)
                   ),
                   recognizer: TapGestureRecognizer()..onTap = () {}

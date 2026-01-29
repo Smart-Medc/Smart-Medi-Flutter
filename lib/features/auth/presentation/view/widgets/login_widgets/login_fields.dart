@@ -59,7 +59,7 @@ class _LoginFieldsState extends State<LoginFields> {
               },
               child: Text(
                 'Forget Password?',
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
             ),
           ),

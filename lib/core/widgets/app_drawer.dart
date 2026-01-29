@@ -47,19 +47,17 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   Text(
                     'Mo ra',
-                    style: AppStyles.textStyle18W700Black.copyWith(
-                      color: Colors.black,
-                    ),
+                    style: AppStyles
+                        .textStyle16W400LightGrey, // todo, would be updated after design system is ready
                   ),
                   4.verticalSpace,
                   Text(
                     'omarmohamed@gmail.com',
-                    style: AppStyles.textStyle14W400Black.copyWith(
-                      color: Colors.black.withOpacity(0.9),
-                    ),
+                    style: AppStyles
+                        .textStyle16W400LightGrey, // todo, would be updated after design system is ready
                   ),
                 ],
-              )
+              ),
             ],
           ),
           56.verticalSpace,
@@ -145,9 +143,9 @@ class AppDrawer extends StatelessWidget {
             isSelected: selectedItem == DrawerItem.settings,
           ),
           73.verticalSpace,
-          Divider(thickness: .2,),
+          const Divider(thickness: .2),
           10.verticalSpace,
-          Text('Colour Scheme',style: AppStyles.textStyle16W400Black,),
+          Text('Colour Scheme', style: AppStyles.textStyle16W400LightGrey), // todo, would be updated after design system is ready
         ],
       ),
     );
@@ -155,13 +153,13 @@ class AppDrawer extends StatelessWidget {
 }
 
 class _DrawerItem extends StatelessWidget {
-
   const _DrawerItem({
     required this.icon,
     required this.title,
     required this.onTap,
     required this.isSelected,
   });
+
   final IconData icon;
   final String title;
   final bool isSelected;
@@ -179,18 +177,15 @@ class _DrawerItem extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: isSelected ? Colors.white : AppColors.textColor3,
+          color: isSelected ? AppColors.white : AppColors.textDarkGrey,
           size: 28.sp,
         ),
         title: Text(
           title,
-          style: AppStyles.textStyle16W400Black.copyWith(
-            color: isSelected ? Colors.white : AppColors.textColor3,
-          ),
+          style: isSelected ? AppStyles.textStyle18W700Black : AppStyles.textStyle12W400DarkGrey,
         ),
         onTap: onTap,
       ),
     );
   }
 }
-

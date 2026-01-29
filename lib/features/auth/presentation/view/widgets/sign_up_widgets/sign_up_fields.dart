@@ -107,7 +107,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
               10.horizontalSpace,
               Text(
                 'Agree with term & conditions',
-                style: AppStyles.textStyle16W400Black,
+                style: AppStyles.textStyle14W400Black,
               ),
             ],
           ),

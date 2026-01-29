@@ -105,20 +105,20 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           },
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: AppStyles.textStyle14W400formFieldHintColor,
+            hintStyle: AppStyles.textStyle12W400DarkGrey,
             filled: true,
-            fillColor: Colors.red , // todo change when the design system is ready
+            fillColor: AppColors.formFieldBGColor,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: Colors.red, // todo change when the design system is ready
+                color: AppColors.formFieldStrokeColor,
                 width: 1.sp,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: BorderSide(
-                color: Colors.red ,// todo change when the design system is ready
+                color: AppColors.formFieldStrokeColor ,
                 width: 1.sp,
               ),
             ),
@@ -174,7 +174,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     ),
                     child: Text(
                       item,
-                      style: AppStyles.textStyle16W400Black,
+                      style: AppStyles.textStyle14W400Black,
                     ),
                   ),
                 ),
