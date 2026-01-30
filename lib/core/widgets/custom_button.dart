@@ -11,29 +11,34 @@ class CustomButton extends StatelessWidget {
     this.height = 56, // raw value because we will apply .h inside build
     this.borderRadius = 10, // same, will apply .r
     this.backgroundColor,
-    this.onPressed,
+    this.onPressed, this.textStyle, this.boxShadow,
   });
   final String text;
   final double height;
   final double borderRadius;
   final Color? backgroundColor;
+  final TextStyle? textStyle;
   final VoidCallback? onPressed;
+  final List<BoxShadow>? boxShadow;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.h,
       width: double.infinity,
-      child: Material(
-        color: backgroundColor ?? AppColors.primaryLightColor,
+      child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius.r),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(borderRadius.r),
-          onTap: onPressed,
+        onTap: onPressed,
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor ?? AppColors.primaryColor,
+            borderRadius: BorderRadius.circular(borderRadius.r),
+            boxShadow: boxShadow,
+          ),
           child: Center(
             child: Text(
               text,
-              style: AppStyles.textStyle22W700White,
+              style: textStyle ?? AppStyles.textStyle24W600White,
             ),
           ),
         ),

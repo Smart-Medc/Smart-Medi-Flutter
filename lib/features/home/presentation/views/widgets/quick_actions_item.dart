@@ -18,7 +18,7 @@ class QuickActionsItem extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.r),
         border: Border.all(
-          color: AppColors.formFieldStrokeColor,
+          color: AppColors.grey,
         ),
         boxShadow: [
           BoxShadow(
@@ -49,7 +49,7 @@ class QuickActionsItem extends StatelessWidget {
             children: [
               Text(title,style: AppStyles.textStyle15W600Black,),
               2.verticalSpace,
-              Text(subtitle,style: AppStyles.textStyle10W400Brown,),
+              Text(subtitle,style: AppStyles.textStyle10W400LightGrey,),
             ],
           )
         ],

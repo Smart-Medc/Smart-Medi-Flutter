@@ -24,7 +24,7 @@ class EmergencyContact extends StatelessWidget {
       children: [
         Text(
           'Emergency Contact',
-          style: AppStyles.textStyle22W500Black,
+          style: AppStyles.textStyle24W600Black,
         ),
         16.verticalSpace,
         authFieldTitle('Contact Name'),

@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 
+enum DrawerItem {
+  home,
+  medicalRecords,
+  medications,
+  journal,
+  aiAssistant,
+  appointments,
+  dataSharing,
+  notifications,
+  settings,
+}
+
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({super.key});
+  const AppDrawer({super.key, required this.selectedItem});
+
+  final DrawerItem selectedItem;
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +47,17 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   Text(
                     'Mo ra',
-                    style: AppStyles.textStyle18W700Black.copyWith(
-                      color: Colors.black,
-                    ),
+                    style: AppStyles
+                        .textStyle16W400LightGrey, // todo, would be updated after design system is ready
                   ),
                   4.verticalSpace,
                   Text(
                     'omarmohamed@gmail.com',
-                    style: AppStyles.textStyle14W400Black.copyWith(
-                      color: Colors.black.withOpacity(0.9),
-                    ),
+                    style: AppStyles
+                        .textStyle16W400LightGrey, // todo, would be updated after design system is ready
                   ),
                 ],
-              )
+              ),
             ],
           ),
           56.verticalSpace,
@@ -51,17 +65,19 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.home_outlined,
             title: 'Home',
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to home
-            }, isSelected: true,
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push(AppRoutes.homeView);
+            },
+            isSelected: selectedItem == DrawerItem.home,
           ),
           _DrawerItem(
             icon: Icons.medical_information_outlined,
-            title: 'Medical Record',
+            title: 'Medical Records',
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to medical record
-            }, isSelected: false,
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push(AppRoutes.medicalRecords);
+            },
+            isSelected: selectedItem == DrawerItem.medicalRecords,
           ),
           _DrawerItem(
             icon: Icons.medication_outlined,
@@ -69,7 +85,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to medications
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.medications,
           ),
           _DrawerItem(
             icon: Icons.book_outlined,
@@ -77,7 +94,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to journal
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.journal,
           ),
           _DrawerItem(
             icon: Icons.smart_toy_outlined,
@@ -85,7 +103,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to AI assistant
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.aiAssistant,
           ),
           _DrawerItem(
             icon: Icons.calendar_today_outlined,
@@ -93,7 +112,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to appointments
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.appointments,
           ),
           _DrawerItem(
             icon: Icons.share_outlined,
@@ -101,7 +121,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to data sharing
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.dataSharing,
           ),
           _DrawerItem(
             icon: Icons.notifications_outlined,
@@ -109,7 +130,8 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to notifications
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.notifications,
           ),
           _DrawerItem(
             icon: Icons.settings_outlined,
@@ -117,12 +139,13 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               // Navigate to settings
-            }, isSelected: false,
+            },
+            isSelected: selectedItem == DrawerItem.settings,
           ),
           73.verticalSpace,
-          Divider(thickness: .2,),
+          const Divider(thickness: .2),
           10.verticalSpace,
-          Text('Colour Scheme',style: AppStyles.textStyle16W400Black,),
+          Text('Colour Scheme', style: AppStyles.textStyle16W400LightGrey), // todo, would be updated after design system is ready
         ],
       ),
     );
@@ -130,13 +153,13 @@ class AppDrawer extends StatelessWidget {
 }
 
 class _DrawerItem extends StatelessWidget {
-
   const _DrawerItem({
     required this.icon,
     required this.title,
     required this.onTap,
     required this.isSelected,
   });
+
   final IconData icon;
   final String title;
   final bool isSelected;
@@ -154,18 +177,15 @@ class _DrawerItem extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon,
-          color: isSelected ? Colors.white : AppColors.textColor3,
+          color: isSelected ? AppColors.white : AppColors.textDarkGrey,
           size: 28.sp,
         ),
         title: Text(
           title,
-          style: AppStyles.textStyle16W400Black.copyWith(
-            color: isSelected ? Colors.white : AppColors.textColor3,
-          ),
+          style: isSelected ? AppStyles.textStyle18W700Black : AppStyles.textStyle12W400DarkGrey,
         ),
         onTap: onTap,
       ),
     );
   }
 }
-

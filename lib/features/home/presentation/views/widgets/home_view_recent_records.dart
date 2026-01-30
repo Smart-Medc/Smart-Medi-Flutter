@@ -41,7 +41,7 @@ class HomeViewRecentRecords extends StatelessWidget {
               const Spacer(),
               Text(
                 'View All',
-                  style: AppStyles.textStyle10W400Brown,
+                  style: AppStyles.textStyle10W500DarkGrey,
               ),
             ],
           ),
@@ -95,12 +95,12 @@ class HomeViewRecentRecords extends StatelessWidget {
                 ),
                 Text(
                   '$recordType • $recordDate',
-                  style: AppStyles.textStyle10W400Brown,
+                  style: AppStyles.textStyle10W400LightGrey,
                 ),
               ],
             ),
             const Spacer(),
-            Text('View',style: AppStyles.textStyle10W500Black,),
+            Text('View',style: AppStyles.textStyle10W500DarkGrey,),
           ],
         )
     );
