@@ -32,7 +32,12 @@ class AppStyles {
   static final TextStyle textStyle24W600White = TextStyle(
     fontSize: 24.sp,
     fontWeight: FontWeight.w600,
-    color: AppColors.white,
+    color: AppColors.textWhite,
+  );
+  static final TextStyle textStyle12W500White = TextStyle(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w500,
+    color: AppColors.textWhite,
   );
   static final TextStyle textStyle24W600Black = TextStyle(
     fontSize: 24.sp,
@@ -55,6 +60,11 @@ class AppStyles {
   static final TextStyle textStyle15W600Black = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w600,
+    color: AppColors.textBlack,
+  );
+  static final TextStyle textStyle11W500Black = TextStyle(
+    fontSize: 11.sp,
+    fontWeight: FontWeight.w500,
     color: AppColors.textBlack,
   );
   static final TextStyle textStyle12W600Black = TextStyle(
