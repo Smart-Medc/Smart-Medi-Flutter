@@ -6,7 +6,7 @@ import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_search_bar.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_view_widgets/medical_records_document.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_view_widgets/medical_records_summary.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_view_widgets/medical_records_upload_new_document.dart';
+import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/upload_new_document.dart';
 class MedicalRecordsBody extends StatelessWidget {
   const MedicalRecordsBody({super.key});
 
@@ -31,7 +31,7 @@ class MedicalRecordsBody extends StatelessWidget {
             16.verticalSpace,
             const MedicalRecordsDocument(documentName: 'Chest X-Ray', date: 'Mar 10, 2024', size: 8.1),
             16.verticalSpace,
-            const MedicalRecordsUploadNewDocument(),
+            const UploadNewDocument(),
             100.verticalSpace,
           ],
         ),

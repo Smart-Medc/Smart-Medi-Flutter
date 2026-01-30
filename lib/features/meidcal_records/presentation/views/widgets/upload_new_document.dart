@@ -5,8 +5,8 @@ import 'package:smart_medi/core/utils/app_shadows.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
 
-class MedicalRecordsUploadNewDocument extends StatelessWidget {
-  const MedicalRecordsUploadNewDocument({super.key});
+class UploadNewDocument extends StatelessWidget {
+  const UploadNewDocument({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class MedicalRecordsUploadNewDocument extends StatelessWidget {
               width: 88.w,
               height: 28.h,
               decoration: BoxDecoration(
-                boxShadow: AppShadows.small,
+                boxShadow: AppShadows.large,
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(color: AppColors.formFieldStrokeColor)

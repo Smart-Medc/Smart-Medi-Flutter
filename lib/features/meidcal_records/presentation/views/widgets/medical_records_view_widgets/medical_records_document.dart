@@ -60,7 +60,9 @@ class MedicalRecordsDocument extends StatelessWidget {
                   child: MedicalRecordsShareDownloadButton(
                     text: 'Share',
                     icon: Icons.share_outlined,
-                    onTap: () {},
+                    onTap: () {
+                      GoRouter.of(context).push(AppRoutes.editRecordView);
+                    },
                     backgroundColor: AppColors.greyBackgroundColor,
                   ),
                 ),
@@ -69,7 +71,9 @@ class MedicalRecordsDocument extends StatelessWidget {
                   child: MedicalRecordsShareDownloadButton(
                     text: 'Download',
                     icon: Icons.download_outlined,
-                    onTap: () {},
+                    onTap: () {
+                      GoRouter.of(context).push(AppRoutes.editRecordView);
+                    },
                     backgroundColor: AppColors.greyBackgroundColor,
                   ),
                 ),
