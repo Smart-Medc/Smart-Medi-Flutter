@@ -1,18 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/widgets/app_header.dart';
+import 'package:smart_medi/core/widgets/app_search_bar.dart';
+import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 
 class MedicationManagementViewBody extends StatelessWidget {
   const MedicationManagementViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.all(20.w),
-        child: const Text(
-          'Medication Management - Coming Soon',
-          style: TextStyle(fontSize: 24),
-          textAlign: TextAlign.center,
+        padding: EdgeInsets.only(top: 68.h, left: 25.w, right: 25.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const CustomAppBar(),
+            32.verticalSpace,
+            const AppHeader(
+              title: 'Medication Management',
+              subtitle: 'Track your medications and set reminders',
+            ),
+            const AppSearchBar(hintText: 'Search medications',showFilter: false,),
+            100.verticalSpace,
+          ],
         ),
       ),
     );
