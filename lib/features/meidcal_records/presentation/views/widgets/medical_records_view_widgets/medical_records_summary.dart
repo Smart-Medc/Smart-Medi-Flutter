@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
-import 'package:smart_medi/core/utils/app_shadows.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
+
 class MedicalRecordsSummary extends StatelessWidget {
   const  MedicalRecordsSummary({super.key});
 
@@ -16,14 +17,8 @@ class MedicalRecordsSummary extends StatelessWidget {
           style: AppStyles.textStyle24W600Black,
         ),
         12.verticalSpace,
-        Container(
-          width: double.infinity,
+        CardContainer(
           padding: EdgeInsets.only(left: 28.w, right: 60.w, top: 22.h, bottom: 22.h),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.r),
-            boxShadow: AppShadows.small,
-          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

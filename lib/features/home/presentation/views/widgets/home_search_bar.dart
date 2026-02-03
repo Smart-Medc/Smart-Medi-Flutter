@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
 
 class HomeSearchBar extends StatelessWidget {
   const HomeSearchBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 58.h,
-      margin: EdgeInsets.only(top: 18.h, bottom: 29.h,right: 25.w),
-      decoration: BoxDecoration(
-        color: const Color(0xffF8F8F8),
-        borderRadius: BorderRadius.circular(7.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
+    return CardContainer(
+      margin: EdgeInsets.only(top: 18.h, bottom: 29.h, right: 25.w),
+      borderColor: const Color(0xffF8F8F8),
+      borderRadius: BorderRadius.circular(7.r),
+      child: SizedBox(
+        height: 58.h,
+        child: Row(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -59,6 +52,7 @@ class HomeSearchBar extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

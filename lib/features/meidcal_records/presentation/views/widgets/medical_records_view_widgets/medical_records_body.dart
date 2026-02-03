@@ -31,7 +31,7 @@ class MedicalRecordsBody extends StatelessWidget {
             16.verticalSpace,
             const MedicalRecordsDocument(documentName: 'Chest X-Ray', date: 'Mar 10, 2024', size: 8.1),
             16.verticalSpace,
-            const UploadNewDocument(),
+            const SizedBox(width: double.infinity,child: UploadNewDocument()),
             100.verticalSpace,
           ],
         ),

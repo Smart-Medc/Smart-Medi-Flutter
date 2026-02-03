@@ -24,7 +24,7 @@ class EditRecordBody extends StatelessWidget {
             24.verticalSpace,
             const EditRecordBasicInformation(),
             16.verticalSpace,
-            const UploadNewDocument(),
+            const SizedBox(width: double.infinity,child: UploadNewDocument()),
             40.verticalSpace,
             const EditRecordActionButtons(),
             60.verticalSpace,

@@ -32,6 +32,15 @@ class AppShadows {
   );
   static const List<BoxShadow> large = <BoxShadow>[_largeBox];
 
+  // Card shadow (commonly used for card containers)
+  // color: Color(0xff696969).withValues(alpha: 0.2) = rgba(105, 105, 105, 0.2)
+  static const BoxShadow _cardBox = BoxShadow(
+    color: Color.fromRGBO(105, 105, 105, 0.2),
+    offset: Offset(0, 1),
+    blurRadius: 10,
+  );
+  static const List<BoxShadow> card = <BoxShadow>[_cardBox];
+
   // Corresponding material-like elevation values (optional helpers)
   static const double smallElevation = 1.0;
   static const double mediumElevation = 4.0;

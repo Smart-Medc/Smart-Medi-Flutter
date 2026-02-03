@@ -1,26 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
+
 class HomeViewUpcoming extends StatelessWidget {
   const HomeViewUpcoming({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CardContainer(
       margin: EdgeInsets.only(right: 25.w),
       padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 25.w),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: const Color(0xffC8C8C8)),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff696969).withValues(alpha: 0.2),
-            blurRadius: 10.r,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-      ),
       child: Column(
         children: [
           Row(
