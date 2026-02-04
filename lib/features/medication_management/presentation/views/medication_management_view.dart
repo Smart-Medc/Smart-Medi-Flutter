@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/widgets/app_drawer.dart';
-import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_view_body.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_management_view_body.dart';
 
 class MedicationManagementView extends StatelessWidget {
   const MedicationManagementView({super.key});
