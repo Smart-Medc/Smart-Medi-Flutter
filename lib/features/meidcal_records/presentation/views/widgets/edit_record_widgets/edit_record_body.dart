@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/edit_record_widgets/edit_record_basic_information.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/edit_record_widgets/edit_record_action_buttons.dart';
@@ -17,6 +18,7 @@ class EditRecordBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const AppBarBackButton(),
             const AppHeader(
               title: 'Edit Medical Record',
               subtitle: 'Update your medical record information',
