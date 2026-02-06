@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/utils/app_shadows.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
+
 class RecordInfoBox extends StatelessWidget {
   const RecordInfoBox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CardContainer(
       padding: EdgeInsets.only(left: 16.w, right: 40.w),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        boxShadow: AppShadows.large,
-      ),
+      borderColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

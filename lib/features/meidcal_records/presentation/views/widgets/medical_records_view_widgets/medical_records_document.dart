@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_share_download_button.dart';
 
@@ -25,17 +26,12 @@ class MedicalRecordsDocument extends StatelessWidget {
       onTap: (){
         GoRouter.of(context).push(AppRoutes.recordDetailsView);
       },
-      child: Container(
+      child: CardContainer(
         padding: EdgeInsets.only(
           left: 24.w,
           right: 24.w,
           top: 20.h,
           bottom: 16.h,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(color: AppColors.formFieldStrokeColor),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

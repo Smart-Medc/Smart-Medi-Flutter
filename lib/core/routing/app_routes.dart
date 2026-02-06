@@ -17,4 +17,9 @@ abstract class AppRoutes {
   static const String medicalRecords = '/medicalRecords';
   static const String recordDetailsView = '/RecordDetailsView';
   static const String editRecordView = '/editRecordView';
+
+  // medication management
+  static const String medicationManagement = '/medicationManagement';
+  static const String addMedication = '/addMedication';
+  static const String editMedication = '/editMedication';
 }

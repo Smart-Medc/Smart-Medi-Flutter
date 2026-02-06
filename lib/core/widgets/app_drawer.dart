@@ -83,8 +83,8 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.medication_outlined,
             title: 'Medications',
             onTap: () {
-              Navigator.pop(context);
-              // Navigate to medications
+              GoRouter.of(context).pop();
+              GoRouter.of(context).push(AppRoutes.medicationManagement);
             },
             isSelected: selectedItem == DrawerItem.medications,
           ),

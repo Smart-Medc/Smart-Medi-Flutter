@@ -32,7 +32,7 @@ class AppColors {
 
 /// icons BG colors
   static const iconBGGreen = Color(0xffE2F1E8);
-  static const iconBGREed = Color(0xffFDECEC);
+  static const iconBGRed = Color(0xffFDECEC);
   static const iconBGYellow = Color(0xffF8F5EF);
   static const iconBGCyan = Color(0xffE7F8FA);
   static const iconBGBlue = Color(0xffEBF2FE);

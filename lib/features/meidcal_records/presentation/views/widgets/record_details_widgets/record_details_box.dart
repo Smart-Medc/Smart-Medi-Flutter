@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
-import 'package:smart_medi/core/utils/app_shadows.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
+
 class RecordDetailsBox extends StatelessWidget {
   const RecordDetailsBox({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CardContainer(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.r),
-        border: Border.all(color: AppColors.formFieldStrokeColor),
-        boxShadow: AppShadows.large,
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

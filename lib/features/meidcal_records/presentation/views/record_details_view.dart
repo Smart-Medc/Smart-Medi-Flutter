@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/record_details_widgets/record_details_body.dart';
 
 class RecordDetailsView extends StatelessWidget {
@@ -8,17 +7,10 @@ class RecordDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return const SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              GoRouter.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_sharp, size: 40.sp),
-          ),
-        ),
-        body: const RecordDetailsBody(),
+        backgroundColor: AppColors.whiteBackgroundColor,
+        body: RecordDetailsBody(),
       ),
     );
   }
