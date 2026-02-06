@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/add_medication_button.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_management_summary.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_tabs.dart';
 
@@ -28,6 +29,8 @@ class MedicationManagementViewBody extends StatelessWidget {
             const MedicationManagementSummary(),
             24.verticalSpace,
             const MedicationTabs(),
+            16.verticalSpace,
+            const SizedBox(width: double.infinity, child: AddMedicationButton()),
             100.verticalSpace,
           ],
         ),

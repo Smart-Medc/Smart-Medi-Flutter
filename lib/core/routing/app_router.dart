@@ -8,6 +8,7 @@ import 'package:smart_medi/features/auth/presentation/view/reset_password_view.d
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/add_medication_view.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/edit_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/medication_management_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/medical_records_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
@@ -34,6 +35,7 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.editRecordView, builder: (context, state) => const EditRecordView()),
       GoRoute(path: AppRoutes.medicationManagement, builder: (context, state) => const MedicationManagementView()),
       GoRoute(path: AppRoutes.addMedication, builder: (context, state) => const AddMedicationView()),
+      GoRoute(path: AppRoutes.editMedication, builder: (context, state) => const EditMedicationView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),

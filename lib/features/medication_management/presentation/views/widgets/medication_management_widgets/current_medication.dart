@@ -85,7 +85,7 @@ class CurrentMedication extends StatelessWidget {
                         const Spacer(),
                         InkWell(
                           onTap: () {
-                            GoRouter.of(context).push(AppRoutes.addMedication);
+                            GoRouter.of(context).push(AppRoutes.editMedication);
                           },
                           child: Icon(
                             Icons.more_vert,
