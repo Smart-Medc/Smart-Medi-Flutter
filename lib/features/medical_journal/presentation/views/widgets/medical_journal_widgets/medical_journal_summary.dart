@@ -5,57 +5,56 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/summary_item.dart';
 
-class MedicationManagementSummary extends StatelessWidget {
-  const MedicationManagementSummary({super.key});
+class MedicalJournalSummary extends StatelessWidget {
+  const MedicalJournalSummary({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Summary', style: AppStyles.textStyle24W600Black),
+        Text('Summary', style: AppStyles.textStyle24W700Black),
         12.verticalSpace,
         CardContainer(
-          padding: EdgeInsets.only(left: 28.w, right: 60.w, top: 22.h, bottom: 22.h),
-          borderColor: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 25.h),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SummaryItem.icon(
-                    title: 'Current',
-                    value: '2',
-                    icon: Icons.medication,
-                    iconColor: AppColors.iconBlue,
-                    backgroundColor: AppColors.iconBGBlue,
+                    title: 'Total Entries',
+                    value: '24',
+                    icon: Icons.event_note,
+                    iconColor: AppColors.iconCyan,
+                    backgroundColor: AppColors.iconBGCyan,
                   ),
-                  20.verticalSpace,
+                  12.verticalSpace,
                   SummaryItem.icon(
-                    title: 'Interactions',
-                    value: '1',
-                    icon: Icons.warning_amber_rounded,
-                    iconColor: AppColors.iconRed,
-                    backgroundColor: AppColors.iconBGRed,
+                    title: 'Avg. Mood',
+                    value: '7.2',
+                    icon: Icons.emoji_emotions,
+                    iconColor: AppColors.iconGreen,
+                    backgroundColor: AppColors.iconBGGreen,
                   ),
                 ],
               ),
+              80.horizontalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SummaryItem.icon(
-                    title: 'Adherence',
-                    value: '92%',
-                    icon: Icons.compare_arrows,
-                    iconColor: AppColors.iconGreen,
-                    backgroundColor: AppColors.iconBGGreen,
+                    title: 'This Month',
+                    value: '8',
+                    icon: Icons.calendar_month,
+                    iconColor: AppColors.iconCyan,
+                    backgroundColor: AppColors.iconBGCyan,
                   ),
                   20.verticalSpace,
                   SummaryItem.icon(
-                    title: 'Next Dose',
-                    value: '2:00 PM',
-                    icon: Icons.schedule,
+                    title: 'Avg. Pain',
+                    value: '4.5',
+                    icon: Icons.monitor_heart_outlined,
                     iconColor: AppColors.iconBlue,
                     backgroundColor: AppColors.iconBGBlue,
                   ),

@@ -93,7 +93,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Journal',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to journal
+              GoRouter.of(context).push(AppRoutes.medicalJournal);
             },
             isSelected: selectedItem == DrawerItem.journal,
           ),

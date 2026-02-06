@@ -16,7 +16,7 @@ class AppSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardContainer(
-      margin: EdgeInsets.only(top: 18.h, bottom: 29.h),
+      margin: EdgeInsets.only(top: 20.h, bottom: 32.h),
       backgroundColor: const Color(0xffF8F8F8),
       borderColor: const Color(0xffF8F8F8),
       borderRadius: BorderRadius.circular(7.r),

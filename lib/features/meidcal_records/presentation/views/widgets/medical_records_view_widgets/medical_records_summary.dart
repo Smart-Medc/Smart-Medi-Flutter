@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
+import 'package:smart_medi/core/widgets/summary_item.dart';
 
 class MedicalRecordsSummary extends StatelessWidget {
   const  MedicalRecordsSummary({super.key});
@@ -25,47 +25,34 @@ class MedicalRecordsSummary extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  summaryItem(title: 'Total Records', value: 47),
+                  SummaryItem.line(
+                    title: 'Total Records',
+                    value: '47',
+                  ),
                   20.verticalSpace,
-                  summaryItem(title: 'Lab Reports', value: 18),
+                  SummaryItem.line(
+                    title: 'Lab Reports',
+                    value: '18',
+                  ),
                 ],
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  summaryItem(title: 'Imaging', value: 12),
+                  SummaryItem.line(
+                    title: 'Imaging',
+                    value: '12',
+                  ),
                   20.verticalSpace,
-                  summaryItem(title: 'Storage Used', value: 2.4),
+                  SummaryItem.line(
+                    title: 'Storage Used',
+                    value: '2.4 GB',
+                  ),
                 ],
               ),
             ],
           ),
         )
-      ],
-    );
-  }
-  Widget summaryItem({required String title, required double value}) {
-    return Row(
-      children: [
-        Container(
-          width: 4.w,
-          height: 30.h,
-          color: AppColors.primaryColor,
-        ),
-        4.horizontalSpace,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: AppStyles.textStyle10W400LightGrey,
-            ),
-            Text(
-              '${title != 'Storage Used' ? value.toInt() : value}${title == 'Storage Used' ? ' GB' : ''}',
-              style: AppStyles.textStyle15W600Black,
-            ),
-          ],
-        ),
       ],
     );
   }
