@@ -15,12 +15,11 @@ class MedicalRecordsBody extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.only(top: 68.h, left: 25.w, right: 25.w),
+        padding: EdgeInsets.symmetric(horizontal: 25.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomAppBar(),
-            32.verticalSpace,
             const AppHeader(title: 'Medical Records', subtitle: 'Securely store and manage your health documents'),
             const AppSearchBar(hintText: 'Search records by title , type'),
             const MedicalRecordsSummary(),

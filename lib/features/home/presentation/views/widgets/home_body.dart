@@ -16,17 +16,25 @@ class HomeBody extends StatelessWidget {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Padding(
-        padding: EdgeInsets.only(top: 68.h, left: 25.w),
+        padding: EdgeInsets.only(left: 25.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomAppBar(),
-            32.verticalSpace,
-            const AppHeader(title: 'Hi, Omar!', subtitle: 'How are you feeling today?'),
-            const AppSearchBar(hintText: 'Search doctors',),
+            Padding(
+              padding: EdgeInsets.only(right: 25.w),
+              child: const CustomAppBar(),
+            ),
+            const AppHeader(
+              title: 'Hi, Omar!',
+              subtitle: 'How are you feeling today?',
+            ),
+            Padding(
+              padding: EdgeInsets.only(right: 25.w),
+              child: const AppSearchBar(hintText: 'Search doctors'),
+            ),
             const QuickActionsListView(),
             44.verticalSpace,
-            Text('Info',style: AppStyles.textStyle24W700Black,),
+            Text('Info', style: AppStyles.textStyle24W700Black),
             12.verticalSpace,
             const HomeViewRecentRecords(),
             20.verticalSpace,
