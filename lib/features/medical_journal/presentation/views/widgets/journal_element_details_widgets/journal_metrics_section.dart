@@ -18,7 +18,7 @@ class JournalMetricsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardContainer(
-      padding: EdgeInsets.only(left: 40.h,top: 19.h,bottom: 16.h),
+      padding: EdgeInsets.only(left: 40.w, top: 19.h, bottom: 16.h),
       child: Row(
         children: [
           Expanded(
