@@ -7,6 +7,8 @@ import 'package:smart_medi/features/auth/presentation/view/otp_verification_view
 import 'package:smart_medi/features/auth/presentation/view/reset_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
+import 'package:smart_medi/features/medical_journal/data/models/journal_entry_model.dart';
+import 'package:smart_medi/features/medical_journal/presentation/views/journal_element_details_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/add_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/edit_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/medication_management_view.dart';
@@ -19,7 +21,7 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (context, state) => const LoginView()),
+        GoRoute(path: '/', builder: (context, state) => const HomeView()),
       GoRoute(path: AppRoutes.loginView, builder: (context, state) => const LoginView()),
       GoRoute(path: AppRoutes.signUpView, builder: (context, state) => const SignUpView()),
       GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
@@ -38,6 +40,10 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.addMedication, builder: (context, state) => const AddMedicationView()),
       GoRoute(path: AppRoutes.editMedication, builder: (context, state) => const EditMedicationView()),
       GoRoute(path: AppRoutes.medicalJournal, builder: (context, state) => const MedicalJournalView()),
+      GoRoute(path: AppRoutes.journalElementDetails, builder: (context, state) {
+        final journalEntry = state.extra as JournalEntryModel;
+        return JournalElementDetailsView(journalEntry: journalEntry);
+      }),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),

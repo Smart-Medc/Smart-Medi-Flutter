@@ -25,4 +25,5 @@ abstract class AppRoutes {
 
   // medical journal
   static const String medicalJournal = '/medicalJournal';
+  static const String journalElementDetails = '/journalElementDetails';
 }
