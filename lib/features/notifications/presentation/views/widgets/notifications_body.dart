@@ -18,6 +18,7 @@ class NotificationsBody extends StatelessWidget {
           20.verticalSpace,
           const NotificationsSummary(),
           NotificationsTabs(),
+
         ],
       ),
     );
