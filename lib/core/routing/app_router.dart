@@ -17,6 +17,7 @@ import 'package:smart_medi/features/medical_journal/presentation/views/medical_j
 import 'package:smart_medi/features/meidcal_records/presentation/views/medical_records_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
+import 'package:smart_medi/features/notifications/presentation/views/notifications_view.dart';
 
 abstract class AppRouter {
 
@@ -46,6 +47,7 @@ abstract class AppRouter {
         return JournalElementDetailsView(journalEntry: journalEntry);
       }),
       GoRoute(path: AppRoutes.addJournalEntry, builder: (context, state) => const AddJournalEntryView()),
+      GoRoute(path: AppRoutes.notificationsView,builder: (context,state) => const NotificationsView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),

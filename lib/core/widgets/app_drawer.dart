@@ -129,7 +129,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Notifications',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to notifications
+              GoRouter.of(context).push(AppRoutes.notificationsView);
             },
             isSelected: selectedItem == DrawerItem.notifications,
           ),
