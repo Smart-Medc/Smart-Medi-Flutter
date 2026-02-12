@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
+import 'package:smart_medi/features/notifications/presentation/views/widgets/notifications_header.dart';
+import 'package:smart_medi/features/notifications/presentation/views/widgets/notifications_summary.dart';
 class NotificationsBody extends StatelessWidget {
   const NotificationsBody({super.key});
 
@@ -11,7 +12,10 @@ class NotificationsBody extends StatelessWidget {
       padding:  EdgeInsets.symmetric(horizontal: 25.w),
       child: Column(
         children: [
-          CustomAppBar(),
+          const CustomAppBar(),
+          const NotificationsHeader(),
+          20.verticalSpace,
+          const NotificationsSummary(),
         ],
       ),
     );

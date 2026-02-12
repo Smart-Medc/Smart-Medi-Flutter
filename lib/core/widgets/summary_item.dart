@@ -56,7 +56,7 @@ class SummaryItem extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: AppStyles.textStyle10W400LightGrey),
+            Text(title, style: AppStyles.textStyle10W400DarkGrey),
             Text(value, style: AppStyles.textStyle15W600Black),
           ],
         ),
