@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/card_container.dart';
+import 'package:smart_medi/core/widgets/icon_with_background.dart';
 import 'package:smart_medi/features/notifications/data/models/notification_model.dart';
 
 class NotificationItem extends StatelessWidget {
-  final NotificationModel notification;
-  final VoidCallback? onTap;
-  final VoidCallback? onMarkAsRead;
 
   const NotificationItem({
     super.key,
@@ -15,6 +14,9 @@ class NotificationItem extends StatelessWidget {
     this.onTap,
     this.onMarkAsRead,
   });
+  final NotificationModel notification;
+  final VoidCallback? onTap;
+  final VoidCallback? onMarkAsRead;
 
   // Get icon based on notification type
   IconData _getIcon() {
@@ -25,8 +27,6 @@ class NotificationItem extends StatelessWidget {
         return Icons.medication_outlined;
       case NotificationType.aiInsight:
         return Icons.lightbulb_outline;
-      case NotificationType.medicalRecord:
-        return Icons.description_outlined;
     }
   }
 
@@ -39,95 +39,67 @@ class NotificationItem extends StatelessWidget {
         return AppColors.iconCyan;
       case NotificationType.aiInsight:
         return AppColors.iconYellow;
-      case NotificationType.medicalRecord:
-        return AppColors.iconBlue;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return CardContainer(
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: notification.isRead ? Colors.white : AppColors.iconBGBlue,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: notification.isRead ? const Color(0xFFE0E0E0) : AppColors.primaryColor,
-          width: notification.isRead ? 1 : 2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff696969).withValues(alpha: 0.08),
-            blurRadius: 8.r,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      backgroundColor: notification.isRead ? Colors.white : AppColors.iconBGBlue,
+      borderColor: notification.isRead ? AppColors.formFieldStrokeColor : AppColors.iconBlue,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(12.r),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.all(12.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.iconBGBlue,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: Icon(_getIcon(), color: _getIconColor(), size: 24.sp),
-                ),
+                IconWithBackground(icon: _getIcon(), backgroundColor: AppColors.iconBGCyan, iconColor: _getIconColor()),
                 16.horizontalSpace,
                 Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Flexible(
-                        child: Text(
-                          notification.title,
-                          style: AppStyles.textStyle15W600Black,
-                        ),
+                      Text(
+                        notification.title,
+                        style: AppStyles.textStyle12W600Black,
                       ),
-                      if (!notification.isRead)
+                      5.verticalSpace,
+                      Text(
+                        notification.message,
+                        style: AppStyles.textStyle10W400LightGrey,
+                      ),
+                      30.verticalSpace,
+                      Text(notification.getTimeAgo(), style: AppStyles.textStyle10W400LightGrey),
+                    ],
+                  ),
+                ),
+                if (!notification.isRead)
+                  SizedBox(
+                    width: 90.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                           decoration: BoxDecoration(
                             color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(12.r),
+                            borderRadius: BorderRadius.circular(999.r),
                           ),
                           child: Text('New', style: AppStyles.textStyle10W400White),
                         ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            16.verticalSpace,
-            Padding(
-              padding: EdgeInsets.only(left: 56.w),
-              child: Text(
-                notification.message,
-                style: AppStyles.textStyle12W400DarkGrey,
-              ),
-            ),
-            16.verticalSpace,
-            Padding(
-              padding: EdgeInsets.only(left: 56.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(notification.getTimeAgo(), style: AppStyles.textStyle12W400DarkGrey),
-                  if (!notification.isRead && onMarkAsRead != null)
-                    GestureDetector(
-                      onTap: onMarkAsRead,
-                      child: Text('Mark As Read', style: AppStyles.textStyle12W600Black),
+                        60.verticalSpace,
+                        GestureDetector(
+                          onTap: onMarkAsRead,
+                          child: Text('Mark As Read', style: AppStyles.textStyle12W500Black),
+                        ),
+                      ],
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
           ],
         ),

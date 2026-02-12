@@ -3,7 +3,6 @@ enum NotificationType {
   appointment,
   medication,
   aiInsight,
-  medicalRecord,
 }
 
 class NotificationModel {

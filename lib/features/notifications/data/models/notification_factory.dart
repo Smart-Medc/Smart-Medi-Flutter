@@ -57,23 +57,6 @@ class NotificationFactory {
     );
   }
 
-  // Create medical record accessed notification
-  static NotificationModel createMedicalRecordAccessed({
-    required String id,
-    required String doctorName,
-    required DateTime timestamp,
-    bool isRead = false,
-  }) {
-    return NotificationModel(
-      id: id,
-      type: NotificationType.medicalRecord,
-      title: 'Medical Record Accessed',
-      message: '$doctorName viewed your shared records',
-      timestamp: timestamp,
-      isRead: isRead,
-    );
-  }
-
   // Helper method to format time
   static String _formatTime(DateTime dateTime) {
     final hour = dateTime.hour;
@@ -94,8 +77,56 @@ class NotificationFactory {
         appointmentTime: DateTime(now.year, now.month, now.day + 1, 10, 0),
         timestamp: now.subtract(const Duration(hours: 1)),
         isRead: false,
+      ),createAppointmentReminder(
+        id: '1',
+        doctorName: 'Dr. Sarah Johnson',
+        appointmentTime: DateTime(now.year, now.month, now.day + 1, 10, 0),
+        timestamp: now.subtract(const Duration(hours: 1)),
+        isRead: false,
+      ),createAppointmentReminder(
+        id: '1',
+        doctorName: 'Dr. Sarah Johnson',
+        appointmentTime: DateTime(now.year, now.month, now.day + 1, 10, 0),
+        timestamp: now.subtract(const Duration(hours: 1)),
+        isRead: false,
+      ),createAppointmentReminder(
+        id: '1',
+        doctorName: 'Dr. Sarah Johnson',
+        appointmentTime: DateTime(now.year, now.month, now.day + 1, 10, 0),
+        timestamp: now.subtract(const Duration(hours: 1)),
+        isRead: true,
+      ),createAppointmentReminder(
+        id: '1',
+        doctorName: 'Dr. Sarah Johnson',
+        appointmentTime: DateTime(now.year, now.month, now.day + 1, 10, 0),
+        timestamp: now.subtract(const Duration(hours: 1)),
+        isRead: false,
       ),
       createMedicationReminder(
+        id: '2',
+        medicationName: 'Metformin',
+        dosage: '500mg',
+        timestamp: now.subtract(const Duration(hours: 2)),
+        isRead: false,
+      ),createMedicationReminder(
+        id: '2',
+        medicationName: 'Metformin',
+        dosage: '500mg',
+        timestamp: now.subtract(const Duration(hours: 2)),
+        isRead: true,
+      ),createMedicationReminder(
+        id: '2',
+        medicationName: 'Metformin',
+        dosage: '500mg',
+        timestamp: now.subtract(const Duration(hours: 2)),
+        isRead: false,
+      ),createMedicationReminder(
+        id: '2',
+        medicationName: 'Metformin',
+        dosage: '500mg',
+        timestamp: now.subtract(const Duration(hours: 2)),
+        isRead: false,
+      ),createMedicationReminder(
         id: '2',
         medicationName: 'Metformin',
         dosage: '500mg',
@@ -107,14 +138,27 @@ class NotificationFactory {
         insightMessage:
             'MediGemma has detected a pattern in your journal entries. Review the insights.',
         timestamp: now.subtract(const Duration(hours: 5)),
+        isRead: false,
+      ),createAIHealthInsight(
+        id: '3',
+        insightMessage:
+            'MediGemma has detected a pattern in your journal entries. Review the insights.',
+        timestamp: now.subtract(const Duration(hours: 5)),
+        isRead: true,
+      ),createAIHealthInsight(
+        id: '3',
+        insightMessage:
+            'MediGemma has detected a pattern in your journal entries. Review the insights.',
+        timestamp: now.subtract(const Duration(hours: 5)),
+        isRead: true,
+      ),createAIHealthInsight(
+        id: '3',
+        insightMessage:
+            'MediGemma has detected a pattern in your journal entries. Review the insights.',
+        timestamp: now.subtract(const Duration(hours: 5)),
         isRead: true,
       ),
-      createMedicalRecordAccessed(
-        id: '4',
-        doctorName: 'Dr. Michael Chen',
-        timestamp: now.subtract(const Duration(hours: 6)),
-        isRead: true,
-      ),
+
     ];
   }
 }
