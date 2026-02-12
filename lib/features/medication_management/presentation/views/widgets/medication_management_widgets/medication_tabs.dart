@@ -18,6 +18,7 @@ class MedicationTabs extends StatelessWidget {
         _buildCurrentMedications(),
         _buildPastMedications(),
       ],
+      isScrollable: false, // Tabs expand to fill width equally
     );
   }
 
