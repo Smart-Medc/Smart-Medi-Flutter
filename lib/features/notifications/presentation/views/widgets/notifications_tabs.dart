@@ -25,6 +25,7 @@ class NotificationsTabs extends StatelessWidget {
         .length;
 
     return CustomTabs(
+      isNotificationsTab: true,
       tabTitles: const ['All', 'Appointments', 'Medications', 'AI Alerts'],
       tabContents: [
         NotificationsList(
