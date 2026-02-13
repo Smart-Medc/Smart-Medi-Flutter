@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class IconWithBackground extends StatelessWidget {
-  const IconWithBackground({super.key, required this.icon, required this.backgroundColor, required this.iconColor});
+  const IconWithBackground({super.key, required this.icon, required this.backgroundColor, required this.iconColor,this.iconSize = 24});
   final IconData icon;
   final Color backgroundColor;
   final Color iconColor;
+  final double iconSize;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +17,7 @@ class IconWithBackground extends StatelessWidget {
       ),
       child: Icon(
         icon,
-        size: 24.sp,
+        size: iconSize.sp,
         color: iconColor,
       ),
     );
