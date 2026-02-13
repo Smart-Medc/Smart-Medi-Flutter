@@ -18,7 +18,7 @@ class DataSharingViewBody extends StatelessWidget {
           16.verticalSpace,
           const DataSharingSummary(),
           20.verticalSpace,
-          DataSharingTabs()
+          const Expanded(child: DataSharingTabs())
         ],
       ),
     );
