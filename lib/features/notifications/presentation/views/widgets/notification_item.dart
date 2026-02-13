@@ -4,6 +4,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/status_badge.dart';
 import 'package:smart_medi/features/notifications/data/models/notification_model.dart';
 
 class NotificationItem extends StatelessWidget {
@@ -83,13 +84,9 @@ class NotificationItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(999.r),
-                          ),
-                          child: Text('New', style: AppStyles.textStyle10W400White),
+                        const StatusBadge(
+                          text: 'New',
+                          backgroundColor: AppColors.primaryColor,
                         ),
                         60.verticalSpace,
                         GestureDetector(

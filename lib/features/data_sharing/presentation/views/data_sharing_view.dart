@@ -11,7 +11,7 @@ class DataSharingView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
         body: DataSharingViewBody(),
-        drawer: AppDrawer(selectedItem: DrawerItem.notifications),
+        drawer: AppDrawer(selectedItem: DrawerItem.dataSharing),
       ),
     );
   }

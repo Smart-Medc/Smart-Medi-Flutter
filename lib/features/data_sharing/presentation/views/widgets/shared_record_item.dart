@@ -5,19 +5,32 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/features/data_sharing/data/models/shared_record_model.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_record_item_header.dart';
 
 class SharedRecordItem extends StatelessWidget {
-  const SharedRecordItem({
-    super.key,
-    required this.sharedRecord,
-  });
+  const SharedRecordItem({super.key, required this.sharedRecord});
 
   final SharedRecordModel sharedRecord;
 
   String _formatDate(DateTime date) {
-    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    final months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return '${months[date.month - 1]} ${date.day}, ${date.year}';
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,35 +41,7 @@ class SharedRecordItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Header with title and status badge
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  'Shared with ${sharedRecord.sharedWith}',
-                  style: AppStyles.textStyle15W600Black,
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
-                decoration: BoxDecoration(
-                  color: sharedRecord.isActive
-                      ? AppColors.iconBGBlue
-                      : AppColors.iconBGRed,
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Text(
-                  sharedRecord.isActive
-                      ? 'Active'
-                      : (sharedRecord.isRevoked ? 'Revoked' : 'Expired'),
-                  style: AppStyles.textStyle12W600Black.copyWith(
-                    color: sharedRecord.isActive
-                        ? AppColors.primaryColor
-                        : AppColors.iconRed,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          SharedRecordItemHeader(sharedRecord: sharedRecord,),
           16.verticalSpace,
 
           // ID with copy button
@@ -145,10 +130,7 @@ class SharedRecordItem extends StatelessWidget {
           16.verticalSpace,
 
           // Shared Records section
-          Text(
-            'Shared Records:',
-            style: AppStyles.textStyle14W400Black,
-          ),
+          Text('Shared Records:', style: AppStyles.textStyle14W400Black),
           8.verticalSpace,
           Wrap(
             spacing: 8.w,
@@ -156,16 +138,16 @@ class SharedRecordItem extends StatelessWidget {
             children: sharedRecord.sharedRecords
                 .map(
                   (record) => Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 6.h,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16.r),
                       border: Border.all(color: AppColors.formFieldStrokeColor),
                     ),
-                    child: Text(
-                      record,
-                      style: AppStyles.textStyle12W500Black,
-                    ),
+                    child: Text(record, style: AppStyles.textStyle12W500Black),
                   ),
                 )
                 .toList(),
@@ -279,9 +261,7 @@ class SharedRecordItem extends StatelessWidget {
                 ),
               );
             },
-            style: TextButton.styleFrom(
-              foregroundColor: AppColors.iconRed,
-            ),
+            style: TextButton.styleFrom(foregroundColor: AppColors.iconRed),
             child: const Text('Revoke'),
           ),
         ],
@@ -289,4 +269,3 @@ class SharedRecordItem extends StatelessWidget {
     );
   }
 }
-
