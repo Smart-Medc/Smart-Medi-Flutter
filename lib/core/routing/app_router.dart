@@ -6,6 +6,7 @@ import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/otp_verification_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/reset_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/data_sharing_view.dart';
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
 import 'package:smart_medi/features/medical_journal/data/models/journal_entry_model.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/add_journal_entry_view.dart';
@@ -23,7 +24,7 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-        GoRoute(path: '/', builder: (context, state) => const LoginView()),
+        GoRoute(path: '/', builder: (context, state) => const HomeView()),
       GoRoute(path: AppRoutes.loginView, builder: (context, state) => const LoginView()),
       GoRoute(path: AppRoutes.signUpView, builder: (context, state) => const SignUpView()),
       GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
@@ -48,6 +49,7 @@ abstract class AppRouter {
       }),
       GoRoute(path: AppRoutes.addJournalEntry, builder: (context, state) => const AddJournalEntryView()),
       GoRoute(path: AppRoutes.notificationsView,builder: (context,state) => const NotificationsView()),
+      GoRoute(path: AppRoutes.dataSharingView,builder: (context,state) => const DataSharingView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),

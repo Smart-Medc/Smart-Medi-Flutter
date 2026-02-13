@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_header.dart';
 class DataSharingViewBody extends StatelessWidget {
   const DataSharingViewBody({super.key});
 
@@ -8,10 +9,10 @@ class DataSharingViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Column(
+      child: const Column(
         children: [
-          const CustomAppBar(),
-
+          CustomAppBar(),
+          DataSharingHeader(),
         ],
       ),
     );
