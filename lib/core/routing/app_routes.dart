@@ -31,6 +31,7 @@ abstract class AppRoutes {
   // notifications
   static const String notificationsView = '/notificationsView';
 
-  // share records
+  // data sharing
   static const String dataSharingView = '/dataSharingView';
+  static const String shareRecordsView = '/shareRecordsView';
 }
