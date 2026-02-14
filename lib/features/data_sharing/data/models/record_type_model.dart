@@ -1,14 +1,13 @@
 class RecordTypeModel {
-  final String typeName;
-  final List<String> records;
-  bool isTypeSelected;
-  final Map<String, bool> selectedRecords;
-
   RecordTypeModel({
     required this.typeName,
     required this.records,
     this.isTypeSelected = false,
   }) : selectedRecords = {for (var record in records) record: false};
+  final String typeName;
+  final List<String> records;
+  bool isTypeSelected;
+  final Map<String, bool> selectedRecords;
 
   void toggleType() {
     isTypeSelected = !isTypeSelected;
@@ -39,7 +38,11 @@ class RecordTypeModel {
     return [
       RecordTypeModel(
         typeName: 'Lab Results',
-        records: ['Blood Test Results', 'Urine Analysis', 'Complete Blood Count'],
+        records: [
+          'Blood Test Results',
+          'Urine Analysis',
+          'Complete Blood Count',
+        ],
       ),
       RecordTypeModel(
         typeName: 'Imaging',
@@ -47,7 +50,11 @@ class RecordTypeModel {
       ),
       RecordTypeModel(
         typeName: 'Checkups',
-        records: ['Annual Physical Examination', 'Routine Checkup', 'Follow-up Visit'],
+        records: [
+          'Annual Physical Examination',
+          'Routine Checkup',
+          'Follow-up Visit',
+        ],
       ),
       RecordTypeModel(
         typeName: 'Cardiology',
@@ -55,9 +62,12 @@ class RecordTypeModel {
       ),
       RecordTypeModel(
         typeName: 'Medications',
-        records: ['Prescriptionary', 'Current Medications', 'Medication History'],
+        records: [
+          'Prescriptionary',
+          'Current Medications',
+          'Medication History',
+        ],
       ),
     ];
   }
 }
-
