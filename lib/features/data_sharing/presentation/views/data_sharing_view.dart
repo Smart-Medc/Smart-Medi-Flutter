@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/widgets/app_drawer.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_body.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_view_body.dart';
 class DataSharingView extends StatelessWidget {
   const DataSharingView({super.key});
 

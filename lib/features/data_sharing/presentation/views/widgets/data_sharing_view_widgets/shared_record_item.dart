@@ -4,10 +4,10 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/features/data_sharing/data/models/shared_record_model.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_record_actions.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_record_item_copy_button.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_record_item_header.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_record_item_chips.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_actions.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item_chips.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item_copy_button.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item_header.dart';
 
 class SharedRecordItem extends StatelessWidget {
   const SharedRecordItem({super.key, required this.sharedRecord});

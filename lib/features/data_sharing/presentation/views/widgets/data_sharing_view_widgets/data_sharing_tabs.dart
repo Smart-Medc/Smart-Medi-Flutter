@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/widgets/custom_tabs.dart';
 import 'package:smart_medi/features/data_sharing/data/models/shared_record_factory.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/shared_records_list.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_records_list.dart';
 
 class DataSharingTabs extends StatelessWidget {
   const DataSharingTabs({super.key});
