@@ -120,7 +120,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Data Sharing',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to data sharing
+              GoRouter.of(context).push(AppRoutes.dataSharingView);
             },
             isSelected: selectedItem == DrawerItem.dataSharing,
           ),

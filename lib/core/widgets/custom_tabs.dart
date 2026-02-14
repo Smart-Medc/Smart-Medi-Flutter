@@ -11,7 +11,7 @@ class CustomTabs extends StatefulWidget { // If true, tabs scroll horizontally; 
     required this.tabContents,
     this.initialTab = 0,
     this.badgeCounts,
-    this.isScrollable = false,
+    this.isScrollable = false, this.isNotificationsTab = false,
   }) : assert(tabTitles.length == tabContents.length,
             'Tab titles and contents must have the same length'),
        assert(badgeCounts == null || badgeCounts.length == tabTitles.length,
@@ -21,6 +21,7 @@ class CustomTabs extends StatefulWidget { // If true, tabs scroll horizontally; 
   final int initialTab;
   final List<int>? badgeCounts; // Optional badge counts for each tab (default 0)
   final bool isScrollable;
+  final bool? isNotificationsTab;
 
   @override
   State<CustomTabs> createState() => _CustomTabsState();
@@ -86,7 +87,8 @@ class _CustomTabsState extends State<CustomTabs> {
     required bool isExpanded,
   }) {
     final isSelected = _selectedTab == index;
-    final showBadge = badgeCount > 0;
+    final showNotificationsBadge = badgeCount > 0 && widget.isNotificationsTab == true;
+    final showSharingBadge = badgeCount > 0 && widget.isNotificationsTab == false;
 
     return GestureDetector(
       onTap: () {
@@ -106,13 +108,13 @@ class _CustomTabsState extends State<CustomTabs> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              title,
+              !showSharingBadge ? title : '$title (${badgeCount > 99 ? '+99' : badgeCount})',
               style: isSelected
                   ? AppStyles.textStyle12W500Black
                   : AppStyles.textStyle12W500DarkGrey,
               textAlign: TextAlign.center,
             ),
-            if (showBadge) ...[
+            if (showNotificationsBadge) ...[
               6.horizontalSpace,
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
