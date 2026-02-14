@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
@@ -57,8 +59,11 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
           20.verticalSpace,
           CustomButton(
             text: 'Generate Access Code',
-            onPressed: (){},
+            onPressed: (){
+              GoRouter.of(context).push(AppRoutes.codeGeneratedView);
+            },
           ),
+          30.verticalSpace,
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/otp_verification_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/reset_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/code_generated_view.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/data_sharing_view.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/share_records_view.dart';
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
@@ -52,6 +53,7 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.notificationsView,builder: (context,state) => const NotificationsView()),
       GoRoute(path: AppRoutes.dataSharingView,builder: (context,state) => const DataSharingView()),
       GoRoute(path: AppRoutes.shareRecordsView,builder: (context,state) => const ShareRecordsView()),
+      GoRoute(path: AppRoutes.codeGeneratedView,builder: (context,state) => const CodeGeneratedView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),

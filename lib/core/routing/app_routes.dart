@@ -34,4 +34,5 @@ abstract class AppRoutes {
   // data sharing
   static const String dataSharingView = '/dataSharingView';
   static const String shareRecordsView = '/shareRecordsView';
+  static const String codeGeneratedView = '/codeGeneratedView';
 }
