@@ -35,4 +35,11 @@ abstract class AppRoutes {
   static const String dataSharingView = '/dataSharingView';
   static const String shareRecordsView = '/shareRecordsView';
   static const String codeGeneratedView = '/codeGeneratedView';
+
+  // appointments
+  static const String appointmentsView = '/appointmentsView';
+  static const String bookAppointmentsView = '/bookAppointmentsView';
+  static const String appointmentsDetailsView = '/appointmentsDetailsView';
+  static const String appointmentsRescheduleView = '/appointmentsRescheduleView';
+  static const String appointmentsCancelView = '/appointmentsCancelView';
 }
