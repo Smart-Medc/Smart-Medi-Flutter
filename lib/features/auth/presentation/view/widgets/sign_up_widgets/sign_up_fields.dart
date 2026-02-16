@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
+import 'package:smart_medi/features/auth/data/models/sign_up/sign_up_request_model.dart';
+import 'package:smart_medi/features/auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_field_title.dart';
 
 class SignUpFields extends StatefulWidget {
@@ -116,9 +117,22 @@ class _SignUpFieldsState extends State<SignUpFields> {
             text: 'Sign up',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                GoRouter.of(context).pushReplacement(AppRoutes.otpVerificationView,extra: {
-                  'isComingFromSignUp' : true,
-                });
+                context.read<SignUpCubit>().signUp(
+                  signUpRequestModel: SignUpRequestModel(
+                    firstName: userNameController.text.trim(),
+                    lastName: 'lastName',
+                    email: emailController.text.trim(),
+                    phoneNumber: phoneNumberController.text.trim(),
+                    password: passwordController.text.trim(),
+                    confirmPassword: confirmPasswordController.text.trim(),
+                    dateOfBirth: '2026-02-16T16:00:42.826Z',
+                    gender: 'Male',
+                    emergencyContactName: 'emergencyContactName',
+                    emergencyContactPhone: '12345623456',
+                    emergencyContactRelationship:
+                        'Spouse',
+                  ),
+                );
               }
             },
           ),

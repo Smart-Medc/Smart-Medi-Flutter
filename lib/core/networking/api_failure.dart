@@ -43,22 +43,15 @@ class ServerFailure extends Failure {
 
   factory ServerFailure.fromResponse(int statusCode, dynamic response) {
     // todo : will be changed later to handle the response from the backend, for now we will just return a message based on the status code
-    // Check if the first value is a list, and handle accordingly
-    final firstKeyValue = response[response.keys.first];
-
     if (statusCode == 404) {
       return ServerFailure(
-        firstKeyValue is List && firstKeyValue.isNotEmpty
-            ? firstKeyValue[0]['Error'].toString() // If it's a list, extract the first error message
-            : firstKeyValue ?? 'Your request was not found, please try later',
+        'error 404, the requested resource was not found. Please check the URL and try again.',
       );
     } else if (statusCode == 500) {
       return ServerFailure('There is a problem with the server, please try later');
     } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
       return ServerFailure(
-        firstKeyValue is List && firstKeyValue.isNotEmpty
-            ? firstKeyValue[0].toString()  // Handle if it's a list
-            : firstKeyValue ?? 'Unexpected Error, Please try again',
+        'Unexpected Error, Please try again',
       );
     } else if (statusCode == 555) {
       return ServerFailure('Error from the backend');
