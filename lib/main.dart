@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/helpers/service_locator.dart';
 import 'package:smart_medi/core/routing/app_router.dart';
 
 void main() {
+  setupServiceLocator();
   runApp(const SmartMedi());
 }
 
