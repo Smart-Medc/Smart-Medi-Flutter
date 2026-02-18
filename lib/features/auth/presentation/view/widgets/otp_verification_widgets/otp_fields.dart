@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
+import 'package:smart_medi/features/auth/data/models/verify_email/verify_email_request.dart';
+import 'package:smart_medi/features/auth/presentation/manager/verify_email_cubit/verify_email_cubit.dart';
 
 class OtpFields extends StatefulWidget {
   const OtpFields({super.key,required this.isComingFromSignUp});
@@ -16,13 +17,14 @@ class OtpFields extends StatefulWidget {
 
 class _OtpFieldsState extends State<OtpFields> {
   final List<TextEditingController> _controllers = List.generate(
-    4,
+    6,
     (index) => TextEditingController(),
   );
   final List<FocusNode> _focusNodes = List.generate(
-    4,
+    6,
     (index) => FocusNode(),
   );
+  String? _errorMessage;
 
   @override
   void dispose() {
@@ -35,16 +37,47 @@ class _OtpFieldsState extends State<OtpFields> {
     super.dispose();
   }
 
+  bool _validateOtp() {
+    final otp = _controllers.map((c) => c.text.trim()).join();
+
+    if (otp.length < 6) {
+      setState(() {
+        _errorMessage = 'Please enter all 6 digits';
+      });
+      return false;
+    }
+
+    if (!RegExp(r'^\d{6}$').hasMatch(otp)) {
+      setState(() {
+        _errorMessage = 'OTP must contain only numbers';
+      });
+      return false;
+    }
+
+    setState(() {
+      _errorMessage = null;
+    });
+    return true;
+  }
+
+  void _clearError() {
+    if (_errorMessage != null) {
+      setState(() {
+        _errorMessage = null;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(4, (index) {
+          children: List.generate(6, (index) {
             return Container(
               margin: EdgeInsets.symmetric(horizontal: 8.w),
-              width: 56.w,
+              width: 48.w,
               height: 56.h,
               child: TextField(
                 controller: _controllers[index],
@@ -60,22 +93,26 @@ class _OtpFieldsState extends State<OtpFields> {
                   counterText: '',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: _controllers[index].text.trim().isNotEmpty ? const Color(0xff2743FD) : const Color(0xffB9B9B9),
+                      color: _errorMessage != null
+                        ? Colors.red
+                        : _controllers[index].text.trim().isNotEmpty
+                          ? const Color(0xff2743FD)
+                          : const Color(0xffB9B9B9),
                     ),
                   ),
-                  focusedBorder: const UnderlineInputBorder(
+                  focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xff2743FD),
+                      color: _errorMessage != null ? Colors.red : const Color(0xff2743FD),
                       width: 1.5,
                     ),
                   ),
                   contentPadding: EdgeInsets.zero,
                 ),
                 onChanged: (value) {
-                  setState(() {
+                  _clearError();
+                  setState(() {});
 
-                  });
-                  if (value.isNotEmpty && index < 3) {
+                  if (value.isNotEmpty && index < 5) {
                     _focusNodes[index + 1].requestFocus();
                   } else if (value.isEmpty && index > 0) {
                     _focusNodes[index - 1].requestFocus();
@@ -85,13 +122,30 @@ class _OtpFieldsState extends State<OtpFields> {
             );
           }),
         ),
+        if (_errorMessage != null) ...[
+          16.verticalSpace,
+          Text(
+            _errorMessage!,
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
         59.verticalSpace,
         CustomButton(
           text: 'Verify',
           onPressed: () {
-            final String otp = _controllers.map((c) => c.text).join();
-            // Handle OTP verification
-            widget.isComingFromSignUp ? GoRouter.of(context).push(AppRoutes.completeProfileView) : GoRouter.of(context).push(AppRoutes.resetPassView);
+            if (_validateOtp()) {
+              final String otp = _controllers.map((c) => c.text).join();
+              context.read<VerifyEmailCubit>().verifyEmail(
+                verifyEmailRequest: VerifyEmailRequest(
+                  email: 'omarmohamed01284@gmail.com',
+                  code: otp,
+                ),
+              );
+            }
           },
         ),
       ],

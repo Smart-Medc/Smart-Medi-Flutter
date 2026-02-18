@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.dart';
-import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_fields.dart';
+import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_bloc_listener.dart';
 
 class OtpVerificationBody extends StatelessWidget {
   const OtpVerificationBody({super.key,required this.isComingFromSignUp});
@@ -21,7 +21,7 @@ class OtpVerificationBody extends StatelessWidget {
             subTitle: 'We will send you one-time password to your email',
           ),
           30.verticalSpace,
-          OtpFields(isComingFromSignUp: isComingFromSignUp,),
+          OtpBlocListener(isComingFromSignUp: isComingFromSignUp),
           32.verticalSpace,
           RichText(
             text: TextSpan(
