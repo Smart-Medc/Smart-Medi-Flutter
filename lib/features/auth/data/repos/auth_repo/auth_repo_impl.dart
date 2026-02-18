@@ -6,7 +6,7 @@ import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/auth/data/models/login/login_response.dart';
 import 'package:smart_medi/features/auth/data/models/sign_up/sign_up_request_model.dart';
 import 'package:smart_medi/features/auth/data/models/verify_email/verify_email_request.dart';
-import 'package:smart_medi/features/auth/data/repos/autho_repo/auth_repo.dart';
+import 'package:smart_medi/features/auth/data/repos/auth_repo/auth_repo.dart';
 
 class AuthRepoImpl extends AuthRepo{
   AuthRepoImpl({required this.apiService});
