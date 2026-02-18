@@ -38,7 +38,7 @@ class AuthFooter extends StatelessWidget {
                 style: AppStyles.textStyle18W700Black,
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
-                    isLogin ? GoRouter.of(context).pushReplacement(AppRoutes.signUpView) : GoRouter.of(context).pushReplacement(AppRoutes.loginView);
+                    isLogin ? GoRouter.of(context).replace(AppRoutes.signUpView) : GoRouter.of(context).replace(AppRoutes.loginView);
                   },
               ),
             ],

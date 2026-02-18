@@ -50,8 +50,18 @@ class ServerFailure extends Failure {
     } else if (statusCode == 500) {
       return ServerFailure('There is a problem with the server, please try later');
     } else if (statusCode == 400 || statusCode == 401 || statusCode == 403) {
+      String errorMessage = '';
+      if (response is Map<String, dynamic>) {
+        final dynamic message = response['message'];
+        final dynamic title = response['title'];
+        if (message is String && message.isNotEmpty) {
+          errorMessage = message;
+        } else if (title is String && title.isNotEmpty) {
+          errorMessage = title;
+        }
+      }
       return ServerFailure(
-        'Unexpected Error, Please try again',
+        errorMessage.isNotEmpty ? errorMessage : 'There was an error with your request, please check and try again.',
       );
     } else if (statusCode == 555) {
       return ServerFailure('Error from the backend');
