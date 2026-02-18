@@ -6,9 +6,9 @@ import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.d
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_bloc_listener.dart';
 
 class OtpVerificationBody extends StatelessWidget {
-  const OtpVerificationBody({super.key,required this.isComingFromSignUp});
+  const OtpVerificationBody({super.key,required this.isComingFromSignUp, required this.email});
   final bool isComingFromSignUp;
-
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,7 +21,7 @@ class OtpVerificationBody extends StatelessWidget {
             subTitle: 'We will send you one-time password to your email',
           ),
           30.verticalSpace,
-          OtpBlocListener(isComingFromSignUp: isComingFromSignUp),
+          OtpBlocListener(isComingFromSignUp: isComingFromSignUp, email: email),
           32.verticalSpace,
           RichText(
             text: TextSpan(

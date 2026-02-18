@@ -36,6 +36,7 @@ class _ForgetPasswordFieldState extends State<ForgetPasswordField> {
             if(_formKey.currentState!.validate()){
               GoRouter.of(context).push(AppRoutes.otpVerificationView,extra: {
                 'isComingFromSignUp': false,
+                'email' : _emailController.text.trim()
               });
             }
           },),

@@ -19,6 +19,7 @@ class SignUpBlocListener extends StatelessWidget {
           GoRouter.of(context).pop();
           GoRouter.of(context).pushReplacement(AppRoutes.otpVerificationView,extra: {
             'isComingFromSignUp' : true,
+            'email' : state.email,
           });
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Sign Up Successful'))

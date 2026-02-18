@@ -117,11 +117,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
             text: 'Sign up',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                final email = emailController.text.trim();
                 context.read<SignUpCubit>().signUp(
                   signUpRequestModel: SignUpRequestModel(
                     firstName: userNameController.text.trim(),
                     lastName: 'lastName',
-                    email: emailController.text.trim(),
+                    email: email,
                     phoneNumber: phoneNumberController.text.trim(),
                     password: passwordController.text.trim(),
                     confirmPassword: confirmPasswordController.text.trim(),

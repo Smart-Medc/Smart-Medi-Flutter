@@ -26,13 +26,14 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-        GoRoute(path: '/', builder: (context, state) => const OtpVerificationView(isComingFromSignUp: true)),
+        GoRoute(path: '/', builder: (context, state) => const LoginView()),
       GoRoute(path: AppRoutes.loginView, builder: (context, state) => const LoginView()),
       GoRoute(path: AppRoutes.signUpView, builder: (context, state) => const SignUpView()),
       GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
         final extraData = state.extra as Map<String,dynamic>;
         final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
-        return OtpVerificationView(isComingFromSignUp: isComingFromSignUp);
+        final String email = extraData['email'] as String;
+        return OtpVerificationView(isComingFromSignUp: isComingFromSignUp, email: email,);
       }),
       GoRoute(path: AppRoutes.forgetPasswordView, builder: (context, state) => const ForgetPasswordView()),
       GoRoute(path: AppRoutes.resetPassView, builder: (context, state) => const ResetPasswordView()),

@@ -8,9 +8,9 @@ import 'package:smart_medi/features/auth/data/models/verify_email/verify_email_r
 import 'package:smart_medi/features/auth/presentation/manager/verify_email_cubit/verify_email_cubit.dart';
 
 class OtpFields extends StatefulWidget {
-  const OtpFields({super.key,required this.isComingFromSignUp});
+  const OtpFields({super.key,required this.isComingFromSignUp, required this.email});
   final bool isComingFromSignUp;
-
+  final String email;
   @override
   State<OtpFields> createState() => _OtpFieldsState();
 }
@@ -141,7 +141,7 @@ class _OtpFieldsState extends State<OtpFields> {
               final String otp = _controllers.map((c) => c.text).join();
               context.read<VerifyEmailCubit>().verifyEmail(
                 verifyEmailRequest: VerifyEmailRequest(
-                  email: 'omarmohamed01284@gmail.com',
+                  email: widget.email,
                   code: otp,
                 ),
               );

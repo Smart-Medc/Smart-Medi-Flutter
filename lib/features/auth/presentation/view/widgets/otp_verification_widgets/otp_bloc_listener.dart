@@ -7,8 +7,9 @@ import 'package:smart_medi/core/widgets/custom_loading_indicator.dart';
 import 'package:smart_medi/features/auth/presentation/manager/verify_email_cubit/verify_email_cubit.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_fields.dart';
 class OtpBlocListener extends StatelessWidget {
-  const OtpBlocListener({super.key, required this.isComingFromSignUp});
+  const OtpBlocListener({super.key, required this.isComingFromSignUp, required this.email});
   final bool isComingFromSignUp;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return BlocListener<VerifyEmailCubit, VerifyEmailState>(
@@ -24,7 +25,7 @@ class OtpBlocListener extends StatelessWidget {
           context.showSnackBar(Text(state.message));
         }
       },
-      child: OtpFields(isComingFromSignUp: isComingFromSignUp),
+      child: OtpFields(isComingFromSignUp: isComingFromSignUp, email: email,),
     );
   }
 }

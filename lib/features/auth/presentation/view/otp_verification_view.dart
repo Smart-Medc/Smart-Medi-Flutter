@@ -6,17 +6,17 @@ import 'package:smart_medi/features/auth/presentation/manager/verify_email_cubit
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_verification_body.dart';
 
 class OtpVerificationView extends StatelessWidget {
-  const OtpVerificationView({super.key, required this.isComingFromSignUp});
+  const OtpVerificationView({super.key, required this.isComingFromSignUp, required this.email});
 
   final bool isComingFromSignUp;
-
+  final String email;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: BlocProvider(
           create: (context) => VerifyEmailCubit(getIt<AuthRepo>()),
-          child: OtpVerificationBody(isComingFromSignUp: isComingFromSignUp),
+          child: OtpVerificationBody(isComingFromSignUp: isComingFromSignUp, email: email),
         ),
       ),
     );

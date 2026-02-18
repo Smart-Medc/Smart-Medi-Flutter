@@ -14,7 +14,10 @@ class SignUpCubit extends Cubit<SignUpState> {
     final response = await authRepo.signUp(signUpRequestModel: signUpRequestModel);
     response.fold(
           (failure) => emit(SignUpFailure(message: failure.message)),
-          (signUpResponse) => emit(SignUpSuccess()),
+          (signUpResponse) {
+            print('Sign-up successful for email: ${signUpRequestModel.email}');
+            return emit(SignUpSuccess(email: signUpRequestModel.email));
+          },
     );
   }
 }

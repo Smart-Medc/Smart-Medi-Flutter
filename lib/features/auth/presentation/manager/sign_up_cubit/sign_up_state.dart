@@ -10,4 +10,8 @@ final class SignUpFailure extends SignUpState {
 
   final String message;
 }
-final class SignUpSuccess extends SignUpState {}
+final class SignUpSuccess extends SignUpState {
+  SignUpSuccess({required this.email});
+
+  final String email;
+}
