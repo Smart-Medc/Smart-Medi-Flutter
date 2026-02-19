@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
@@ -6,6 +7,8 @@ import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
+import 'package:smart_medi/features/auth/data/models/login/login_request.dart';
+import 'package:smart_medi/features/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_field_title.dart';
 
 class LoginFields extends StatefulWidget {
@@ -54,7 +57,7 @@ class _LoginFieldsState extends State<LoginFields> {
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(
-              onTap: (){
+              onTap: () {
                 GoRouter.of(context).push(AppRoutes.forgetPasswordView);
               },
               child: Text(
@@ -68,7 +71,11 @@ class _LoginFieldsState extends State<LoginFields> {
             text: 'Login',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                GoRouter.of(context).pushReplacement(AppRoutes.homeView);
+                context.read<LoginCubit>().login(loginRequest: LoginRequest(
+                  email: emailController.text.trim(),
+                  password: passwordController.text.trim(),
+                  // todo create a check box to remember the user or not and pass it to the login request
+                ));
               }
             },
           ),
