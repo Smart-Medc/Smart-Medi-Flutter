@@ -24,6 +24,7 @@ class LoginBlocListener extends StatelessWidget {
             userId: state.loginResponse.data.user.id,
             userEmail: state.loginResponse.data.user.email,
             userType: state.loginResponse.data.user.userType,
+            userName: state.loginResponse.data.user.firstName
           );
 
           if (context.mounted) {

@@ -28,6 +28,11 @@ class AuthHelper {
     return await SecureStorageHelper.getUserType();
   }
 
+  /// Get current user's name
+  static Future<String?> getCurrentUserName() async {
+    return await SecureStorageHelper.getUserName();
+  }
+
   /// Logout user - clears all stored data
   static Future<void> logout() async {
     await SecureStorageHelper.clearAll();
