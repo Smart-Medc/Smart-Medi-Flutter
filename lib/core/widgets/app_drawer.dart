@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/logout_button.dart';
 
 enum DrawerItem {
   home,
@@ -145,7 +146,10 @@ class AppDrawer extends StatelessWidget {
           73.verticalSpace,
           const Divider(thickness: .2),
           10.verticalSpace,
-          Text('Colour Scheme', style: AppStyles.textStyle16W400LightGrey), // todo, would be updated after design system is ready
+          const LogoutListTile(),
+          20.verticalSpace,
+          Text('Colour Scheme', style: AppStyles.textStyle16W400LightGrey),
+          // todo, would be updated after design system is ready
         ],
       ),
     );
@@ -182,7 +186,9 @@ class _DrawerItem extends StatelessWidget {
         ),
         title: Text(
           title,
-          style: isSelected ? AppStyles.textStyle18W700Black : AppStyles.textStyle12W400DarkGrey,
+          style: isSelected
+              ? AppStyles.textStyle18W700Black
+              : AppStyles.textStyle12W400DarkGrey,
         ),
         onTap: onTap,
       ),
