@@ -56,5 +56,19 @@ class AuthRepoImpl extends AuthRepo{
       }
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> resendVerificationCode({required String email}) async{
+    try {
+      await apiService.post(endpoint: ApiEndpoints.resendVerificationCode, data: {'email': email});
+      return right(unit);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(e.toString()));
+      }
+    }
+  }
   
 }

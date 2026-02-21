@@ -121,7 +121,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 context.read<SignUpCubit>().signUp(
                   signUpRequestModel: SignUpRequestModel(
                     firstName: userNameController.text.trim(),
-                    lastName: 'lastName',
+                    lastName: '',
                     email: email,
                     phoneNumber: phoneNumberController.text.trim(),
                     password: passwordController.text.trim(),

@@ -9,4 +9,5 @@ abstract class AuthRepo {
   Future<Either<Failure, Unit>> signUp({required SignUpRequestModel signUpRequestModel});
   Future<Either<Failure, LoginResponse>> verifyEmail({required VerifyEmailRequest verifyEmailRequest});
   Future<Either<Failure, LoginResponse>> login({required LoginRequest loginRequest});
+  Future<Either<Failure, Unit>> resendVerificationCode({required String email});
 }

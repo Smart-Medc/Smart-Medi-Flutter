@@ -14,8 +14,17 @@ class VerifyEmailCubit extends Cubit<VerifyEmailState> {
     emit(VerifyEmailLoading());
     final result = await authRepo.verifyEmail(verifyEmailRequest: verifyEmailRequest);
     result.fold(
-      (failure) => emit(VerifyEmailFailure(message: failure.message)),
-      (loginResponse) => emit(VerifyEmailSuccess(loginResponse: loginResponse)),
+          (failure) => emit(VerifyEmailFailure(message: failure.message)),
+          (loginResponse) => emit(VerifyEmailSuccess(loginResponse: loginResponse)),
+    );
+  }
+
+  Future<void> resendVerificationCode({required String email}) async {
+    emit(ResendCodeLoading());
+    final result = await authRepo.resendVerificationCode(email: email);
+    result.fold(
+          (failure) => emit(ResendCodeFailure(message: failure.message)),
+          (_) => emit(ResendCodeSuccess()),
     );
   }
 }

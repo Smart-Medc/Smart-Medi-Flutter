@@ -15,3 +15,13 @@ final class VerifyEmailSuccess extends VerifyEmailState {
 
   final LoginResponse loginResponse;
 }
+
+// Resend code states
+final class ResendCodeLoading extends VerifyEmailState {}
+final class ResendCodeFailure extends VerifyEmailState {
+  ResendCodeFailure({required this.message});
+
+  final String message;
+}
+final class ResendCodeSuccess extends VerifyEmailState {}
+
