@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
@@ -14,16 +14,9 @@ class LoginRepoImpl extends LoginRepo {
 
   @override
   Future<Either<Failure, LoginResponse>> login({required LoginRequest loginRequest}) async {
-    try {
+    return ApiHelper.execute<LoginResponse>(() async {
       final data = await apiService.post(endpoint: ApiEndpoints.login, data: loginRequest.toJson());
-      final loginResponse = LoginResponse.fromJson(data);
-      return right(loginResponse);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        return left(ServerFailure(e.toString()));
-      }
-    }
+      return LoginResponse.fromJson(data);
+    });
   }
 }

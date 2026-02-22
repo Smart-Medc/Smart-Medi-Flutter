@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
@@ -15,44 +15,25 @@ class RegistrationRepoImpl extends RegistrationRepo {
 
   @override
   Future<Either<Failure, Unit>> signUp({required SignUpRequestModel signUpRequestModel}) async {
-    try {
+    return ApiHelper.execute<Unit>(() async {
       await apiService.post(endpoint: ApiEndpoints.register, data: signUpRequestModel.toJson());
-      return right(unit);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        return left(ServerFailure(e.toString()));
-      }
-    }
+      return unit;
+    });
   }
 
   @override
   Future<Either<Failure, LoginResponse>> verifyEmail({required VerifyEmailRequest verifyEmailRequest}) async {
-    try {
+    return ApiHelper.execute<LoginResponse>(() async {
       final data = await apiService.post(endpoint: ApiEndpoints.verifyEmail, data: verifyEmailRequest.toJson());
-      final loginResponse = LoginResponse.fromJson(data);
-      return right(loginResponse);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        return left(ServerFailure(e.toString()));
-      }
-    }
+      return LoginResponse.fromJson(data);
+    });
   }
 
   @override
   Future<Either<Failure, Unit>> resendVerificationCode({required String email}) async {
-    try {
+    return ApiHelper.execute<Unit>(() async {
       await apiService.post(endpoint: ApiEndpoints.resendVerificationCode, data: {'email': email});
-      return right(unit);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      } else {
-        return left(ServerFailure(e.toString()));
-      }
-    }
+      return unit;
+    });
   }
 }
