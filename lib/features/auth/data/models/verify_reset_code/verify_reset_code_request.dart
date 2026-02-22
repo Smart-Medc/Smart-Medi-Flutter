@@ -10,7 +10,7 @@ class VerifyResetCodeRequest {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'code': code,
+      'otpCode': code,
     };
   }
 }

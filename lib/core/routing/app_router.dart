@@ -27,11 +27,11 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const LoginView(),
-          redirect: (context, state) => AuthGuard.checkGuest(state),
-        ),
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const LoginView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
       GoRoute(
         path: AppRoutes.loginView,
         builder: (context, state) => const LoginView(),
@@ -43,10 +43,11 @@ abstract class AppRouter {
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
-        final extraData = state.extra as Map<String,dynamic>;
+        final extraData = state.extra as Map<String, dynamic>;
         final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
         final String email = extraData['email'] as String;
-        return OtpVerificationView(isComingFromSignUp: isComingFromSignUp, email: email,);
+        return OtpVerificationView(
+          isComingFromSignUp: isComingFromSignUp, email: email,);
       },
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
@@ -57,7 +58,12 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.resetPassView,
-        builder: (context, state) => const ResetPasswordView(),
+        builder: (context, state){
+          final extraData = state.extra as Map<String, dynamic>;
+          final String email = extraData['email'] as String;
+          final String code = extraData['code'] as String;
+          return ResetPasswordView(email: email,code: code);
+      },
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       GoRoute(
@@ -118,22 +124,22 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.notificationsView,
-        builder: (context,state) => const NotificationsView(),
+        builder: (context, state) => const NotificationsView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(
         path: AppRoutes.dataSharingView,
-        builder: (context,state) => const DataSharingView(),
+        builder: (context, state) => const DataSharingView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(
         path: AppRoutes.shareRecordsView,
-        builder: (context,state) => const ShareRecordsView(),
+        builder: (context, state) => const ShareRecordsView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(
         path: AppRoutes.codeGeneratedView,
-        builder: (context,state) => const CodeGeneratedView(),
+        builder: (context, state) => const CodeGeneratedView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       // GoRoute(

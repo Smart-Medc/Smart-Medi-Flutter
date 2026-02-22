@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_bloc_listener.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_resend_code_bloc_listener.dart';
+import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/verify_reset_code_bloc_listener.dart';
 
 class OtpVerificationBody extends StatelessWidget {
   const OtpVerificationBody({super.key,required this.isComingFromSignUp, required this.email});
@@ -20,7 +21,10 @@ class OtpVerificationBody extends StatelessWidget {
             subTitle: 'We will send you one-time password to your email',
           ),
           30.verticalSpace,
-          OtpBlocListener(isComingFromSignUp: isComingFromSignUp, email: email),
+          // Conditionally use different bloc listeners based on the flow
+          isComingFromSignUp
+              ? OtpBlocListener(isComingFromSignUp: isComingFromSignUp, email: email)
+              : VerifyResetCodeBlocListener(email: email),
           32.verticalSpace,
           OtpResendCodeBlocListener(email: email)
         ],

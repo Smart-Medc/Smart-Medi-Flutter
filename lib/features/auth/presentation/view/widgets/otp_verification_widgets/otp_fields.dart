@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/features/auth/data/models/verify_email/verify_email_request.dart';
+import 'package:smart_medi/features/auth/data/models/verify_reset_code/verify_reset_code_request.dart';
 import 'package:smart_medi/features/auth/presentation/manager/verify_email_cubit/verify_email_cubit.dart';
+import 'package:smart_medi/features/auth/presentation/manager/verify_reset_code_cubit/verify_reset_code_cubit.dart';
 
 class OtpFields extends StatefulWidget {
   const OtpFields({super.key,required this.isComingFromSignUp, required this.email});
@@ -139,12 +141,24 @@ class _OtpFieldsState extends State<OtpFields> {
           onPressed: () {
             if (_validateOtp()) {
               final String otp = _controllers.map((c) => c.text).join();
-              context.read<VerifyEmailCubit>().verifyEmail(
-                verifyEmailRequest: VerifyEmailRequest(
-                  email: widget.email,
-                  code: otp,
-                ),
-              );
+
+              if (widget.isComingFromSignUp) {
+                // Email verification flow (after sign up)
+                context.read<VerifyEmailCubit>().verifyEmail(
+                  verifyEmailRequest: VerifyEmailRequest(
+                    email: widget.email,
+                    code: otp,
+                  ),
+                );
+              } else {
+                // Password reset verification flow (after forgot password)
+                context.read<VerifyResetCodeCubit>().verifyResetCode(
+                  verifyCodeResetRequest: VerifyResetCodeRequest(
+                    email: widget.email,
+                    code: otp,
+                  ),
+                );
+              }
             }
           },
         ),

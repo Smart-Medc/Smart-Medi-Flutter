@@ -14,7 +14,7 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
     final result = await passwordRecoveryRepo.verifyResetCode(verifyResetCodeRequest: verifyCodeResetRequest);
     result.fold(
           (failure) => emit(VerifyResetCodeFailure(message: failure.message)),
-          (_) => emit(VerifyResetCodeSuccess()),
+          (_) => emit(VerifyResetCodeSuccess(code: verifyCodeResetRequest.code)),
     );
   }
 }
