@@ -15,3 +15,13 @@ final class VerifyResetCodeFailure extends VerifyResetCodeState {
 
   final String message;
 }
+
+// Resend reset code states
+final class ResendResetCodeLoading extends VerifyResetCodeState {}
+final class ResendResetCodeSuccess extends VerifyResetCodeState {}
+final class ResendResetCodeFailure extends VerifyResetCodeState {
+  ResendResetCodeFailure({required this.message});
+
+  final String message;
+}
+

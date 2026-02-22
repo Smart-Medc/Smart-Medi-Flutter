@@ -8,4 +8,5 @@ abstract class PasswordRecoveryRepo {
   Future<Either<Failure, Unit>> forgotPassword({required EmailRequest emailRequest});
   Future<Either<Failure, Unit>> verifyResetCode({required VerifyResetCodeRequest verifyResetCodeRequest});
   Future<Either<Failure, Unit>> resetPassword({required ResetPasswordRequest resetPasswordRequest});
+  Future<Either<Failure, Unit>> resendResetCode({required EmailRequest emailRequest});
 }

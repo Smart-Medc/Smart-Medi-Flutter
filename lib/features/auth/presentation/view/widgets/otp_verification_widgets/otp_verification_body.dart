@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_bloc_listener.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/otp_resend_code_bloc_listener.dart';
+import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/resend_reset_code_bloc_listener.dart' show ResendResetCodeBlocListener;
 import 'package:smart_medi/features/auth/presentation/view/widgets/otp_verification_widgets/verify_reset_code_bloc_listener.dart';
 
 class OtpVerificationBody extends StatelessWidget {
@@ -22,11 +23,10 @@ class OtpVerificationBody extends StatelessWidget {
           ),
           30.verticalSpace,
           // Conditionally use different bloc listeners based on the flow
-          isComingFromSignUp
-              ? OtpBlocListener(isComingFromSignUp: isComingFromSignUp, email: email)
-              : VerifyResetCodeBlocListener(email: email),
+          if (isComingFromSignUp) OtpBlocListener(isComingFromSignUp: isComingFromSignUp, email: email) else VerifyResetCodeBlocListener(email: email),
           32.verticalSpace,
-          OtpResendCodeBlocListener(email: email)
+          // Conditionally use different resend listeners based on the flow
+          if (isComingFromSignUp) OtpResendCodeBlocListener(email: email, isComingFromSignUp: true) else ResendResetCodeBlocListener(email: email)
         ],
       ),
     );

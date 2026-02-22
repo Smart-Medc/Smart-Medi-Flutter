@@ -39,4 +39,12 @@ class PasswordRecoveryRepoImpl extends PasswordRecoveryRepo {
       return unit;
     });
   }
+
+  @override
+  Future<Either<Failure, Unit>> resendResetCode({required EmailRequest emailRequest}) {
+   return ApiHelper.execute<Unit>(() async {
+     await apiService.post(endpoint: ApiEndpoints.resendResetCode, data: emailRequest.toJson());
+     return unit;
+   });
+  }
 }
