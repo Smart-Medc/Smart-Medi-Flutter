@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
+import 'package:smart_medi/features/auth/data/models/email_request/email_request.dart';
+import 'package:smart_medi/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_field_title.dart';
 class ForgetPasswordField extends StatefulWidget {
   const ForgetPasswordField({super.key});
@@ -34,10 +35,9 @@ class _ForgetPasswordFieldState extends State<ForgetPasswordField> {
           42.verticalSpace,
           CustomButton(text: 'Send Code',onPressed: (){
             if(_formKey.currentState!.validate()){
-              GoRouter.of(context).push(AppRoutes.otpVerificationView,extra: {
-                'isComingFromSignUp': false,
-                'email' : _emailController.text.trim()
-              });
+              context.read<ForgetPasswordCubit>().forgetPassword(
+                emailRequest: EmailRequest(email: _emailController.text.trim()),
+              );
             }
           },),
         ],
