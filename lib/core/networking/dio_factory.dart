@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:smart_medi/core/helpers/secure_storage_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
@@ -115,17 +116,19 @@ class DioFactory {
     );
 
     /// Pretty logger for debugging network calls
-    dio.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: true,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-      ),
-    );
+    if (kDebugMode) {
+      dio.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true,
+          error: true,
+          compact: true,
+          maxWidth: 90,
+        ),
+      );
+    }
   }
 
   /// ================= REFRESH TOKEN CALL =================
