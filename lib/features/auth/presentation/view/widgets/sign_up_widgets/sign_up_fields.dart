@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
-import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
 import 'package:smart_medi/features/auth/data/models/sign_up/sign_up_request_model.dart';
 import 'package:smart_medi/features/auth/presentation/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_field_title.dart';
+import 'package:smart_medi/features/auth/presentation/view/widgets/sign_up_widgets/terms_conditions_checkbox.dart';
 
 class SignUpFields extends StatefulWidget {
   const SignUpFields({super.key});
@@ -26,6 +26,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   bool _isAgreeWithTerms = false;
+  String? _termsErrorText;
 
   @override
   void dispose() {
@@ -90,38 +91,35 @@ class _SignUpFieldsState extends State<SignUpFields> {
           ),
 
           12.verticalSpace,
-          Row(
-            children: [
-              4.horizontalSpace,
-              SizedBox(
-                height: 15.h,
-                width: 15.h,
-                child: Checkbox(
-                  value: _isAgreeWithTerms,
-                  onChanged: (newValue) {
-                    _isAgreeWithTerms = newValue ?? false;
-                    setState(() {});
-                  },
-                  activeColor: Colors.black,
-                ),
-              ),
-              10.horizontalSpace,
-              Text(
-                'Agree with term & conditions',
-                style: AppStyles.textStyle14W400Black,
-              ),
-            ],
+          TermsConditionsCheckbox(
+            value: _isAgreeWithTerms,
+            onChanged: (value) {
+              setState(() {
+                _isAgreeWithTerms = value;
+                if (value) {
+                  _termsErrorText = null;
+                }
+              });
+            },
+            errorText: _termsErrorText,
           ),
           20.verticalSpace,
           CustomButton(
             text: 'Sign up',
             onPressed: () {
               if (_formKey.currentState!.validate()) {
+                if (!_isAgreeWithTerms) {
+                  setState(() {
+                    _termsErrorText = 'You must agree to the terms & conditions';
+                  });
+                  return;
+                }
+
                 final email = emailController.text.trim();
                 context.read<SignUpCubit>().signUp(
                   signUpRequestModel: SignUpRequestModel(
                     firstName: userNameController.text.trim(),
-                    lastName: '',
+                    lastName: '--',
                     email: email,
                     phoneNumber: phoneNumberController.text.trim(),
                     password: passwordController.text.trim(),
