@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_footer.dart';
 import 'package:smart_medi/features/auth/presentation/view/widgets/auth_header.dart';
-import 'package:smart_medi/features/auth/presentation/view/widgets/login_widgets/login_fields.dart';
+import 'package:smart_medi/features/auth/presentation/view/widgets/login_widgets/login_bloc_listener.dart';
 class LoginBody extends StatelessWidget {
   const LoginBody({super.key});
 
@@ -16,7 +16,7 @@ class LoginBody extends StatelessWidget {
             65.verticalSpace,
             const AuthHeader(title: 'Sign in', subTitle: 'Welcome back, you‘ve been missed'),
             80.verticalSpace,
-            const LoginFields(),
+            const LoginBlocListener(),
             40.verticalSpace,
             const AuthFooter(isLogin: true,),
           ],

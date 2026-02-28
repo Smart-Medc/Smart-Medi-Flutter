@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
+import 'package:smart_medi/core/routing/auth_guard.dart';
 import 'package:smart_medi/features/auth/presentation/view/complete_profile_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/forget_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
@@ -26,34 +27,157 @@ abstract class AppRouter {
 
   static final router = GoRouter(
     routes: [
-        GoRoute(path: '/', builder: (context, state) => const LoginView()),
-      GoRoute(path: AppRoutes.loginView, builder: (context, state) => const LoginView()),
-      GoRoute(path: AppRoutes.signUpView, builder: (context, state) => const SignUpView()),
-      GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
-        final extraData = state.extra as Map<String,dynamic>;
-        final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
-        return OtpVerificationView(isComingFromSignUp: isComingFromSignUp);
-      }),
-      GoRoute(path: AppRoutes.forgetPasswordView, builder: (context, state) => const ForgetPasswordView()),
-      GoRoute(path: AppRoutes.resetPassView, builder: (context, state) => const ResetPasswordView()),
-      GoRoute(path: AppRoutes.completeProfileView, builder: (context, state) => const CompleteProfileView()),
-      GoRoute(path: AppRoutes.homeView, builder: (context, state) => const HomeView()),
-      GoRoute(path: AppRoutes.medicalRecords, builder: (context, state) => const MedicalRecordsView()),
-      GoRoute(path: AppRoutes.recordDetailsView, builder: (context, state) => const RecordDetailsView()),
-      GoRoute(path: AppRoutes.editRecordView, builder: (context, state) => const EditRecordView()),
-      GoRoute(path: AppRoutes.medicationManagement, builder: (context, state) => const MedicationManagementView()),
-      GoRoute(path: AppRoutes.addMedication, builder: (context, state) => const AddMedicationView()),
-      GoRoute(path: AppRoutes.editMedication, builder: (context, state) => const EditMedicationView()),
-      GoRoute(path: AppRoutes.medicalJournal, builder: (context, state) => const MedicalJournalView()),
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const LoginView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
+      GoRoute(
+        path: AppRoutes.loginView,
+        builder: (context, state) => const LoginView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
+      GoRoute(
+        path: AppRoutes.signUpView,
+        builder: (context, state) => const SignUpView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
+      GoRoute(
+        path: AppRoutes.otpVerificationView,
+        redirect: (context, state) async {
+          // First check authentication
+          final authRedirect = await AuthGuard.checkGuest(state);
+          if (authRedirect != null) return authRedirect;
+
+          // Then validate parameters
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('isComingFromSignUp') ||
+              !extraData.containsKey('email')) {
+            return AppRoutes.loginView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          // Safe to cast - redirect already validated
+          final extraData = state.extra as Map<String, dynamic>;
+          final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
+          final String email = extraData['email'] as String;
+
+          return OtpVerificationView(
+            isComingFromSignUp: isComingFromSignUp,
+            email: email,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.forgetPasswordView,
+        builder: (context, state) => const ForgetPasswordView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
+      GoRoute(
+        path: AppRoutes.resetPassView,
+        redirect: (context, state) async {
+          // First check authentication
+          final authRedirect = await AuthGuard.checkGuest(state);
+          if (authRedirect != null) return authRedirect;
+
+          // Then validate parameters
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('email') ||
+              !extraData.containsKey('code')) {
+            return AppRoutes.loginView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          // Safe to cast - redirect already validated
+          final extraData = state.extra as Map<String, dynamic>;
+          final String email = extraData['email'] as String;
+          final String code = extraData['code'] as String;
+
+          return ResetPasswordView(email: email, code: code);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.completeProfileView,
+        builder: (context, state) => const CompleteProfileView(),
+        redirect: (context, state) => AuthGuard.checkGuest(state),
+      ),
+      GoRoute(
+        path: AppRoutes.homeView,
+        builder: (context, state) => const HomeView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.medicalRecords,
+        builder: (context, state) => const MedicalRecordsView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.recordDetailsView,
+        builder: (context, state) => const RecordDetailsView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.editRecordView,
+        builder: (context, state) => const EditRecordView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.medicationManagement,
+        builder: (context, state) => const MedicationManagementView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.addMedication,
+        builder: (context, state) => const AddMedicationView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.editMedication,
+        builder: (context, state) => const EditMedicationView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.medicalJournal,
+        builder: (context, state) => const MedicalJournalView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
       GoRoute(path: AppRoutes.journalElementDetails, builder: (context, state) {
         final journalEntry = state.extra as JournalEntryModel;
         return JournalElementDetailsView(journalEntry: journalEntry);
-      }),
-      GoRoute(path: AppRoutes.addJournalEntry, builder: (context, state) => const AddJournalEntryView()),
-      GoRoute(path: AppRoutes.notificationsView,builder: (context,state) => const NotificationsView()),
-      GoRoute(path: AppRoutes.dataSharingView,builder: (context,state) => const DataSharingView()),
-      GoRoute(path: AppRoutes.shareRecordsView,builder: (context,state) => const ShareRecordsView()),
-      GoRoute(path: AppRoutes.codeGeneratedView,builder: (context,state) => const CodeGeneratedView()),
+      },
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.addJournalEntry,
+        builder: (context, state) => const AddJournalEntryView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.notificationsView,
+        builder: (context, state) => const NotificationsView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.dataSharingView,
+        builder: (context, state) => const DataSharingView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.shareRecordsView,
+        builder: (context, state) => const ShareRecordsView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.codeGeneratedView,
+        builder: (context, state) => const CodeGeneratedView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),
