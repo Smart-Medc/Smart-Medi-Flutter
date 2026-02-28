@@ -15,7 +15,6 @@ class SignUpCubit extends Cubit<SignUpState> {
     response.fold(
           (failure) => emit(SignUpFailure(message: failure.message)),
           (signUpResponse) {
-            print('Sign-up successful for email: ${signUpRequestModel.email}');
             return emit(SignUpSuccess(email: signUpRequestModel.email));
           },
     );
