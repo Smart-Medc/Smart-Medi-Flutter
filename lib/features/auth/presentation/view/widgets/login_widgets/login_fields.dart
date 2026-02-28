@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
+import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
@@ -23,6 +24,7 @@ class _LoginFieldsState extends State<LoginFields> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool rememberMe = false;
 
   @override
   void dispose() {
@@ -53,7 +55,25 @@ class _LoginFieldsState extends State<LoginFields> {
             controller: passwordController,
             validator: Validator.passwordValidator,
           ),
-          12.verticalSpace,
+          8.verticalSpace,
+          Row(
+            children: [
+              Checkbox(
+                value: rememberMe,
+                onChanged: (value) {
+                  setState(() {
+                    rememberMe = value ?? false;
+                  });
+                },
+                activeColor: AppColors.primaryColor,
+              ),
+              Text(
+                'Remember Me',
+                style: AppStyles.textStyle14W400Black,
+              ),
+            ],
+          ),
+          4.verticalSpace,
           Align(
             alignment: Alignment.centerRight,
             child: InkWell(
@@ -74,7 +94,7 @@ class _LoginFieldsState extends State<LoginFields> {
                 context.read<LoginCubit>().login(loginRequest: LoginRequest(
                   email: emailController.text.trim(),
                   password: passwordController.text.trim(),
-                  // todo create a check box to remember the user or not and pass it to the login request
+                  rememberMe: rememberMe,
                 ));
               }
             },
