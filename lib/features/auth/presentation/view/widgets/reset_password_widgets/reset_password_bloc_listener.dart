@@ -26,7 +26,7 @@ class ResetPasswordBlocListener extends StatelessWidget {
         } else if (state is ResetPasswordSuccess) {
           GoRouter.of(context).pop(); // Close loading dialog
           context.showSnackBar(const Text('Password reset successfully!'));
-          GoRouter.of(context).go(AppRoutes.loginView);
+          context.go(AppRoutes.loginView);
         } else if (state is ResetPasswordFailure) {
           GoRouter.of(context).pop(); // Close loading dialog
           context.showSnackBar(Text(state.message));

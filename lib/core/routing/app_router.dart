@@ -42,14 +42,34 @@ abstract class AppRouter {
         builder: (context, state) => const SignUpView(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
-      GoRoute(path: AppRoutes.otpVerificationView, builder: (context, state) {
-        final extraData = state.extra as Map<String, dynamic>;
-        final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
-        final String email = extraData['email'] as String;
-        return OtpVerificationView(
-          isComingFromSignUp: isComingFromSignUp, email: email,);
-      },
-        redirect: (context, state) => AuthGuard.checkGuest(state),
+      GoRoute(
+        path: AppRoutes.otpVerificationView,
+        redirect: (context, state) async {
+          // First check authentication
+          final authRedirect = await AuthGuard.checkGuest(state);
+          if (authRedirect != null) return authRedirect;
+
+          // Then validate parameters
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('isComingFromSignUp') ||
+              !extraData.containsKey('email')) {
+            return AppRoutes.loginView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          // Safe to cast - redirect already validated
+          final extraData = state.extra as Map<String, dynamic>;
+          final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
+          final String email = extraData['email'] as String;
+
+          return OtpVerificationView(
+            isComingFromSignUp: isComingFromSignUp,
+            email: email,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.forgetPasswordView,
@@ -58,13 +78,29 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.resetPassView,
-        builder: (context, state){
+        redirect: (context, state) async {
+          // First check authentication
+          final authRedirect = await AuthGuard.checkGuest(state);
+          if (authRedirect != null) return authRedirect;
+
+          // Then validate parameters
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('email') ||
+              !extraData.containsKey('code')) {
+            return AppRoutes.loginView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          // Safe to cast - redirect already validated
           final extraData = state.extra as Map<String, dynamic>;
           final String email = extraData['email'] as String;
           final String code = extraData['code'] as String;
-          return ResetPasswordView(email: email,code: code);
-      },
-        redirect: (context, state) => AuthGuard.checkGuest(state),
+
+          return ResetPasswordView(email: email, code: code);
+        },
       ),
       GoRoute(
         path: AppRoutes.completeProfileView,
