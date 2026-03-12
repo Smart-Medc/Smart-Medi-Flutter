@@ -4,6 +4,7 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_header.dart';
+import 'package:smart_medi/features/home/presentation/views/widgets/home_health_stats.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_view_upcoming.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/quick_actions_list_view.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_view_recent_records.dart';
@@ -30,10 +31,15 @@ class HomeBody extends StatelessWidget {
               child: const AppSearchBar(hintText: 'Search doctors'),
             ),
             const QuickActionsListView(),
-            44.verticalSpace,
+            24.verticalSpace,
             Text('Info', style: AppStyles.textStyle24W700Black),
             12.verticalSpace,
             const HomeViewRecentRecords(),
+            44.verticalSpace,
+            Padding(
+              padding: EdgeInsets.only(right: 25.w),
+              child: const HomeHealthStats(),
+            ),
             20.verticalSpace,
             const HomeViewUpcoming(),
           ],
