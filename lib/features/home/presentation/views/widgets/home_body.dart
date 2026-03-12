@@ -5,6 +5,7 @@ import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_header.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_health_stats.dart';
+import 'package:smart_medi/features/home/presentation/views/widgets/home_medication_reminder.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_view_upcoming.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/quick_actions_list_view.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/home_view_recent_records.dart';
@@ -35,13 +36,23 @@ class HomeBody extends StatelessWidget {
             Text('Info', style: AppStyles.textStyle24W700Black),
             12.verticalSpace,
             const HomeViewRecentRecords(),
-            44.verticalSpace,
+            16.verticalSpace,
             Padding(
               padding: EdgeInsets.only(right: 25.w),
               child: const HomeHealthStats(),
             ),
-            20.verticalSpace,
+            16.verticalSpace,
             const HomeViewUpcoming(),
+            16.verticalSpace,
+            Padding(
+              padding: EdgeInsets.only(right: 25.w),
+              child: const HomeMedicationReminder(
+                medicationName: 'Lisinopril',
+                dosage: '10mg',
+                time: '08:00 PM',
+              ),
+            ),
+            50.verticalSpace,
           ],
         ),
       ),
