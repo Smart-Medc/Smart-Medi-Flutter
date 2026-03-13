@@ -20,6 +20,7 @@ class _HomeHeaderState extends State<HomeHeader> {
 
   Future<void> _loadUserName() async {
     final name = await SecureStorageHelper.getUserName();
+    if (!mounted) return;
     if (name != null && name.isNotEmpty) {
       setState(() {
         userName = name;
