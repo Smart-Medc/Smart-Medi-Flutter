@@ -35,7 +35,7 @@ class QuickActionsModel {
       containerColor: AppColors.iconBGCyan,
       iconColor: AppColors.iconCyan,
       icon: Icons.calendar_today,
-      route: AppRoutes.homeView, // Update this when appointments feature is added
+      route: '', // Navigation disabled until appointments feature and route are added
     ),
     QuickActionsModel(
       title: 'Add Medication',
