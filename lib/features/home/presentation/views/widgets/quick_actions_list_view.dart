@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/features/home/data/models/quick_actions_model.dart';
 import 'package:smart_medi/features/home/presentation/views/widgets/quick_actions_item.dart';
@@ -20,12 +21,16 @@ class QuickActionsListView extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: QuickActionsModel.quickActions.length,
             itemBuilder: (context, index) {
+              final action = QuickActionsModel.quickActions[index];
               return QuickActionsItem(
-                title: QuickActionsModel.quickActions[index].title,
-                subtitle: QuickActionsModel.quickActions[index].subtitle,
-                containerColor: QuickActionsModel.quickActions[index].containerColor,
-                iconColor: QuickActionsModel.quickActions[index].iconColor,
-                icon: QuickActionsModel.quickActions[index].icon,
+                title: action.title,
+                onTap: () {
+                  GoRouter.of(context).push(action.route);
+                },
+                subtitle: action.subtitle,
+                containerColor: action.containerColor,
+                iconColor: action.iconColor,
+                icon: action.icon,
               );
             },
             separatorBuilder: (context, index) {
