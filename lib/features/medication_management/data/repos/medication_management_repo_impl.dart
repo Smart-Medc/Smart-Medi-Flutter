@@ -4,10 +4,10 @@ import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/medication_management/data/models/add_medication_request.dart';
-import 'package:smart_medi/features/medication_management/data/repos/medication_repo.dart';
+import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo.dart';
 
-class MedicationRepoImpl extends MedicationRepo {
-  MedicationRepoImpl({required this.apiService});
+class MedicationManagementRepoImpl extends MedicationManagementRepo {
+  MedicationManagementRepoImpl({required this.apiService});
 
   final ApiService apiService;
 
