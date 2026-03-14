@@ -12,6 +12,7 @@ class SecureStorageHelper {
   static const String _userEmailKey = 'user_email';
   static const String _userTypeKey = 'user_type';
   static const String _userNameKey = 'user_name';
+  static const String _patientIdKey = 'patient_id';
 
   // Save access token
   static Future<void> saveAccessToken(String token) async {
@@ -73,6 +74,16 @@ class SecureStorageHelper {
     return await _storage.read(key: _userNameKey);
   }
 
+  // Save patient ID
+  static Future<void> savePatientId(String patientId) async {
+    await _storage.write(key: _patientIdKey, value: patientId);
+  }
+
+  // Get patient ID
+  static Future<String?> getPatientId() async {
+    return await _storage.read(key: _patientIdKey);
+  }
+
   // Save all login data at once
   static Future<void> saveLoginData({
     required String accessToken,
@@ -81,6 +92,7 @@ class SecureStorageHelper {
     required String userEmail,
     required String userType,
     required String userName,
+    String? patientId,
   }) async {
     await Future.wait([
       saveAccessToken(accessToken),
@@ -88,7 +100,8 @@ class SecureStorageHelper {
       saveUserId(userId),
       saveUserEmail(userEmail),
       saveUserType(userType),
-      saveUserName(userName)
+      saveUserName(userName),
+      if(patientId != null ) savePatientId(patientId),
     ]);
   }
 

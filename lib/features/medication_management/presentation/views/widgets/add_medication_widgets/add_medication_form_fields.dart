@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/helpers/auth_helper.dart';
+import 'package:smart_medi/core/helpers/extensions.dart';
+import 'package:smart_medi/core/helpers/secure_storage_helper.dart';
 import 'package:smart_medi/core/helpers/validator.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/widgets/action_buttons.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/labeled_form_field.dart';
@@ -33,24 +38,46 @@ class AddMedicationFormFields extends StatefulWidget {
 class _AddMedicationFormFieldsState extends State<AddMedicationFormFields> {
   final _formKey = GlobalKey<FormState>();
 
-  void _handleAddMedication(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
+  Future<void> _handleAddMedication(BuildContext context) async {
+    if (!_formKey.currentState!.validate()) {
+      if (!context.mounted) return;
+      context.showSnackBar(const Text('Please fill all required fields'));
+      return;
+    }
+
+    try {
       final startDate = DateTime.parse(widget.startDateController.text);
       final addMedicationRequest = AddMedicationRequest(
         name: widget.medicationNameController.text,
         dosage: widget.dosageController.text,
         frequency: widget.dosageFrequencyController.text,
         route: widget.dosageRouteController.text,
-        instructions: '',
+        instructions: null,
         startDate: startDate,
         endDate: null,
         prescribingDoctor: widget.prescribingDoctorController.text,
       );
 
-      context.read<AddMedicationCubit>().addMedication(
-        addMedicationRequest: addMedicationRequest,
-        patientId: '',
-      );
+      // Get patientId from secure storage
+      final patientId = await SecureStorageHelper.getPatientId();
+
+      if (!context.mounted) return;
+
+      if (patientId != null && patientId.isNotEmpty) {
+        context.read<AddMedicationCubit>().addMedication(
+          addMedicationRequest: addMedicationRequest,
+          patientId: patientId,
+        );
+      } else {
+        // Logout user and navigate to login screen
+        await AuthHelper.logout();
+        if (!context.mounted) return;
+        GoRouter.of(context).pushReplacement(AppRoutes.loginView);
+        context.showSnackBar(const Text('Session expired. Please login again.'));
+      }
+    } catch (e) {
+      if (!context.mounted) return;
+      context.showSnackBar(const Text('Invalid date format'));
     }
   }
 

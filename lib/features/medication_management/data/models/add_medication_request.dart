@@ -5,7 +5,7 @@ class AddMedicationRequest {
     required this.dosage,
     required this.frequency,
     required this.route,
-    required this.instructions,
+    this.instructions,
     required this.startDate,
     this.endDate,
     required this.prescribingDoctor,
@@ -18,7 +18,7 @@ class AddMedicationRequest {
   final String dosage;
   final String frequency;
   final String route;
-  final String instructions;
+  final String? instructions;
   final DateTime startDate;
   final DateTime? endDate;
   final String prescribingDoctor;
