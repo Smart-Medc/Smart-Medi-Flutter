@@ -7,10 +7,10 @@ class AddMedicationRequest {
     required this.route,
     required this.instructions,
     required this.startDate,
-    required this.endDate,
+    this.endDate,
     required this.prescribingDoctor,
   }) {
-    if (endDate.isBefore(startDate)) {
+    if (endDate != null && endDate!.isBefore(startDate)) {
       throw ArgumentError('End date must be after start date');
     }
   }
@@ -20,7 +20,7 @@ class AddMedicationRequest {
   final String route;
   final String instructions;
   final DateTime startDate;
-  final DateTime endDate;
+  final DateTime? endDate;
   final String prescribingDoctor;
 
   Map<String, dynamic> toJson() {
@@ -31,7 +31,7 @@ class AddMedicationRequest {
       'route': route,
       'instructions': instructions,
       'startDate': startDate.toIso8601String(),
-      'endDate': endDate.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
       'prescribingDoctor': prescribingDoctor,
     };
   }
