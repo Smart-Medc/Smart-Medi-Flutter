@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:smart_medi/features/medication_management/data/models/add_medication_request.dart';
+import 'package:smart_medi/features/medication_management/data/models/add_medication_model/add_medication_request.dart';
 import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo.dart';
 
 part 'add_medication_state.dart';

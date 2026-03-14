@@ -10,7 +10,7 @@ import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/widgets/action_buttons.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/labeled_form_field.dart';
-import 'package:smart_medi/features/medication_management/data/models/add_medication_request.dart';
+import 'package:smart_medi/features/medication_management/data/models/add_medication_model/add_medication_request.dart';
 import 'package:smart_medi/features/medication_management/presentation/manager/add_medication_cubit/add_medication_cubit.dart';
 
 class AddMedicationFormFields extends StatefulWidget {

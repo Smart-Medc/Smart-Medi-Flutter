@@ -3,7 +3,8 @@ import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
-import 'package:smart_medi/features/medication_management/data/models/add_medication_request.dart';
+import 'package:smart_medi/features/medication_management/data/models/add_medication_model/add_medication_request.dart';
+import 'package:smart_medi/features/medication_management/data/models/get_medications_model/get_medication_response.dart';
 import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo.dart';
 
 class MedicationManagementRepoImpl extends MedicationManagementRepo {
@@ -22,6 +23,22 @@ class MedicationManagementRepoImpl extends MedicationManagementRepo {
         data: addMedicationRequest.toJson(),
       );
       return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, GetMedicationResponse>> getMedications({
+    required String patientId,
+    bool? includeInactive,
+  }) async {
+    return ApiHelper.execute<GetMedicationResponse>(() async {
+      final data = await apiService.get(
+        endpoint: ApiEndpoints.getPatientMedications(
+          patientId: patientId,
+          includeInactive: includeInactive ?? false,
+        ),
+      );
+      return GetMedicationResponse.fromJson(data);
     });
   }
 }
