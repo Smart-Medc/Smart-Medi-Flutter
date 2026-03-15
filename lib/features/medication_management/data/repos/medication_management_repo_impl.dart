@@ -41,4 +41,17 @@ class MedicationManagementRepoImpl extends MedicationManagementRepo {
       return GetMedicationResponse.fromJson(data);
     });
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteMedication({required String patientId, required String medicationId}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.delete(
+        endpoint: ApiEndpoints.deletePatientMedication(
+          patientId: patientId,
+          medicationId: medicationId,
+        ),
+      );
+      return unit;
+    });
+  }
 }

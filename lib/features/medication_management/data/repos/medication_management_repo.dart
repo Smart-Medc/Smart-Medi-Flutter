@@ -12,4 +12,8 @@ abstract class MedicationManagementRepo {
     required String patientId,
     bool? includeInactive,
   });
+  Future<Either<Failure, Unit>> deleteMedication({
+    required String patientId,
+    required String medicationId,
+  });
 }
