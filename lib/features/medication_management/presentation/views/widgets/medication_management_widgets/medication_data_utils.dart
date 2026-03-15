@@ -45,3 +45,26 @@ String formatMedicationDate(DateTime date) {
   return '${months[date.month - 1]} ${date.day}, ${date.year}';
 }
 
+bool matchesMedicationQuery(MedicationModel medication, String query) {
+  final normalizedQuery = query.trim().toLowerCase();
+  if (normalizedQuery.isEmpty) {
+    return true;
+  }
+
+  final routeValue = medication.routeName.isNotEmpty
+      ? medication.routeName
+      : medication.route;
+
+  final searchableValues = <String>[
+    medication.name,
+    medication.dosage,
+    medication.frequency,
+    routeValue,
+    medication.prescribingDoctor,
+    medication.statusName,
+  ];
+
+  return searchableValues
+      .any((value) => value.toLowerCase().contains(normalizedQuery));
+}
+
