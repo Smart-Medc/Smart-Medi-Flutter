@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
@@ -7,6 +8,7 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
 import 'package:smart_medi/core/widgets/item_action_menu.dart';
+import 'package:smart_medi/features/medication_management/presentation/manager/get_medications_cubit/get_medications_cubit.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_delete_helper.dart';
 
 class PastMedication extends StatelessWidget {
@@ -61,18 +63,28 @@ class PastMedication extends StatelessWidget {
                         const Spacer(),
                         ItemActionMenu(
                           onEdit: () {
-                            GoRouter.of(context).push(AppRoutes.editMedication,
-                              extra: {
-                                'medicationId': medicationId,
-                                'medicationName': medicationName,
-                                'dosage': dosage,
-                                'frequency': frequency,
-                                'type': type,
-                                'startDate': startDate,
-                                'endDate': endDate,
-                                'doctorName': doctorName,
-                              },
-                            );
+                            GoRouter.of(context)
+                                .push(
+                                  AppRoutes.editMedication,
+                                  extra: {
+                                    'medicationId': medicationId,
+                                    'medicationName': medicationName,
+                                    'dosage': dosage,
+                                    'frequency': frequency,
+                                    'type': type,
+                                    'startDate': startDate,
+                                    'endDate': endDate,
+                                    'doctorName': doctorName,
+                                  },
+                                )
+                                .then((result) {
+                                  // Edit screen returns true on success, so we reload only then.
+                                  if (result == true && context.mounted) {
+                                    context
+                                        .read<GetMedicationsCubit>()
+                                        .loadMedicationsForCurrentPatient();
+                                  }
+                                });
                           },
                           onDelete: () => confirmAndDeleteMedication(
                             context: context,
