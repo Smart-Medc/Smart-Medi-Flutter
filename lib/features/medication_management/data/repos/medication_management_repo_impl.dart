@@ -54,4 +54,18 @@ class MedicationManagementRepoImpl extends MedicationManagementRepo {
       return unit;
     });
   }
+
+  @override
+  Future<Either<Failure, Unit>> editMedication({required String patientId, required String medicationId, required AddMedicationRequest editMedicationRequest}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.put(
+        endpoint: ApiEndpoints.editPatientMedication(
+          patientId: patientId,
+          medicationId: medicationId,
+        ),
+        data: editMedicationRequest.toJson(),
+      );
+      return unit;
+    });
+  }
 }

@@ -16,4 +16,9 @@ abstract class MedicationManagementRepo {
     required String patientId,
     required String medicationId,
   });
+  Future<Either<Failure, Unit>> editMedication({
+    required String patientId,
+    required String medicationId,
+    required AddMedicationRequest editMedicationRequest,
+  });
 }
