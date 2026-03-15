@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/add_medication_button.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_management_data_section.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_management_header.dart';
 
 class MedicationManagementViewBody extends StatelessWidget {
   const MedicationManagementViewBody({super.key});
@@ -20,10 +20,7 @@ class MedicationManagementViewBody extends StatelessWidget {
             slivers: [
               const SliverToBoxAdapter(child: CustomAppBar()),
               const SliverToBoxAdapter(
-                child: AppHeader(
-                  title: 'Medication Management',
-                  subtitle: 'Track your medications and set reminders',
-                ),
+                child: MedicationManagementHeader(),
               ),
               const SliverToBoxAdapter(
                 child: AppSearchBar(hintText: 'Search medications', showFilter: false),
