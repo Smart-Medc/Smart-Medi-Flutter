@@ -11,26 +11,33 @@ class MedicationManagementViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return CustomScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Padding(
+      slivers: [
+        SliverPadding(
         padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(),
-            const AppHeader(
-              title: 'Medication Management',
-              subtitle: 'Track your medications and set reminders',
-            ),
-            const AppSearchBar(hintText: 'Search medications', showFilter: false),
-            const MedicationManagementDataSection(),
-            16.verticalSpace,
-            const SizedBox(width: double.infinity, child: AddMedicationButton()),
-            100.verticalSpace,
-          ],
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              const SliverToBoxAdapter(child: CustomAppBar()),
+              const SliverToBoxAdapter(
+                child: AppHeader(
+                  title: 'Medication Management',
+                  subtitle: 'Track your medications and set reminders',
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: AppSearchBar(hintText: 'Search medications', showFilter: false),
+              ),
+              const MedicationManagementDataSection(),
+              SliverToBoxAdapter(child: 16.verticalSpace),
+              const SliverToBoxAdapter(
+                child: SizedBox(width: double.infinity, child: AddMedicationButton()),
+              ),
+              SliverToBoxAdapter(child: 100.verticalSpace),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
