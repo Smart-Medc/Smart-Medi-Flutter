@@ -89,7 +89,16 @@ class CurrentMedication extends StatelessWidget {
                         const Spacer(),
                         ItemActionMenu(
                           onEdit: () {
-                            GoRouter.of(context).push(AppRoutes.editMedication);
+                            GoRouter.of(context).push(AppRoutes.editMedication,extra: {
+                            'medicationId': medicationId,
+                            'medicationName': medicationName,
+                            'dosage': dosage,
+                            'frequency': frequency,
+                            'type': type,
+                            'startDate': startDate,
+                            // 'endDate': endDate,
+                            'doctorName': doctorName,
+                            },);
                           },
                           onDelete: () => confirmAndDeleteMedication(
                             context: context,

@@ -139,8 +139,35 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.editMedication,
-        builder: (context, state) => const EditMedicationView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null) {
+            return AppRoutes.medicationManagement;
+          }
+
+          final medicationId = extraData['medicationId'];
+          if (medicationId is! String || medicationId.trim().isEmpty) {
+            return AppRoutes.medicationManagement;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return EditMedicationView(
+            medicationId: extraData['medicationId'] as String,
+            medicationName: (extraData['medicationName'] as String?) ?? '',
+            dosage: (extraData['dosage'] as String?) ?? '',
+            frequency: (extraData['frequency'] as String?) ?? '',
+            dosageRoute: ((extraData['dosageRoute'] ?? extraData['type']) as String?) ?? '',
+            startDate: (extraData['startDate'] as String?) ?? '',
+            prescribingDoctor: ((extraData['prescribingDoctor'] ?? extraData['doctorName']) as String?) ?? '',
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.medicalJournal,

@@ -6,7 +6,24 @@ import 'package:smart_medi/features/medication_management/presentation/views/wid
 import 'package:smart_medi/features/medication_management/presentation/views/widgets/edit_medication_widgets/edit_medication_form_fields.dart';
 
 class EditMedicationViewBody extends StatefulWidget {
-  const EditMedicationViewBody({super.key});
+  const EditMedicationViewBody({
+    super.key,
+    required this.medicationId,
+    required this.medicationName,
+    required this.dosage,
+    required this.frequency,
+    required this.dosageRoute,
+    required this.startDate,
+    required this.prescribingDoctor,
+  });
+
+  final String medicationId;
+  final String medicationName;
+  final String dosage;
+  final String frequency;
+  final String dosageRoute;
+  final String startDate;
+  final String prescribingDoctor;
 
   @override
   State<EditMedicationViewBody> createState() => _EditMedicationViewBodyState();
@@ -19,6 +36,17 @@ class _EditMedicationViewBodyState extends State<EditMedicationViewBody> {
   final TextEditingController _dosageRouteController = TextEditingController();
   final TextEditingController _startDateController = TextEditingController();
   final TextEditingController _prescribingDoctorController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _medicationNameController.text = widget.medicationName;
+    _dosageController.text = widget.dosage;
+    _dosageFrequencyController.text = widget.frequency;
+    _dosageRouteController.text = widget.dosageRoute;
+    _startDateController.text = widget.startDate;
+    _prescribingDoctorController.text = widget.prescribingDoctor;
+  }
 
   @override
   void dispose() {
