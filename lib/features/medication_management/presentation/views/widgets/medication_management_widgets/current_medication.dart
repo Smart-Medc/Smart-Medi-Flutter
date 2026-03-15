@@ -6,6 +6,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
 
 class CurrentMedication extends StatelessWidget {
 
@@ -83,16 +84,11 @@ class CurrentMedication extends StatelessWidget {
                           ),
                         ],
                         const Spacer(),
-                        InkWell(
-                          onTap: () {
+                        ItemActionMenu(
+                          onEdit: (){
                             GoRouter.of(context).push(AppRoutes.editMedication);
                           },
-                          child: Icon(
-                            Icons.more_vert,
-                            size: 20.w,
-                            color: AppColors.textBlack,
-                          ),
-                        ),
+                        )
                       ],
                     ),
                     6.verticalSpace,
@@ -145,7 +141,7 @@ class CurrentMedication extends StatelessWidget {
               ),
               8.horizontalSpace,
               Text(
-                'Dr.$doctorName',
+                'Dr. $doctorName',
                 style: AppStyles.textStyle11W500Black,
               ),
             ],
