@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
-import 'package:smart_medi/features/medication_management/presentation/views/widgets/add_medication_widgets/add_medication_action_buttons.dart';
-import 'package:smart_medi/features/medication_management/presentation/views/widgets/add_medication_widgets/add_medication_form_fields.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/add_medication_widgets/add_medication_bloc_listener.dart';
 
 class AddMedicationViewBody extends StatefulWidget {
   const AddMedicationViewBody({super.key});
@@ -35,6 +34,7 @@ class _AddMedicationViewBodyState extends State<AddMedicationViewBody> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
@@ -46,7 +46,7 @@ class _AddMedicationViewBodyState extends State<AddMedicationViewBody> {
                 subtitle: 'Add a new medication to your records',
               ),
               16.verticalSpace,
-              AddMedicationFormFields(
+              AddMedicationBlocListener(
                 medicationNameController: _medicationNameController,
                 dosageController: _dosageController,
                 dosageFrequencyController: _dosageFrequencyController,
@@ -54,8 +54,6 @@ class _AddMedicationViewBodyState extends State<AddMedicationViewBody> {
                 startDateController: _startDateController,
                 prescribingDoctorController: _prescribingDoctorController,
               ),
-              24.verticalSpace,
-              const AddMedicationActionButtons(),
               100.verticalSpace,
             ],
           ),
@@ -64,4 +62,6 @@ class _AddMedicationViewBodyState extends State<AddMedicationViewBody> {
     );
   }
 }
+
+
 

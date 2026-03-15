@@ -7,6 +7,8 @@ import 'package:smart_medi/features/auth/data/repos/password_recovery_repo/passw
 import 'package:smart_medi/features/auth/data/repos/password_recovery_repo/password_recovery_repo_impl.dart';
 import 'package:smart_medi/features/auth/data/repos/registration_repo/registration_repo.dart';
 import 'package:smart_medi/features/auth/data/repos/registration_repo/registration_repo_impl.dart';
+import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo.dart';
+import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo_impl.dart';
 
 
 final getIt = GetIt.instance;
@@ -27,6 +29,11 @@ Future<void> setupServiceLocator() async {
   ));
 
   getIt.registerSingleton<PasswordRecoveryRepo>(PasswordRecoveryRepoImpl(
+    apiService: getIt.get<ApiService>(),
+  ));
+
+  // Medication repositories
+  getIt.registerSingleton<MedicationManagementRepo>(MedicationManagementRepoImpl(
     apiService: getIt.get<ApiService>(),
   ));
 

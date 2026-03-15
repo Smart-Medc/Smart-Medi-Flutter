@@ -17,7 +17,9 @@ import 'package:smart_medi/features/medical_journal/presentation/views/journal_e
 import 'package:smart_medi/features/medication_management/presentation/views/add_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/edit_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/medication_management_view.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/medication_search_view.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/medical_journal_view.dart';
+import 'package:smart_medi/features/medication_management/data/models/get_medications_model/get_medication_response.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/medical_records_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
@@ -139,7 +141,48 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.editMedication,
-        builder: (context, state) => const EditMedicationView(),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null) {
+            return AppRoutes.medicationManagement;
+          }
+
+          final medicationId = extraData['medicationId'];
+          if (medicationId is! String || medicationId.trim().isEmpty) {
+            return AppRoutes.medicationManagement;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return EditMedicationView(
+            medicationId: extraData['medicationId'] as String,
+            medicationName: (extraData['medicationName'] as String?) ?? '',
+            dosage: (extraData['dosage'] as String?) ?? '',
+            frequency: (extraData['frequency'] as String?) ?? '',
+            dosageRoute: ((extraData['dosageRoute'] ?? extraData['type']) as String?) ?? '',
+            startDate: (extraData['startDate'] as String?) ?? '',
+            prescribingDoctor: ((extraData['prescribingDoctor'] ?? extraData['doctorName']) as String?) ?? '',
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.medicationSearch,
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>?;
+          final medications = extraData?['medications'];
+
+          return MedicationSearchView(
+            medications: medications is List<MedicationModel>
+                ? medications
+                : const <MedicationModel>[],
+          );
+        },
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(

@@ -13,6 +13,7 @@ class LabeledFormField extends StatelessWidget {
     this.isDate = false,
     this.isDropdown = false,
     this.dropdownItems,
+    this.validator,
   });
 
   final String label;
@@ -22,6 +23,7 @@ class LabeledFormField extends StatelessWidget {
   final bool isDate;
   final bool isDropdown;
   final List<String>? dropdownItems;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +51,20 @@ class LabeledFormField extends StatelessWidget {
           CustomTextFormField.date(
             controller: controller,
             hintText: hintText,
+            validator: validator,
           )
         else if (isDropdown)
           CustomTextFormField.dropdown(
             controller: controller,
             hintText: hintText,
+            validator: validator,
             dropdownItems: dropdownItems ?? [],
           )
         else
           CustomTextFormField(
             controller: controller,
             hintText: hintText,
+            validator: validator,
           ),
       ],
     );

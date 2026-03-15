@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
@@ -6,11 +7,15 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
+import 'package:smart_medi/features/medication_management/presentation/manager/get_medications_cubit/get_medications_cubit.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_delete_helper.dart';
 
 class CurrentMedication extends StatelessWidget {
 
   const CurrentMedication({
     super.key,
+    required this.medicationId,
     required this.medicationName,
     required this.dosage,
     required this.frequency,
@@ -20,6 +25,7 @@ class CurrentMedication extends StatelessWidget {
     required this.adherence,
     this.hasInteraction = false,
   });
+  final String medicationId;
   final String medicationName;
   final String dosage;
   final String frequency;
@@ -83,42 +89,42 @@ class CurrentMedication extends StatelessWidget {
                           ),
                         ],
                         const Spacer(),
-                        InkWell(
-                          onTap: () {
-                            GoRouter.of(context).push(AppRoutes.editMedication);
+                        ItemActionMenu(
+                          onEdit: () {
+                            GoRouter.of(context)
+                                .push(
+                                  AppRoutes.editMedication,
+                                  extra: {
+                                    'medicationId': medicationId,
+                                    'medicationName': medicationName,
+                                    'dosage': dosage,
+                                    'frequency': frequency,
+                                    'type': type,
+                                    'startDate': startDate,
+                                    'doctorName': doctorName,
+                                  },
+                                )
+                                .then((result) {
+                                  // Edit screen returns true on success, so we reload only then.
+                                  if (result == true && context.mounted) {
+                                    context
+                                        .read<GetMedicationsCubit>()
+                                        .loadMedicationsForCurrentPatient();
+                                  }
+                                });
                           },
-                          child: Icon(
-                            Icons.more_vert,
-                            size: 20.w,
-                            color: AppColors.textBlack,
+                          onDelete: () => confirmAndDeleteMedication(
+                            context: context,
+                            medicationId: medicationId,
+                            medicationName: medicationName,
                           ),
                         ),
                       ],
                     ),
                     6.verticalSpace,
-                    Row(
-                      children: [
-                        Text(
-                          dosage,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          ' • ',
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          frequency,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          ' • ',
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          type,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                      ],
+                    Text(
+                      '$dosage • $frequency • $type',
+                      style: AppStyles.textStyle10W400LightGrey,
                     ),
                   ],
                 ),
@@ -135,17 +141,7 @@ class CurrentMedication extends StatelessWidget {
               ),
               4.horizontalSpace,
               Text(
-                'Started: $startDate',
-                style: AppStyles.textStyle11W500Black,
-              ),
-              8.horizontalSpace,
-              Text(
-                '•',
-                style: AppStyles.textStyle11W500Black,
-              ),
-              8.horizontalSpace,
-              Text(
-                'Dr.$doctorName',
+                'Started: $startDate   •   Dr. $doctorName',
                 style: AppStyles.textStyle11W500Black,
               ),
             ],

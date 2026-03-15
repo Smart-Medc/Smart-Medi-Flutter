@@ -33,8 +33,8 @@ class ApiService {
     return response.data;
   }
 
-  Future<dynamic> put({required String endpoint, dynamic queryParameters}) async {
-    final response = await dio.put(endpoint, queryParameters: queryParameters);
+  Future<dynamic> put({required String endpoint, dynamic data}) async {
+    final response = await dio.put(endpoint, data: data);
     return response.data;
   }
 
