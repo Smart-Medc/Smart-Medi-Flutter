@@ -7,11 +7,13 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
 import 'package:smart_medi/core/widgets/item_action_menu.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_delete_helper.dart';
 
 class CurrentMedication extends StatelessWidget {
 
   const CurrentMedication({
     super.key,
+    required this.medicationId,
     required this.medicationName,
     required this.dosage,
     required this.frequency,
@@ -21,6 +23,7 @@ class CurrentMedication extends StatelessWidget {
     required this.adherence,
     this.hasInteraction = false,
   });
+  final String medicationId;
   final String medicationName;
   final String dosage;
   final String frequency;
@@ -85,36 +88,21 @@ class CurrentMedication extends StatelessWidget {
                         ],
                         const Spacer(),
                         ItemActionMenu(
-                          onEdit: (){
+                          onEdit: () {
                             GoRouter.of(context).push(AppRoutes.editMedication);
                           },
-                        )
+                          onDelete: () => confirmAndDeleteMedication(
+                            context: context,
+                            medicationId: medicationId,
+                            medicationName: medicationName,
+                          ),
+                        ),
                       ],
                     ),
                     6.verticalSpace,
-                    Row(
-                      children: [
-                        Text(
-                          dosage,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          ' • ',
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          frequency,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          ' • ',
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                        Text(
-                          type,
-                          style: AppStyles.textStyle10W400LightGrey,
-                        ),
-                      ],
+                    Text(
+                      '$dosage • $frequency • $type',
+                      style: AppStyles.textStyle10W400LightGrey,
                     ),
                   ],
                 ),
@@ -131,17 +119,7 @@ class CurrentMedication extends StatelessWidget {
               ),
               4.horizontalSpace,
               Text(
-                'Started: $startDate',
-                style: AppStyles.textStyle11W500Black,
-              ),
-              8.horizontalSpace,
-              Text(
-                '•',
-                style: AppStyles.textStyle11W500Black,
-              ),
-              8.horizontalSpace,
-              Text(
-                'Dr. $doctorName',
+                'Started: $startDate   •   Dr. $doctorName',
                 style: AppStyles.textStyle11W500Black,
               ),
             ],

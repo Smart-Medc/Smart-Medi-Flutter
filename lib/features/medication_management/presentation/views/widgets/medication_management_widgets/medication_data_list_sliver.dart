@@ -37,6 +37,7 @@ class MedicationDataListSliver extends StatelessWidget {
           ),
           child: selectedTabIndex == 0
               ? CurrentMedication(
+            medicationId: medication.id,
             medicationName: medication.name,
             dosage: medication.dosage,
             frequency: medication.frequency,
@@ -49,6 +50,7 @@ class MedicationDataListSliver extends StatelessWidget {
             hasInteraction: medication.hasInteraction,
           )
               : PastMedication(
+            medicationId: medication.id,
             medicationName: medication.name,
             dosage: medication.dosage,
             frequency: medication.frequency,

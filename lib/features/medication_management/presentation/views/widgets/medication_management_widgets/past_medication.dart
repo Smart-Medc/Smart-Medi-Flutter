@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
+import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/medication_delete_helper.dart';
 
 class PastMedication extends StatelessWidget {
 
   const PastMedication({
     super.key,
+    required this.medicationId,
     required this.medicationName,
     required this.dosage,
     required this.frequency,
@@ -17,6 +22,7 @@ class PastMedication extends StatelessWidget {
     required this.endDate,
     required this.doctorName,
   });
+  final String medicationId;
   final String medicationName;
   final String dosage;
   final String frequency;
@@ -53,10 +59,15 @@ class PastMedication extends StatelessWidget {
                           style: AppStyles.textStyle15W600Black,
                         ),
                         const Spacer(),
-                        Icon(
-                          Icons.more_vert,
-                          size: 20.w,
-                          color: AppColors.textBlack,
+                        ItemActionMenu(
+                          onEdit: () {
+                            GoRouter.of(context).push(AppRoutes.editMedication);
+                          },
+                          onDelete: () => confirmAndDeleteMedication(
+                            context: context,
+                            medicationId: medicationId,
+                            medicationName: medicationName,
+                          ),
                         ),
                       ],
                     ),
