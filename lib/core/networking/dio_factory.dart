@@ -15,6 +15,9 @@ class DioFactory {
   /// Shared future used by all requests waiting for the same refresh process
   static Future<void>? _refreshFuture;
 
+  /// Extra key used to ensure each request is retried after refresh only once.
+  static const String _refreshRetriedExtraKey = 'refreshRetried';
+
   static Future<Dio> getInstance() async {
     if (_dioInstance == null) {
       final dio = Dio();
@@ -58,8 +61,15 @@ class DioFactory {
         /// ================= ERROR =================
         /// Handle token expiration (401) and perform automatic refresh
         onError: (error, handler) async {
+          final requestOptions = error.requestOptions;
+
           /// If the error is not 401, just pass it through
           if (error.response?.statusCode != 401) {
+            return handler.next(error);
+          }
+
+          /// Prevent endless refresh/retry loops for the same request.
+          if (requestOptions.extra[_refreshRetriedExtraKey] == true) {
             return handler.next(error);
           }
 
@@ -80,22 +90,35 @@ class DioFactory {
             await _refreshFuture;
           } catch (e) {
             /// If refresh fails -> clear session (force logout)
-            _isRefreshing = false;
             await SecureStorageHelper.clearAll();
             return handler.next(error);
+          } finally {
+            _isRefreshing = false;
+            _refreshFuture = null;
           }
-
-          _isRefreshing = false;
 
           /// Retry the original request using the new token
           final newToken = await SecureStorageHelper.getAccessToken();
-          final requestOptions = error.requestOptions;
+          if (newToken == null || newToken.isEmpty) {
+            return handler.next(error);
+          }
 
           final options = Options(
             method: requestOptions.method,
             headers: {
               ...requestOptions.headers,
               'Authorization': 'Bearer $newToken',
+            },
+            responseType: requestOptions.responseType,
+            contentType: requestOptions.contentType,
+            sendTimeout: requestOptions.sendTimeout,
+            receiveTimeout: requestOptions.receiveTimeout,
+            followRedirects: requestOptions.followRedirects,
+            validateStatus: requestOptions.validateStatus,
+            receiveDataWhenStatusError: requestOptions.receiveDataWhenStatusError,
+            extra: {
+              ...requestOptions.extra,
+              _refreshRetriedExtraKey: true,
             },
           );
 
@@ -105,6 +128,9 @@ class DioFactory {
               data: requestOptions.data,
               queryParameters: requestOptions.queryParameters,
               options: options,
+              cancelToken: requestOptions.cancelToken,
+              onReceiveProgress: requestOptions.onReceiveProgress,
+              onSendProgress: requestOptions.onSendProgress,
             );
 
             return handler.resolve(response);
@@ -157,13 +183,27 @@ class DioFactory {
       throw Exception('Refresh token failed');
     }
 
-    /// Adjust keys below to match your API response structure
-    final data = response.data['data'];
+    if (response.data is! Map<String, dynamic>) {
+      throw Exception('Invalid refresh response format');
+    }
 
-    final newAccessToken = data['accessToken'];
-    final expiresAt = data['accessTokenExpiresAt'];
+    final payload = response.data as Map<String, dynamic>;
+    final nestedData = payload['data'];
+    final tokenContainer = nestedData is Map<String, dynamic> ? nestedData : payload;
+
+    final newAccessToken =
+        (tokenContainer['accessToken'] ?? tokenContainer['token'])?.toString();
+    if (newAccessToken == null || newAccessToken.isEmpty) {
+      throw Exception('Refresh response missing access token');
+    }
+
+    final expiresAt =
+        (tokenContainer['accessTokenExpiresAt'] ?? tokenContainer['expiresAt'])
+            ?.toString();
 
     await SecureStorageHelper.saveAccessToken(newAccessToken);
-    await SecureStorageHelper.saveAccessTokenExpiresAt(expiresAt);
+    if (expiresAt != null && expiresAt.isNotEmpty) {
+      await SecureStorageHelper.saveAccessTokenExpiresAt(expiresAt);
+    }
   }
 }

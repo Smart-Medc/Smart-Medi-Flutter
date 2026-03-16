@@ -21,10 +21,10 @@ class AuthGuard {
   /// Check if user is authenticated, redirect to login if not
   static Future<String?> checkAuth(GoRouterState state) async {
     final isAuthenticated = await AuthHelper.isAuthenticated();
-    final isTokenExpired = await AuthHelper.isTokenExpired();
 
-    // If not authenticated or token expired, redirect to login
-    if (!isAuthenticated || isTokenExpired) {
+    // If no stored session exists, redirect to login.
+    // Expired access tokens are handled by the networking refresh flow.
+    if (!isAuthenticated) {
       return AppRoutes.loginView;
     }
 
@@ -35,10 +35,9 @@ class AuthGuard {
   /// Prevent authenticated users from accessing login/signup
   static Future<String?> checkGuest(GoRouterState state) async {
     final isAuthenticated = await AuthHelper.isAuthenticated();
-    final isTokenExpired = await AuthHelper.isTokenExpired();
 
-    // If authenticated and token is valid, redirect to home
-    if (isAuthenticated && !isTokenExpired) {
+    // Keep users with a stored session inside the app.
+    if (isAuthenticated) {
       return AppRoutes.homeView;
     }
 
