@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/helpers/extensions.dart';
+import 'package:smart_medi/core/helpers/validator.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/labeled_form_field.dart';
+import 'package:smart_medi/features/medical_journal/data/models/add_journal_models/add_journal_request.dart';
+import 'package:smart_medi/features/medical_journal/presentation/manager/add_journal_cubit/add_journal_cubit.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/add_journal_entry_widgets/add_journal_entry_action_buttons.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/add_journal_entry_widgets/add_journal_slider.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/add_journal_entry_widgets/multiline_entry_field.dart';
@@ -16,6 +21,8 @@ class AddJournalEntryFormFields extends StatefulWidget {
 }
 
 class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
+  final _formKey = GlobalKey<FormState>();
+
   // Controllers
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _entryController = TextEditingController();
@@ -36,19 +43,22 @@ class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: CardContainer(
-        padding: EdgeInsets.all(24.w),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+      child: Form(
+        key: _formKey,
+        child: CardContainer(
+          padding: EdgeInsets.all(24.w),
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
               // Title field
               LabeledFormField(
                 label: 'Title',
                 controller: _titleController,
                 hintText: 'e.g: Felt better than yesterday',
                 isRequired: true,
+                validator: (value) => Validator.requiredValidator(value, 'Title is required'),
               ),
               16.verticalSpace,
               // Entry field (multiline)
@@ -56,10 +66,8 @@ class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
                 label: 'Entry',
                 controller: _entryController,
                 hintText: 'Write your journal entry here',
-                isRequired: true,
               ),
               16.verticalSpace,
-
               // Mood Level slider
               AddJournalSlider(
                 icon: Icons.mood,
@@ -74,7 +82,6 @@ class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
                 activeColor: AppColors.iconGreen,
               ),
               16.verticalSpace,
-
               // Pain Level slider
               AddJournalSlider(
                 icon: Icons.monitor_heart_outlined,
@@ -105,11 +112,47 @@ class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
               24.verticalSpace,
 
               // Action buttons
-              const AddJournalEntryActionButtons(),
+              AddJournalEntryActionButtons(
+                onSavePressed: () => _submitJournalEntry(context),
+              ),
             ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  void _submitJournalEntry(BuildContext context) {
+    if (!_formKey.currentState!.validate()) {
+      context.showSnackBar(const Text('Please fill all required fields'));
+      return;
+    }
+
+    // if (_entryController.text.trim().isEmpty) {
+    //   context.showSnackBar(const Text('Entry is required'));
+    //   return;
+    // }
+
+    final tags = _tagsController.text
+        .split(',')
+        .map((tag) => tag.trim())
+        .where((tag) => tag.isNotEmpty)
+        .toSet()
+        .toList();
+
+    final addJournalRequest = AddJournalRequest(
+      title: _titleController.text.trim(),
+      content: _entryController.text.trim(),
+      entryDate: DateTime.now().toUtc(),
+      moodLevel: _moodLevel.round(),
+      painLevel: _painLevel.round(),
+      symptoms: const <String>[],
+      tags: tags,
+    );
+
+    context.read<AddJournalCubit>().addJournalEntry(
+      addJournalRequest: addJournalRequest,
     );
   }
 }

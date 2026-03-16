@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
-import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/medical_journal/data/models/sample_journal_data.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/journal_entry_card.dart';
+import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_header.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_summary.dart';
 
 class MedicalJournalViewBody extends StatelessWidget {
@@ -21,10 +21,7 @@ class MedicalJournalViewBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomAppBar(),
-            const AppHeader(
-              title: 'Medical Journal',
-              subtitle: 'Track your symptoms and daily observations',
-            ),
+            const MedicalJournalHeader(),
             const AppSearchBar(hintText: 'Search journal entries', showFilter: false),
             const MedicalJournalSummary(),
             24.verticalSpace,
