@@ -4,6 +4,7 @@ import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/medical_journal/data/models/add_journal_models/add_journal_request.dart';
+import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 import 'package:smart_medi/features/medical_journal/data/repos/medical_journal_repo.dart';
 
 class MedicalJournalRepoImpl extends MedicalJournalRepo{
@@ -18,6 +19,16 @@ class MedicalJournalRepoImpl extends MedicalJournalRepo{
         data: addJournalRequest.toJson(),
       );
       return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, GetJournalResponse>> getMedicalJournals({required String patientId}) {
+    return ApiHelper.execute<GetJournalResponse>(() async {
+      final response = await apiService.get(
+        endpoint: ApiEndpoints.getMedicalJournals(patientId: patientId),
+      );
+      return GetJournalResponse.fromJson(response);
     });
   }
 
