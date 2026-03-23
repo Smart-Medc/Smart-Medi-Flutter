@@ -6,7 +6,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
-import 'package:smart_medi/features/medical_journal/data/models/journal_entry_model.dart';
+import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 
 class JournalEntryCard extends StatelessWidget {
   const JournalEntryCard({
@@ -15,7 +15,7 @@ class JournalEntryCard extends StatelessWidget {
     this.onDelete,
   });
 
-  final JournalEntryModel journalEntry;
+  final JournalListItem journalEntry;
   final VoidCallback? onDelete;
 
   @override
@@ -54,14 +54,16 @@ class JournalEntryCard extends StatelessWidget {
                           ),
                           4.horizontalSpace,
                           Text(
-                            '${journalEntry.date}  •  ${journalEntry.time}',
+                            '${_formatDate(journalEntry.entryDate)}  •  ${_formatTime(journalEntry.entryDate)}',
                             style: AppStyles.textStyle10W400DarkGrey,
                           ),
                         ],
                       ),
                       8.verticalSpace,
                       Text(
-                        journalEntry.description,
+                        journalEntry.excerpt.trim().isEmpty
+                            ? 'No content'
+                            : journalEntry.excerpt,
                         style: AppStyles.textStyle10W400DarkGrey,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -74,13 +76,13 @@ class JournalEntryCard extends StatelessWidget {
                           children: [
                             _buildInfoChip(
                               icon: Icons.mood,
-                              label: 'Mood: ${journalEntry.mood}',
+                              label: 'Mood: ${journalEntry.moodLevel}',
                               color: AppColors.iconGreen,
                             ),
                             12.horizontalSpace,
                             _buildInfoChip(
                               icon: Icons.monitor_heart_outlined,
-                              label: 'Pain: ${journalEntry.pain}',
+                              label: 'Pain: ${journalEntry.painLevel}',
                               color: AppColors.iconBlue,
                             ),
                             if (journalEntry.tags.isNotEmpty)
@@ -134,6 +136,31 @@ class JournalEntryCard extends StatelessWidget {
         Text(label, style: AppStyles.textStyle10W400Black),
       ],
     );
+  }
+
+  String _formatDate(DateTime dateTime) {
+    const months = <String>[
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    return '${months[dateTime.month - 1]} ${dateTime.day}, ${dateTime.year}';
+  }
+
+  String _formatTime(DateTime dateTime) {
+    final hour = dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12;
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    final period = dateTime.hour >= 12 ? 'PM' : 'AM';
+    return '$hour:$minute $period';
   }
 }
 

@@ -11,7 +11,7 @@ import 'package:smart_medi/features/data_sharing/presentation/views/code_generat
 import 'package:smart_medi/features/data_sharing/presentation/views/data_sharing_view.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/share_records_view.dart';
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
-import 'package:smart_medi/features/medical_journal/data/models/journal_entry_model.dart';
+import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/add_journal_entry_view.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/journal_element_details_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/add_medication_view.dart';
@@ -191,7 +191,7 @@ abstract class AppRouter {
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(path: AppRoutes.journalElementDetails, builder: (context, state) {
-        final journalEntry = state.extra as JournalEntryModel;
+        final journalEntry = state.extra as JournalListItem;
         return JournalElementDetailsView(journalEntry: journalEntry);
       },
         redirect: (context, state) => AuthGuard.checkAuth(state),

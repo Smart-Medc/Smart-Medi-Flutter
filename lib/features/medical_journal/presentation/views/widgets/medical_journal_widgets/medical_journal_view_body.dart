@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
-import 'package:smart_medi/features/medical_journal/data/models/sample_journal_data.dart';
-import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/journal_entry_card.dart';
+import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_entries_bloc_builder.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_header.dart';
-import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_summary.dart';
 
 class MedicalJournalViewBody extends StatelessWidget {
   const MedicalJournalViewBody({super.key});
@@ -23,18 +20,7 @@ class MedicalJournalViewBody extends StatelessWidget {
             const CustomAppBar(),
             const MedicalJournalHeader(),
             const AppSearchBar(hintText: 'Search journal entries', showFilter: false),
-            const MedicalJournalSummary(),
-            24.verticalSpace,
-            Text('Recent Entries', style: AppStyles.textStyle24W600Black),
-            16.verticalSpace,
-
-            // Use sample data entries
-            ...SampleJournalData.entries.map((entry) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 16.h),
-                child: JournalEntryCard(journalEntry: entry),
-              );
-            }),
+            const MedicalJournalEntriesBlocBuilder(),
 
             100.verticalSpace,
           ],
