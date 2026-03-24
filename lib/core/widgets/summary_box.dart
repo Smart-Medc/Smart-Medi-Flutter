@@ -4,7 +4,7 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/summary_item.dart';
 
-class SummaryBox extends StatelessWidget {
+class SummaryBox extends StatefulWidget {
   const SummaryBox({
     super.key,
     this.title = 'Summary',
@@ -13,6 +13,7 @@ class SummaryBox extends StatelessWidget {
     this.padding,
     this.horizontalSpacing,
     this.verticalSpacing,
+    this.initiallyExpanded = true,
   }) : assert(items.length == 4, 'SummaryBox requires exactly 4 items');
 
   final String title;
@@ -21,42 +22,86 @@ class SummaryBox extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? horizontalSpacing;
   final double? verticalSpacing;
+  final bool initiallyExpanded;
+
+  @override
+  State<SummaryBox> createState() => _SummaryBoxState();
+}
+
+class _SummaryBoxState extends State<SummaryBox> {
+  late bool _isExpanded;
+
+  @override
+  void initState() {
+    super.initState();
+    _isExpanded = widget.initiallyExpanded;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: titleStyle ?? AppStyles.textStyle24W600Black,
-        ),
-        12.verticalSpace,
-        CardContainer(
-          padding: padding ?? EdgeInsets.only(left: 28.w, right: 80.w, top: 22.h, bottom: 22.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  items[0]._buildItem(),
-                  (verticalSpacing ?? 20).verticalSpace,
-                  items[1]._buildItem(),
-                ],
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                widget.title,
+                style: widget.titleStyle ?? AppStyles.textStyle24W600Black,
               ),
-              (horizontalSpacing ?? 0).horizontalSpace,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  items[2]._buildItem(),
-                  (verticalSpacing ?? 20).verticalSpace,
-                  items[3]._buildItem(),
-                ],
+            ),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  _isExpanded = !_isExpanded;
+                });
+              },
+              icon: Icon(
+                _isExpanded
+                    ? Icons.keyboard_arrow_up_rounded
+                    : Icons.keyboard_arrow_down_rounded,
+              ),
+            ),
+          ],
+        ),
+        AnimatedCrossFade(
+          duration: const Duration(milliseconds: 200),
+          firstChild: const SizedBox.shrink(),
+          secondChild: Column(
+            children: [
+              12.verticalSpace,
+              CardContainer(
+                padding: widget.padding ??
+                    EdgeInsets.only(left: 28.w, right: 80.w, top: 22.h, bottom: 22.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        widget.items[0]._buildItem(),
+                        (widget.verticalSpacing ?? 20).verticalSpace,
+                        widget.items[1]._buildItem(),
+                      ],
+                    ),
+                    (widget.horizontalSpacing ?? 0).horizontalSpace,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        widget.items[2]._buildItem(),
+                        (widget.verticalSpacing ?? 20).verticalSpace,
+                        widget.items[3]._buildItem(),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        )
+          crossFadeState: _isExpanded
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+        ),
       ],
     );
   }
