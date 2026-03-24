@@ -45,7 +45,7 @@ class _CompleteProfileFieldsState extends State<CompleteProfileFields> {
         children: [
           authFieldTitle('Date Of Birth'),
           4.verticalSpace,
-          CustomTextFormField.date(hintText: 'dd/mm/yyyy', controller: dateController,validator: (value) => Validator.requiredValidator(value, 'Please select your birthday'),),
+          CustomTextFormField.date(hintText: 'yyyy-MM-dd', controller: dateController,validator: (value) => Validator.requiredValidator(value, 'Please select your birthday'),),
           16.verticalSpace,
           authFieldTitle('Gender'),
           4.verticalSpace,

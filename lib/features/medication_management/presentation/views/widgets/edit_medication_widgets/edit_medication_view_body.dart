@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/helpers/extensions.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
@@ -66,7 +67,9 @@ class _EditMedicationViewBodyState extends State<EditMedicationViewBody> {
         dosage: _dosageController.text.trim(),
         frequency: _dosageFrequencyController.text.trim(),
         route: _dosageRouteController.text.trim(),
-        startDate: DateTime.parse(_startDateController.text.trim()),
+        startDate: DateFormat('yyyy-MM-dd').parseStrict(
+          _startDateController.text.trim(),
+        ),
         prescribingDoctor: _prescribingDoctorController.text.trim(),
       );
 
@@ -77,7 +80,7 @@ class _EditMedicationViewBodyState extends State<EditMedicationViewBody> {
       );
     } on FormatException {
       if (!context.mounted) return;
-      context.showSnackBar(const Text('Invalid date format'));
+      context.showSnackBar(const Text('Invalid date format. Use yyyy-MM-dd'));
     }
   }
 

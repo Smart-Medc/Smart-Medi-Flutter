@@ -43,7 +43,6 @@ class AddJournalSlider extends StatelessWidget {
         Row(
           children: [
             Icon(icon, color: iconColor, size: 20.sp),
-            8.horizontalSpace,
             Expanded(
               child: SliderTheme(
                 data: SliderThemeData(
@@ -56,9 +55,9 @@ class AddJournalSlider extends StatelessWidget {
                 ),
                 child: Slider(
                   value: value,
-                  min: 0,
+                  min: 1,
                   max: 10,
-                  divisions: 10,
+                  divisions: 9,
                   onChanged: onChanged,
                 ),
               ),

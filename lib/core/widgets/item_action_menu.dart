@@ -26,14 +26,25 @@ class ItemActionMenu extends StatelessWidget {
         }
         onDelete?.call();
       },
-      itemBuilder: (context) => const [
-        PopupMenuItem<ItemMenuAction>(
+      itemBuilder: (context) =>  [
+         PopupMenuItem<ItemMenuAction>(
           value: ItemMenuAction.edit,
-          child: Text('Edit'),
+          child: Row(
+            children: [
+              Icon(Icons.edit, size: 16.sp),
+              SizedBox(width: 8.w),
+              const Text('Edit'),
+            ],
+          ),
         ),
         PopupMenuItem<ItemMenuAction>(
           value: ItemMenuAction.delete,
-          child: Text('Delete'),
+          child: Row(
+            children: [
+              Icon(Icons.delete, size: 16.sp),
+              SizedBox(width: 8.w),
+              const Text('Delete'),            ],
+          ),
         ),
       ],
       child: Icon(

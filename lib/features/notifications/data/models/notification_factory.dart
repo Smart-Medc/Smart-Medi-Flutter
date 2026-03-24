@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:smart_medi/features/notifications/data/models/notification_model.dart';
 
 class NotificationFactory {
@@ -15,7 +16,7 @@ class NotificationFactory {
       type: NotificationType.appointment,
       title: 'Appointment Reminder',
       message:
-          'You have an appointment with $doctorName tomorrow at ${_formatTime(appointmentTime)}',
+          'You have an appointment with $doctorName tomorrow at ${DateFormat.jm().format(appointmentTime)}',
       timestamp: timestamp,
       isRead: isRead,
     );
@@ -57,14 +58,6 @@ class NotificationFactory {
     );
   }
 
-  // Helper method to format time
-  static String _formatTime(DateTime dateTime) {
-    final hour = dateTime.hour;
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-    final period = hour >= 12 ? 'PM' : 'AM';
-    final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
-    return '$displayHour:$minute $period';
-  }
 
   // Get sample notifications for testing
   static List<NotificationModel> getSampleNotifications() {

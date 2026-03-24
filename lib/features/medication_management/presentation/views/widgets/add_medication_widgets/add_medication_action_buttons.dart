@@ -75,7 +75,7 @@
 //             patientId: '', // Get patientId from your state management
 //           );
 //     } catch (e) {
-//       context.showSnackBar(const Text('Invalid date format. Use mm/dd/yyyy'));
+//       context.showSnackBar(const Text('Invalid date format. Use yyyy-MM-dd'));
 //     }
 //   }
 //

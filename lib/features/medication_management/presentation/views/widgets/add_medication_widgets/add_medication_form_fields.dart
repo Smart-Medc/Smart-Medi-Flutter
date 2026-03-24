@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/helpers/auth_helper.dart';
 import 'package:smart_medi/core/helpers/extensions.dart';
 import 'package:smart_medi/core/helpers/secure_storage_helper.dart';
@@ -46,7 +47,9 @@ class _AddMedicationFormFieldsState extends State<AddMedicationFormFields> {
     }
 
     try {
-      final startDate = DateTime.parse(widget.startDateController.text);
+      final startDate = DateFormat('yyyy-MM-dd').parseStrict(
+        widget.startDateController.text.trim(),
+      );
       final addMedicationRequest = AddMedicationRequest(
         name: widget.medicationNameController.text,
         dosage: widget.dosageController.text,
@@ -77,7 +80,7 @@ class _AddMedicationFormFieldsState extends State<AddMedicationFormFields> {
       }
     } catch (e) {
       if (!context.mounted) return;
-      context.showSnackBar(const Text('Invalid date format'));
+      context.showSnackBar(const Text('Invalid date format. Use yyyy-MM-dd'));
     }
   }
 
@@ -125,7 +128,7 @@ class _AddMedicationFormFieldsState extends State<AddMedicationFormFields> {
             LabeledFormField(
               label: 'Start Date',
               controller: widget.startDateController,
-              hintText: 'mm/dd/yyyy',
+              hintText: 'yyyy-MM-dd',
               isDate: true,
               isRequired: true,
               validator: (value) => Validator.requiredValidator(value, 'Start date is required'),
