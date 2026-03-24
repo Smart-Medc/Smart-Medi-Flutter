@@ -13,45 +13,48 @@ class JournalEntrySection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: CardContainer(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Entry title
-            Text('Entry', style: AppStyles.textStyle15W600Black),
-            16.verticalSpace,
+      child: SizedBox(
+        width: double.infinity,
+        child: CardContainer(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Entry title
+              Text('Entry', style: AppStyles.textStyle15W600Black),
+              16.verticalSpace,
 
-            // Scrollable entry text
-            Expanded(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.only(left: 8.w, right: 8.w),
-                  child: Text(
-                    journalEntry.excerpt.trim().isEmpty
-                        ? 'No content'
-                        : journalEntry.excerpt,
-                    style: AppStyles.textStyle12W400DarkGrey,
+              // Scrollable entry text
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 8.w, right: 8.w),
+                    child: Text(
+                      journalEntry.excerpt.trim().isEmpty
+                          ? 'No content'
+                          : journalEntry.excerpt,
+                      style: AppStyles.textStyle12W400DarkGrey,
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            8.verticalSpace,
+              8.verticalSpace,
 
-            // Symptoms section - fixed at bottom
-            JournalChipSection(
-              title: 'Symptoms',
-              items: journalEntry.symptoms,
-            ),
+              // Symptoms section - fixed at bottom
+              JournalChipSection(
+                title: 'Symptoms',
+                items: journalEntry.symptoms,
+              ),
 
-            // Tags section - fixed at bottom
-            JournalChipSection(
-              title: 'Tags',
-              items: journalEntry.tags,
-            ),
-          ],
+              // Tags section - fixed at bottom
+              JournalChipSection(
+                title: 'Tags',
+                items: journalEntry.tags,
+              ),
+            ],
+          ),
         ),
       ),
     );
