@@ -17,22 +17,19 @@ class MedicalJournalEntriesSuccess extends StatelessWidget {
     return SliverMainAxisGroup(
       slivers: [
         SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.only(top: 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MedicalJournalSummary(
-                  totalEntries: totalEntries,
-                  avgMood: avgMood,
-                  thisMonth: thisMonthEntries,
-                  avgPain: avgPain,
-                ),
-                24.verticalSpace,
-                Text('Recent Entries', style: AppStyles.textStyle24W600Black),
-                16.verticalSpace,
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              MedicalJournalSummary(
+                totalEntries: totalEntries,
+                avgMood: avgMood,
+                thisMonth: thisMonthEntries,
+                avgPain: avgPain,
+              ),
+              24.verticalSpace,
+              Text('Recent Entries', style: AppStyles.textStyle24W600Black),
+              16.verticalSpace,
+            ],
           ),
         ),
         if (entries.isEmpty)

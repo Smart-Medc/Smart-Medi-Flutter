@@ -7,6 +7,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
 import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 
 class JournalEntryCard extends StatelessWidget {
@@ -14,10 +15,12 @@ class JournalEntryCard extends StatelessWidget {
     super.key,
     required this.journalEntry,
     this.onDelete,
+    this.onEdit,
   });
 
   final JournalListItem journalEntry;
   final VoidCallback? onDelete;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -109,13 +112,9 @@ class JournalEntryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: onDelete,
-                  icon: Icon(
-                    Icons.delete_outline,
-                    color: AppColors.textBlack,
-                    size: 15.sp,
-                  ),
+                ItemActionMenu(
+                  onDelete: onDelete,
+                  onEdit: onEdit,
                 ),
               ],
             ),

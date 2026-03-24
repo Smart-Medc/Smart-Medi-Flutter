@@ -15,22 +15,26 @@ class MedicalJournalViewBody extends StatelessWidget {
       slivers: [
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 25.w),
-          sliver: const SliverToBoxAdapter(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBar(),
-                MedicalJournalHeader(),
-                AppSearchBar(hintText: 'Search journal entries', showFilter: false),
-              ],
-            ),
+          sliver:  SliverMainAxisGroup(
+            slivers: [
+              const SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomAppBar(),
+                    MedicalJournalHeader(),
+                    AppSearchBar(
+                      hintText: 'Search journal entries',
+                      showFilter: false,
+                    ),
+                  ],
+                ),
+              ),
+              const MedicalJournalEntriesBlocBuilder(),
+              SliverToBoxAdapter(child: 20.verticalSpace),
+            ],
           ),
         ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 25.w),
-          sliver: const MedicalJournalEntriesBlocBuilder(),
-        ),
-        SliverToBoxAdapter(child: 20.verticalSpace),
       ],
     );
   }
