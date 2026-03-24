@@ -12,7 +12,6 @@ class DeleteJournalCubit extends Cubit<DeleteJournalState> {
   Future<void> deleteJournal({
     required String journalId,
   }) async {
-    emit(DeleteJournalLoading());
     if (journalId.trim().isEmpty) {
       emit(DeleteJournalFailure(message: 'Journal ID is required'));
       return;
@@ -27,6 +26,8 @@ class DeleteJournalCubit extends Cubit<DeleteJournalState> {
       );
       return;
     }
+
+    emit(DeleteJournalLoading());
 
     final result = await medicalJournalRepo.deleteJournalEntry(
       patientId: patientId,

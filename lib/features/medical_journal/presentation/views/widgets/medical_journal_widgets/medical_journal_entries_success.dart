@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
+import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/delete_journal_helper.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/journal_entry_card.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_summary.dart';
 class MedicalJournalEntriesSuccess extends StatelessWidget {
@@ -45,7 +46,16 @@ class MedicalJournalEntriesSuccess extends StatelessWidget {
               final entry = entries[index];
               return Padding(
                 padding: EdgeInsets.only(bottom: 16.h),
-                child: JournalEntryCard(journalEntry: entry),
+                child: JournalEntryCard(
+                  journalEntry: entry,
+                  onDelete: () {
+                    confirmAndDeleteJournal(
+                      context: context,
+                      journalId: entry.id,
+                      journalTitle: entry.title,
+                    );
+                  },
+                ),
               );
             }, childCount: entries.length),
           ),
