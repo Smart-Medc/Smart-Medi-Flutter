@@ -32,4 +32,20 @@ class MedicalJournalRepoImpl extends MedicalJournalRepo{
     });
   }
 
+  @override
+  Future<Either<Failure, Unit>> deleteJournalEntry({
+    required String patientId,
+    required String journalId,
+  }) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.delete(
+        endpoint: ApiEndpoints.deletePatientJournal(
+          patientId: patientId,
+          journalId: journalId,
+        ),
+      );
+      return unit;
+    });
+  }
+
 }

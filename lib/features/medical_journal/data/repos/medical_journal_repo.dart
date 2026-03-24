@@ -11,4 +11,9 @@ abstract class MedicalJournalRepo {
   Future<Either<Failure, GetJournalResponse>> getMedicalJournals({
     required String patientId,
   });
+
+  Future<Either<Failure, Unit>> deleteJournalEntry({
+    required String patientId,
+    required String journalId,
+  });
 }
