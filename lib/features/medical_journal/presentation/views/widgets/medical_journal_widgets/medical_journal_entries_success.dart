@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
+import 'package:smart_medi/features/medical_journal/presentation/manager/get_medical_journals/get_medical_journals_cubit.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/delete_journal_helper.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/journal_entry_card.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_summary.dart';
@@ -48,6 +52,21 @@ class MedicalJournalEntriesSuccess extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 16.h),
                 child: JournalEntryCard(
                   journalEntry: entry,
+                  onEdit: () {
+                    GoRouter.of(context)
+                        .push<bool>(
+                          AppRoutes.editJournalEntry,
+                          extra: entry,
+                        )
+                        .then((result) {
+                          if (!context.mounted) return;
+                          if (result == true) {
+                            context
+                                .read<GetMedicalJournalsCubit>()
+                                .getMedicalJournalsForCurrentPatient();
+                          }
+                        });
+                  },
                   onDelete: () {
                     confirmAndDeleteJournal(
                       context: context,

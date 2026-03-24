@@ -33,6 +33,24 @@ class MedicalJournalRepoImpl extends MedicalJournalRepo{
   }
 
   @override
+  Future<Either<Failure, Unit>> editJournalEntry({
+    required String patientId,
+    required String journalId,
+    required AddJournalRequest editJournalRequest,
+  }) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.put(
+        endpoint: ApiEndpoints.editPatientJournal(
+          patientId: patientId,
+          journalId: journalId,
+        ),
+        data: editJournalRequest.toJson(),
+      );
+      return unit;
+    });
+  }
+
+  @override
   Future<Either<Failure, Unit>> deleteJournalEntry({
     required String patientId,
     required String journalId,

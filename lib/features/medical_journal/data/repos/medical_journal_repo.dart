@@ -12,6 +12,12 @@ abstract class MedicalJournalRepo {
     required String patientId,
   });
 
+  Future<Either<Failure, Unit>> editJournalEntry({
+    required String patientId,
+    required String journalId,
+    required AddJournalRequest editJournalRequest,
+  });
+
   Future<Either<Failure, Unit>> deleteJournalEntry({
     required String patientId,
     required String journalId,

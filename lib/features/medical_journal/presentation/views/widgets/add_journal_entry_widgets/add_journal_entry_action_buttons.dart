@@ -6,15 +6,17 @@ class AddJournalEntryActionButtons extends StatelessWidget {
     super.key,
     this.onSavePressed,
     this.onCancelPressed,
+    this.primaryButtonText = 'Save Entry',
   });
 
   final VoidCallback? onSavePressed;
   final VoidCallback? onCancelPressed;
+  final String primaryButtonText;
 
   @override
   Widget build(BuildContext context) {
     return ActionButtons(
-      primaryButtonText: 'Save Entry',
+      primaryButtonText: primaryButtonText,
       onPrimaryPressed: onSavePressed,
       onCancelPressed: onCancelPressed,
     );

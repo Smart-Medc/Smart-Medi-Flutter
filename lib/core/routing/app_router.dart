@@ -13,6 +13,7 @@ import 'package:smart_medi/features/data_sharing/presentation/views/share_record
 import 'package:smart_medi/features/home/presentation/views/home_view.dart';
 import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/add_journal_entry_view.dart';
+import 'package:smart_medi/features/medical_journal/presentation/views/edit_journal_entry_view.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/journal_element_details_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/add_medication_view.dart';
 import 'package:smart_medi/features/medication_management/presentation/views/edit_medication_view.dart';
@@ -200,6 +201,34 @@ abstract class AppRouter {
         path: AppRoutes.addJournalEntry,
         builder: (context, state) => const AddJournalEntryView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.editJournalEntry,
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final entry = state.extra;
+          if (entry is! JournalListItem || entry.id.trim().isEmpty) {
+            return AppRoutes.medicalJournal;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final entry = state.extra as JournalListItem;
+
+          return EditJournalEntryView(
+            journalId: entry.id,
+            title: entry.title,
+            content: entry.excerpt,
+            entryDate: entry.entryDate,
+            moodLevel: entry.moodLevel,
+            painLevel: entry.painLevel,
+            tags: entry.tags,
+            symptoms: entry.symptoms,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.notificationsView,
