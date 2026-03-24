@@ -10,22 +10,28 @@ class MedicalJournalViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return CustomScrollView(
       physics: const BouncingScrollPhysics(),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CustomAppBar(),
-            const MedicalJournalHeader(),
-            const AppSearchBar(hintText: 'Search journal entries', showFilter: false),
-            const MedicalJournalEntriesBlocBuilder(),
-
-            100.verticalSpace,
-          ],
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          sliver: const SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppBar(),
+                MedicalJournalHeader(),
+                AppSearchBar(hintText: 'Search journal entries', showFilter: false),
+              ],
+            ),
+          ),
         ),
-      ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          sliver: const MedicalJournalEntriesBlocBuilder(),
+        ),
+        SliverToBoxAdapter(child: 20.verticalSpace),
+      ],
     );
   }
 }

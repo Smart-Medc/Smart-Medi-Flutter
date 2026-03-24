@@ -13,32 +13,36 @@ class MedicalJournalEntriesBlocBuilder extends StatelessWidget {
       builder: (context, state) {
         if (state is GetMedicalJournalsLoading ||
             state is GetMedicalJournalsInitial) {
-          return Padding(
-            padding: EdgeInsets.only(top: 24.h),
-            child: const Center(child: CircularProgressIndicator()),
+          return SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(top: 24.h),
+              child: const Center(child: CircularProgressIndicator()),
+            ),
           );
         }
 
         if (state is GetMedicalJournalsFailure) {
-          return Padding(
-            padding: EdgeInsets.only(top: 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  state.errorMessage,
-                  style: AppStyles.textStyle14W400DarkGrey,
-                ),
-                12.verticalSpace,
-                OutlinedButton(
-                  onPressed: () {
-                    context
-                        .read<GetMedicalJournalsCubit>()
-                        .getMedicalJournalsForCurrentPatient();
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
+          return SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(top: 24.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.errorMessage,
+                    style: AppStyles.textStyle14W400DarkGrey,
+                  ),
+                  12.verticalSpace,
+                  OutlinedButton(
+                    onPressed: () {
+                      context
+                          .read<GetMedicalJournalsCubit>()
+                          .getMedicalJournalsForCurrentPatient();
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
             ),
           );
         }
@@ -81,7 +85,7 @@ class MedicalJournalEntriesBlocBuilder extends StatelessWidget {
           );
         }
 
-        return const SizedBox.shrink();
+        return const SliverToBoxAdapter(child: SizedBox.shrink());
       },
     );
   }

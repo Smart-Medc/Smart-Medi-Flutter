@@ -11,42 +11,48 @@ class MedicalJournalEntriesSuccess extends StatelessWidget {
   final int thisMonthEntries;
   final double avgPain;
   final List<JournalListItem> entries;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: 24.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MedicalJournalSummary(
-            totalEntries: totalEntries,
-            avgMood: avgMood,
-            thisMonth: thisMonthEntries,
-            avgPain: avgPain,
+    return SliverMainAxisGroup(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.only(top: 24.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                MedicalJournalSummary(
+                  totalEntries: totalEntries,
+                  avgMood: avgMood,
+                  thisMonth: thisMonthEntries,
+                  avgPain: avgPain,
+                ),
+                24.verticalSpace,
+                Text('Recent Entries', style: AppStyles.textStyle24W600Black),
+                16.verticalSpace,
+              ],
+            ),
           ),
-          24.verticalSpace,
-          Text('Recent Entries', style: AppStyles.textStyle24W600Black),
-          16.verticalSpace,
-          if (entries.isEmpty)
-            Text(
+        ),
+        if (entries.isEmpty)
+          SliverToBoxAdapter(
+            child: Text(
               'No journal entries yet.',
               style: AppStyles.textStyle14W400DarkGrey,
-            )
-          else
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: entries.length,
-              itemBuilder: (context, index) {
-                final entry = entries[index];
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 16.h),
-                  child: JournalEntryCard(journalEntry: entry),
-                );
-              },
             ),
-        ],
-      ),
+          )
+        else
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final entry = entries[index];
+              return Padding(
+                padding: EdgeInsets.only(bottom: 16.h),
+                child: JournalEntryCard(journalEntry: entry),
+              );
+            }, childCount: entries.length),
+          ),
+      ],
     );
   }
 }
