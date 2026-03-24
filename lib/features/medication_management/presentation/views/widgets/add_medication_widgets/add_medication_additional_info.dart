@@ -25,7 +25,7 @@ class AddMedicationAdditionalInfo extends StatelessWidget {
         8.verticalSpace,
         CustomTextFormField.date(
           controller: startDateController,
-          hintText: 'mm/dd/yyyy',
+          hintText: 'yyyy-MM-dd',
         ),
         16.verticalSpace,
         Text(

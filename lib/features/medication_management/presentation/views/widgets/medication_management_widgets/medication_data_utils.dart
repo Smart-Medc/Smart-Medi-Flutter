@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:smart_medi/features/medication_management/data/models/get_medications_model/get_medication_response.dart';
 
 bool isCurrentMedication(MedicationModel medication) {
@@ -28,21 +29,7 @@ int getAverageAdherencePercentage(List<MedicationModel> medications) {
 }
 
 String formatMedicationDate(DateTime date) {
-  const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-  ];
-  return '${months[date.month - 1]} ${date.day}, ${date.year}';
+  return DateFormat.yMMMd().format(date);
 }
 
 bool matchesMedicationQuery(MedicationModel medication, String query) {

@@ -18,7 +18,7 @@ class AddJournalBlocListener extends StatelessWidget {
         } else if (state is AddJournalSuccess) {
           GoRouter.of(context).pop();
           context.showSnackBar(const Text('Journal entry added successfully'));
-          GoRouter.of(context).pop();
+          GoRouter.of(context).pop(true);
         } else if (state is AddJournalFailure) {
           GoRouter.of(context).pop();
           context.showSnackBar(Text(state.errorMessage));

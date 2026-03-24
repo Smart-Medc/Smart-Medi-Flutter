@@ -144,7 +144,7 @@ class _AddJournalEntryFormFieldsState extends State<AddJournalEntryFormFields> {
     final addJournalRequest = AddJournalRequest(
       title: _titleController.text.trim(),
       content: _entryController.text.trim(),
-      entryDate: DateTime.now().toUtc(),
+      entryDate: DateTime.now(),
       moodLevel: _moodLevel.round(),
       painLevel: _painLevel.round(),
       symptoms: const <String>[],

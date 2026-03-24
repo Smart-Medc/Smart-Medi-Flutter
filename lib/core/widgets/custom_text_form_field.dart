@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 
@@ -83,7 +84,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     );
 
     if (picked != null) {
-      widget.controller.text = picked.toString().split(' ')[0];
+      widget.controller.text = DateFormat('yyyy-MM-dd').format(picked);
     }
   }
 

@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/features/medical_journal/presentation/manager/get_medical_journals/get_medical_journals_cubit.dart';
-import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/journal_entry_card.dart';
-import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_summary.dart';
-
+import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_entries_success.dart';
 class MedicalJournalEntriesBlocBuilder extends StatelessWidget {
   const MedicalJournalEntriesBlocBuilder({super.key});
 
@@ -63,51 +61,23 @@ class MedicalJournalEntriesBlocBuilder extends StatelessWidget {
           final double avgMood = entries.isEmpty
               ? 0
               : entries
-                      .map((entry) => entry.moodLevel)
-                      .reduce((a, b) => a + b) /
-                  entries.length;
+                        .map((entry) => entry.moodLevel)
+                        .reduce((a, b) => a + b) /
+                    entries.length;
 
           final double avgPain = entries.isEmpty
               ? 0
               : entries
-                      .map((entry) => entry.painLevel)
-                      .reduce((a, b) => a + b) /
-                  entries.length;
+                        .map((entry) => entry.painLevel)
+                        .reduce((a, b) => a + b) /
+                    entries.length;
 
-          return Padding(
-            padding: EdgeInsets.only(top: 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MedicalJournalSummary(
-                  totalEntries: totalEntries,
-                  avgMood: avgMood,
-                  thisMonth: thisMonthEntries,
-                  avgPain: avgPain,
-                ),
-                24.verticalSpace,
-                Text('Recent Entries', style: AppStyles.textStyle24W600Black),
-                16.verticalSpace,
-                if (entries.isEmpty)
-                  Text(
-                    'No journal entries yet.',
-                    style: AppStyles.textStyle14W400DarkGrey,
-                  )
-                else
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: entries.length,
-                    itemBuilder: (context, index) {
-                      final entry = entries[index];
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: 16.h),
-                        child: JournalEntryCard(journalEntry: entry),
-                      );
-                    },
-                  ),
-              ],
-            ),
+          return MedicalJournalEntriesSuccess(
+            totalEntries: totalEntries,
+            avgMood: avgMood,
+            thisMonthEntries: thisMonthEntries,
+            avgPain: avgPain,
+            entries: entries,
           );
         }
 
@@ -116,4 +86,3 @@ class MedicalJournalEntriesBlocBuilder extends StatelessWidget {
     );
   }
 }
-

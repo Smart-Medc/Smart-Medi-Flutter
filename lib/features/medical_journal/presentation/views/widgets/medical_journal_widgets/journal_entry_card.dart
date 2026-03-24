@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
@@ -54,7 +55,7 @@ class JournalEntryCard extends StatelessWidget {
                           ),
                           4.horizontalSpace,
                           Text(
-                            '${_formatDate(journalEntry.entryDate)}  •  ${_formatTime(journalEntry.entryDate)}',
+                            '${DateFormat.yMMMd().format(journalEntry.entryDate)}  •  ${DateFormat.jm().format(journalEntry.entryDate)}',
                             style: AppStyles.textStyle10W400DarkGrey,
                           ),
                         ],
@@ -138,29 +139,5 @@ class JournalEntryCard extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime dateTime) {
-    const months = <String>[
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[dateTime.month - 1]} ${dateTime.day}, ${dateTime.year}';
-  }
-
-  String _formatTime(DateTime dateTime) {
-    final hour = dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12;
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-    final period = dateTime.hour >= 12 ? 'PM' : 'AM';
-    return '$hour:$minute $period';
-  }
 }
 

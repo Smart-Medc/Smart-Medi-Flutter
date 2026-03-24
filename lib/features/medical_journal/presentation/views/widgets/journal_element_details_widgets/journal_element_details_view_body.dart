@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
 import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
@@ -26,8 +27,8 @@ class JournalElementDetailsViewBody extends StatelessWidget {
           const AppBarBackButton(),
           JournalElementDetailsTitle(
             title: journalEntry.title,
-            date: _formatDate(journalEntry.entryDate),
-            time: _formatTime(journalEntry.entryDate),
+            date: DateFormat.yMMMd().format(journalEntry.entryDate),
+            time: DateFormat.jm().format(journalEntry.entryDate),
           ),
           24.verticalSpace,
           // Mood and Pain metrics
@@ -49,29 +50,5 @@ class JournalElementDetailsViewBody extends StatelessWidget {
     );
   }
 
-  String _formatDate(DateTime dateTime) {
-    const months = <String>[
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[dateTime.month - 1]} ${dateTime.day}, ${dateTime.year}';
-  }
-
-  String _formatTime(DateTime dateTime) {
-    final hour = dateTime.hour % 12 == 0 ? 12 : dateTime.hour % 12;
-    final minute = dateTime.minute.toString().padLeft(2, '0');
-    final period = dateTime.hour >= 12 ? 'PM' : 'AM';
-    return '$hour:$minute $period';
-  }
 }
 

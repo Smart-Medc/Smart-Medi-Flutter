@@ -68,7 +68,7 @@ class EditMedicationFormFields extends StatelessWidget {
           LabeledFormField(
             label: 'Start Date',
             controller: startDateController,
-            hintText: 'mm/dd/yyyy',
+            hintText: 'yyyy-MM-dd',
             isDate: true,
             isRequired: true,
             validator: (value) =>
