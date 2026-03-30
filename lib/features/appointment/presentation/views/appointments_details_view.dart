@@ -7,7 +7,6 @@ import 'package:smart_medi/features/appointment/presentation/views/widgets/appoi
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/appointments_details_policy_cancellation.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/appointments_details_reminder_card.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/appointments_details_shared_Record.dart';
-import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/shared_reusable_widgets.dart';
 
 class AppointmentsDetailsView extends StatelessWidget {
   const AppointmentsDetailsView({super.key});
