@@ -111,7 +111,7 @@ class AppDrawer extends StatelessWidget {
             title: 'Appointments',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to appointments
+              GoRouter.of(context).push(AppRoutes.appointmentsView);
             },
             isSelected: selectedItem == DrawerItem.appointments,
           ),

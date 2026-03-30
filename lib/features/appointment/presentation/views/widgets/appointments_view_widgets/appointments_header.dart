@@ -16,7 +16,7 @@ class AppointmentsHeader extends StatelessWidget {
       children: [
         const Expanded(
           child: AppHeader(
-            title: 'appointments',
+            title: 'Appointments',
             subtitle: 'Manage your healthcare appointments',
           ),
         ),
