@@ -22,7 +22,7 @@ class AppointmentsHeader extends StatelessWidget {
         ),
         60.verticalSpace,
         InkWell(
-          onTap: () => context.push(AppRoutes.bookAppointmentsView),
+          onTap: () => context.push(AppRoutes.availableAppointmentView),
           borderRadius: BorderRadius.circular(10.r),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 9.h),

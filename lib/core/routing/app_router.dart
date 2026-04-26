@@ -2,9 +2,13 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_cancel_view.dart';
+import 'package:smart_medi/features/appointment/presentation/views/appointments_confirmed_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_details_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_reschedule_view.dart';
+import 'package:smart_medi/features/appointment/presentation/views/available_appointment_detail_view.dart';
+import 'package:smart_medi/features/appointment/presentation/views/available_appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/book_appointments_view.dart';
+import 'package:smart_medi/features/appointment/presentation/views/complete_booking_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/complete_profile_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/forget_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
@@ -66,6 +70,10 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.appointmentsCancelView,builder: (context,state) => const AppointmentsCancelView()),
       GoRoute(path: AppRoutes.appointmentsRescheduleView,builder: (context,state) => const AppointmentsRescheduleView()),
       GoRoute(path: AppRoutes.appointmentsDetailsView,builder: (context,state) => const AppointmentsDetailsView()),
+      GoRoute(path: AppRoutes.appointmentsConfirmedView,builder: (context,state) => const AppointmentsConfirmedView()),
+      GoRoute(path: AppRoutes.availableAppointmentView,builder: (context,state) => const AvailableAppointmentView()),
+      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
+      //GoRoute(path: AppRoutes.availableAppointmentDetailView,builder: (context,state) => const AvailableAppointmentDetailView()),
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),
