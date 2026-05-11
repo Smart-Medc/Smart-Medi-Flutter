@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_medi/core/helpers/service_locator.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/widgets/app_drawer.dart';
+import 'package:smart_medi/features/medical_journal/data/repos/medical_journal_repo.dart';
+import 'package:smart_medi/features/medical_journal/presentation/manager/delete_journal_cubit/delete_journal_cubit.dart';
+import 'package:smart_medi/features/medical_journal/presentation/manager/get_medical_journals/get_medical_journals_cubit.dart';
 import 'package:smart_medi/features/medical_journal/presentation/views/widgets/medical_journal_widgets/medical_journal_view_body.dart';
 
 class MedicalJournalView extends StatelessWidget {
@@ -14,23 +16,21 @@ class MedicalJournalView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
-        body: const MedicalJournalViewBody(),
-        drawer: const AppDrawer(selectedItem: DrawerItem.journal),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            context.push(AppRoutes.addJournalEntry);
-          },
-          backgroundColor: AppColors.primaryColor,
-          icon: Icon(Icons.add, size: 24.sp, color: Colors.white),
-          label: Text(
-            'Add Entry',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  GetMedicalJournalsCubit(getIt<MedicalJournalRepo>())
+                    ..getMedicalJournalsForCurrentPatient(),
             ),
-          ),
+            BlocProvider(
+              create: (context) =>
+                  DeleteJournalCubit(getIt<MedicalJournalRepo>()),
+            ),
+          ],
+          child: const MedicalJournalViewBody(),
         ),
+        drawer: const AppDrawer(selectedItem: DrawerItem.journal),
       ),
     );
   }

@@ -11,7 +11,7 @@ class CustomButton extends StatelessWidget {
     this.height = 56, // raw value because we will apply .h inside build
     this.borderRadius = 10, // same, will apply .r
     this.backgroundColor,
-    this.onPressed, this.textStyle, this.boxShadow,
+    this.onPressed, this.textStyle, this.boxShadow, this.width,
   });
   final String text;
   final double height;
@@ -20,12 +20,13 @@ class CustomButton extends StatelessWidget {
   final TextStyle? textStyle;
   final VoidCallback? onPressed;
   final List<BoxShadow>? boxShadow;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.h,
-      width: double.infinity,
+      width: width?.w ?? double.infinity,
       child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius.r),
         onTap: onPressed,

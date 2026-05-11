@@ -1,10 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_images.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
+
 class AuthFooter extends StatelessWidget {
   const AuthFooter({super.key, required this.isLogin,});
   final bool isLogin;
@@ -26,23 +26,25 @@ class AuthFooter extends StatelessWidget {
         16.verticalSpace,
         authFooterContainer(text: '${isLogin ? 'Login' : 'Sign up'} with Facebook', icon: AppImages.facebookIcon),
         20.verticalSpace,
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Don't have an account? ",
-                style: AppStyles.textStyle14W400Black,
-              ),
-              TextSpan(
-                text: isLogin ? 'Sign up' : 'Login',
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Don't have an account? ",
+              style: AppStyles.textStyle14W400Black,
+            ),
+            InkWell(
+              onTap: () {
+                isLogin
+                  ? GoRouter.of(context).replace(AppRoutes.signUpView)
+                  : GoRouter.of(context).replace(AppRoutes.loginView);
+              },
+              child: Text(
+                isLogin ? 'Sign up' : 'Login',
                 style: AppStyles.textStyle18W700Black,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    isLogin ? GoRouter.of(context).pushReplacement(AppRoutes.signUpView) : GoRouter.of(context).pushReplacement(AppRoutes.loginView);
-                  },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

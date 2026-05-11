@@ -1,78 +1,60 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/core/widgets/custom_tabs.dart';
-import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/current_medication.dart';
-import 'package:smart_medi/features/medication_management/presentation/views/widgets/medication_management_widgets/past_medication.dart';
+import 'package:smart_medi/core/utils/app_colors.dart';
+import 'package:smart_medi/core/utils/app_styles.dart';
 
 class MedicationTabs extends StatelessWidget {
-  const MedicationTabs({super.key});
+  const MedicationTabs({
+    super.key,
+    required this.selectedIndex,
+    required this.onTabChanged,
+    required this.currentCount,
+    required this.pastCount,
+  });
+
+  final int selectedIndex;
+  final ValueChanged<int> onTabChanged;
+  final int currentCount;
+  final int pastCount;
+
+  static const List<String> _titles = [
+    'Current Medication',
+    'Past Medication',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return CustomTabs(
-      tabTitles: const [
-        'Current Medication',
-        'Past Medication',
-      ],
-      tabContents: [
-        _buildCurrentMedications(),
-        _buildPastMedications(),
-      ],
-      isScrollable: false, // Tabs expand to fill width equally
-    );
-  }
-
-  Widget _buildCurrentMedications() {
-    return Column(
-      children: [
-        const CurrentMedication(
-          medicationName: 'Metformin',
-          dosage: '500 mg',
-          frequency: 'Twice daily',
-          type: 'Oral',
-          startDate: 'Jan 15, 2024',
-          doctorName: 'Sarah Johnson',
-          adherence: 95,
-        ),
-        16.verticalSpace,
-        const CurrentMedication(
-          medicationName: 'Lisinopril',
-          dosage: '10 mg',
-          frequency: 'Once daily',
-          type: 'Oral',
-          startDate: 'Feb 1, 2024',
-          doctorName: 'Sarah Johnson',
-          adherence: 70,
-          hasInteraction: true,
-        ),
-        16.verticalSpace,
-        const CurrentMedication(
-          medicationName: 'Lisinopril',
-          dosage: '10 mg',
-          frequency: 'Once daily',
-          type: 'Oral',
-          startDate: 'Feb 1, 2024',
-          doctorName: 'Sarah Johnson',
-          adherence: 30,
-          hasInteraction: true,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPastMedications() {
-    return const Column(
-      children: [
-        PastMedication(
-          medicationName: 'Amoxicillin',
-          dosage: '250 mg',
-          frequency: 'Three times daily',
-          type: 'Oral',
-          startDate: 'Dec 10, 2023',
-          endDate: 'Dec 20, 2023',
-          doctorName: 'Mike Smith',
-        ),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.formFieldBGColor,
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Row(
+        children: List.generate(_titles.length, (index) {
+          final isSelected = index == selectedIndex;
+          final badgeCount = index == 0 ? currentCount : pastCount;
+          return Expanded(
+            child: GestureDetector(
+              onTap: () => onTabChanged(index),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+                margin: EdgeInsets.all(6.h),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.textWhite : Colors.transparent,
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: Text(
+                  '${_titles[index]} (${badgeCount > 99 ? '+99' : badgeCount})',
+                  style: isSelected
+                      ? AppStyles.textStyle12W500Black
+                      : AppStyles.textStyle12W500DarkGrey,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 }

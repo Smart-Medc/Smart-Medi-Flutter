@@ -8,10 +8,20 @@ class AppSearchBar extends StatelessWidget {
     super.key,
     this.hintText = 'Search',
     this.showFilter = true,
+    this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.onTap,
+    this.readOnly = false,
   });
 
   final String hintText;
   final bool showFilter;
+  final TextEditingController? controller;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final VoidCallback? onTap;
+  final bool readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +44,11 @@ class AppSearchBar extends StatelessWidget {
             ),
             Expanded(
               child: TextField(
+                controller: controller,
+                onChanged: onChanged,
+                onSubmitted: onSubmitted,
+                onTap: onTap,
+                readOnly: readOnly,
                 decoration: InputDecoration(
                   hintText: hintText,
                   hintStyle: TextStyle(

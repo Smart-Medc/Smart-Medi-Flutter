@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
-import 'package:smart_medi/features/medical_journal/data/models/journal_entry_model.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
+import 'package:smart_medi/features/medical_journal/data/models/get_journals_models/get_journal_response.dart';
 
 class JournalEntryCard extends StatelessWidget {
   const JournalEntryCard({
     super.key,
     required this.journalEntry,
     this.onDelete,
+    this.onEdit,
   });
 
-  final JournalEntryModel journalEntry;
+  final JournalListItem journalEntry;
   final VoidCallback? onDelete;
+  final VoidCallback? onEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +58,16 @@ class JournalEntryCard extends StatelessWidget {
                           ),
                           4.horizontalSpace,
                           Text(
-                            '${journalEntry.date}  •  ${journalEntry.time}',
+                            '${DateFormat.yMMMd().format(journalEntry.entryDate)}  •  ${DateFormat.jm().format(journalEntry.entryDate)}',
                             style: AppStyles.textStyle10W400DarkGrey,
                           ),
                         ],
                       ),
                       8.verticalSpace,
                       Text(
-                        journalEntry.description,
+                        journalEntry.excerpt.trim().isEmpty
+                            ? 'No content'
+                            : journalEntry.excerpt,
                         style: AppStyles.textStyle10W400DarkGrey,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -74,13 +80,13 @@ class JournalEntryCard extends StatelessWidget {
                           children: [
                             _buildInfoChip(
                               icon: Icons.mood,
-                              label: 'Mood: ${journalEntry.mood}',
+                              label: 'Mood: ${journalEntry.moodLevel}',
                               color: AppColors.iconGreen,
                             ),
                             12.horizontalSpace,
                             _buildInfoChip(
                               icon: Icons.monitor_heart_outlined,
-                              label: 'Pain: ${journalEntry.pain}',
+                              label: 'Pain: ${journalEntry.painLevel}',
                               color: AppColors.iconBlue,
                             ),
                             if (journalEntry.tags.isNotEmpty)
@@ -106,13 +112,9 @@ class JournalEntryCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                IconButton(
-                  onPressed: onDelete,
-                  icon: Icon(
-                    Icons.delete_outline,
-                    color: AppColors.textBlack,
-                    size: 15.sp,
-                  ),
+                ItemActionMenu(
+                  onDelete: onDelete,
+                  onEdit: onEdit,
                 ),
               ],
             ),
@@ -135,5 +137,6 @@ class JournalEntryCard extends StatelessWidget {
       ],
     );
   }
+
 }
 

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 
 class AppStyles {
-
   static final TextStyle textStyle40W700Black = TextStyle(
     fontSize: 40.sp,
     fontWeight: FontWeight.bold,
@@ -70,7 +69,6 @@ class AppStyles {
     color: AppColors.black,
   );
 
-
   static final TextStyle textStyle16W400LightGrey = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.normal,
@@ -122,6 +120,4 @@ class AppStyles {
     fontWeight: FontWeight.normal,
     color: AppColors.textBlack,
   );
-
-
 }
