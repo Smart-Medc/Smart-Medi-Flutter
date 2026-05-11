@@ -141,7 +141,7 @@ class _AppDrawerState extends State<AppDrawer> {
             title: 'Appointments',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to appointments
+              GoRouter.of(context).push(AppRoutes.appointmentsView);
             },
             isSelected: widget.selectedItem == DrawerItem.appointments,
           ),
