@@ -45,8 +45,11 @@ abstract class AppRoutes {
   static const String appointmentsRescheduleView = '/appointmentsRescheduleView';
   static const String appointmentsCancelView = '/appointmentsCancelView';
   static const String appointmentsConfirmedView = '/AppointmentsConfirmedView';
-
   static const String availableAppointmentView = '/AvailableAppointmentView';
   static const String availableAppointmentDetailView = '/AvailableAppointmentDetailView';
   static const String completeBookingView = '/CompleteBookingView';
+
+  //organization
+  static const String organizationDashboardView = '/organizationDashboardView';
+
 }
