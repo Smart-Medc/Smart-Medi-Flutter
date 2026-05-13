@@ -34,6 +34,8 @@ import 'package:smart_medi/features/meidcal_records/presentation/views/record_de
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
 import 'package:smart_medi/features/notifications/presentation/views/notifications_view.dart';
 import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
+import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/access_patient_data_page_view.dart';
+import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/organization_access_patient_data_view.dart';
 
 abstract class AppRouter {
 
@@ -41,7 +43,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const OrganizationDashboardView(),
+        builder: (context, state) => const AccessPatientDataView(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       // GoRoute(
@@ -277,6 +279,8 @@ abstract class AppRouter {
 
       //organization
       GoRoute(path: AppRoutes.organizationDashboardView,builder: (context,state) => const OrganizationDashboardView()),
+      GoRoute(path: AppRoutes.organizationAccessPatientDataView,builder: (context,state) => const OrganizationAccessPatientDataView()),
+      GoRoute(path: AppRoutes.accessPatientDataView,builder: (context,state) => const AccessPatientDataView()),
 
       // GoRoute(
       //     path: AppRoutes.onboardingView,
