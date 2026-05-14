@@ -43,8 +43,6 @@ class OrganizationAccessPatientDataView extends StatelessWidget {
                 ),
                 SizedBox(height: 24.h),
                 const SecureAccessSection(),
-                SizedBox(height: 20.h),
-                const SystemValidatesSection(),
                 SizedBox(height: 30.h),
                 const RecentAccessCodesSection(),
                 SizedBox(height: 20.h),
