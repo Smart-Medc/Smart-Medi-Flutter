@@ -33,6 +33,8 @@ import 'package:smart_medi/features/meidcal_records/presentation/views/medical_r
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
 import 'package:smart_medi/features/notifications/presentation/views/notifications_view.dart';
+import 'package:smart_medi/features/organization_feature/Appointment%20Requests/presentation/views/appointment_details_screen.dart';
+import 'package:smart_medi/features/organization_feature/Appointment%20Requests/presentation/views/appointment_requests_view.dart';
 import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
 import 'package:smart_medi/features/organization_feature/organization_availability/presentaion/views/availability_calender_view.dart';
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/access_patient_data_page_view.dart';
@@ -44,7 +46,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const AvailabilityCalenderView(),
+        builder: (context, state) => const AppointmentDetailsScreen(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       // GoRoute(
@@ -283,6 +285,8 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.organizationAccessPatientDataView,builder: (context,state) => const OrganizationAccessPatientDataView()),
       GoRoute(path: AppRoutes.accessPatientDataView,builder: (context,state) => const AccessPatientDataView()),
       GoRoute(path: AppRoutes.organizationAvailabilityCalenderView ,builder: (context,state) => const AvailabilityCalenderView()),
+      GoRoute(path: AppRoutes.appointmentRequestsView ,builder: (context,state) => const AppointmentRequestsView()),
+      GoRoute(path: AppRoutes.appointmentDetailsScreen ,builder: (context,state) => const AppointmentDetailsScreen()),
 
       // GoRoute(
       //     path: AppRoutes.onboardingView,
