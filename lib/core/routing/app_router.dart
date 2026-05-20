@@ -36,6 +36,7 @@ import 'package:smart_medi/features/notifications/presentation/views/notificatio
 import 'package:smart_medi/features/organization_feature/Appointment%20Requests/presentation/views/appointment_details_screen.dart';
 import 'package:smart_medi/features/organization_feature/Appointment%20Requests/presentation/views/appointment_requests_view.dart';
 import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
+import 'package:smart_medi/features/organization_feature/appointment_Schedule/presentation/view/appointment_schedule_screen.dart';
 import 'package:smart_medi/features/organization_feature/organization_availability/presentaion/views/availability_calender_view.dart';
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/access_patient_data_page_view.dart';
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/organization_access_patient_data_view.dart';
@@ -46,7 +47,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const AppointmentDetailsScreen(),
+        builder: (context, state) => const AppointmentScheduleView(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       // GoRoute(
@@ -287,6 +288,7 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.organizationAvailabilityCalenderView ,builder: (context,state) => const AvailabilityCalenderView()),
       GoRoute(path: AppRoutes.appointmentRequestsView ,builder: (context,state) => const AppointmentRequestsView()),
       GoRoute(path: AppRoutes.appointmentDetailsScreen ,builder: (context,state) => const AppointmentDetailsScreen()),
+      GoRoute(path: AppRoutes.appointmentScheduleView ,builder: (context,state) => const AppointmentScheduleView()),
 
       // GoRoute(
       //     path: AppRoutes.onboardingView,
