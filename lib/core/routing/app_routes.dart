@@ -51,5 +51,7 @@ abstract class AppRoutes {
 
   //organization
   static const String organizationDashboardView = '/organizationDashboardView';
+  static const String organizationAccessPatientDataView = '/OrganizationAccessPatientDataView';
+  static const String accessPatientDataView = '/AccessPatientDataView';
 
 }
