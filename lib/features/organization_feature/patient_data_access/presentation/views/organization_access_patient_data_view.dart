@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
-import 'package:smart_medi/core/widgets/app_drawer.dart';
-import 'widgets/organization_access_patient_data_view_body.dart';
+import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/widgets/organization_access_patient_data_view_body.dart';
 
 class OrganizationAccessPatientDataView extends StatelessWidget {
   const OrganizationAccessPatientDataView({super.key});
@@ -12,7 +11,6 @@ class OrganizationAccessPatientDataView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
         body: OrganizationAccessPatientDataViewBody(),
-        drawer: AppDrawer(selectedItem: DrawerItem.home),
       ),
     );
   }
