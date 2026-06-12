@@ -54,5 +54,7 @@ abstract class AppRoutes {
   static const String organizationAccessPatientDataView = '/OrganizationAccessPatientDataView';
   static const String accessPatientDataView = '/AccessPatientDataView';
   static const String organizationAvailabilityCalenderView = '/OrganizationAvailabilityCalenderView';
+  static const String appointmentRequestsView = '/AppointmentRequestsView';
+  static const String appointmentDetailsScreen = '/AppointmentDetailsScreen';
 
 }
