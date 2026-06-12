@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
+import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/widgets/system_validates_section.dart';
 
 class SecureAccessSection extends StatelessWidget {
   const SecureAccessSection({super.key});
@@ -12,9 +13,16 @@ class SecureAccessSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.grey.withOpacity(0.3)),
+        border: Border.all(color: AppColors.grey, width: 1),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,6 +65,8 @@ class SecureAccessSection extends StatelessWidget {
             text: 'Access Data',
             onPressed: () {},
           ),
+          SizedBox(height: 20.h),
+          SystemValidatesSection()
         ],
       ),
     );
