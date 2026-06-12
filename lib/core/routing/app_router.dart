@@ -43,7 +43,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const OrganizationAccessPatientDataView(),
+        builder: (context, state) => const LoginView(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
       // GoRoute(

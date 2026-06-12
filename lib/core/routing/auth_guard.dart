@@ -25,7 +25,7 @@ class AuthGuard {
     // If no stored session exists, redirect to login.
     // Expired access tokens are handled by the networking refresh flow.
     if (!isAuthenticated) {
-      return AppRoutes.loginView;
+      return AppRoutes.organizationAccessPatientDataView;
     }
 
     // Allow access to the route
@@ -38,7 +38,7 @@ class AuthGuard {
 
     // Keep users with a stored session inside the app.
     if (isAuthenticated) {
-      return AppRoutes.homeView;
+      return AppRoutes.organizationAccessPatientDataView;
     }
 
     // Allow access to login/signup
