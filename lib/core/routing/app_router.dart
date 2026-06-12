@@ -33,6 +33,7 @@ import 'package:smart_medi/features/meidcal_records/presentation/views/medical_r
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
 import 'package:smart_medi/features/notifications/presentation/views/notifications_view.dart';
+import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
 
 abstract class AppRouter {
 
@@ -267,6 +268,9 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.appointmentsConfirmedView,builder: (context,state) => const AppointmentsConfirmedView()),
       GoRoute(path: AppRoutes.availableAppointmentView,builder: (context,state) => const AvailableAppointmentView()),
       GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
+      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
+      GoRoute(path: AppRoutes.organizationDashboardView,builder: (context,state) => const OrganizationDashboardView()),
+
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),
