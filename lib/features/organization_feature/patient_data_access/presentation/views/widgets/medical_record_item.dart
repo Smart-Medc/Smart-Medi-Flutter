@@ -25,9 +25,16 @@ class MedicalRecordItem extends StatelessWidget {
       padding: EdgeInsets.all(12.w),
       margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
-        color: AppColors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.grey.withOpacity(0.3)),
+        border: Border.all(color: AppColors.grey, width: 1),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
+        ],
       ),
       child: Row(
         children: [

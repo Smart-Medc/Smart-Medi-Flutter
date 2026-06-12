@@ -46,14 +46,9 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const AppointmentDetailsScreen(),
+        builder: (context, state) => const LoginView(),
         redirect: (context, state) => AuthGuard.checkGuest(state),
       ),
-      // GoRoute(
-      //   path: '/',
-      //   builder: (context, state) => const LoginView(),
-      //   redirect: (context, state) => AuthGuard.checkGuest(state),
-      // ),
       GoRoute(
         path: AppRoutes.loginView,
         builder: (context, state) => const LoginView(),
@@ -278,9 +273,7 @@ abstract class AppRouter {
       GoRoute(path: AppRoutes.appointmentsConfirmedView,builder: (context,state) => const AppointmentsConfirmedView()),
       GoRoute(path: AppRoutes.availableAppointmentView,builder: (context,state) => const AvailableAppointmentView()),
       GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
-
-
-      //organization
+      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
       GoRoute(path: AppRoutes.organizationDashboardView,builder: (context,state) => const OrganizationDashboardView()),
       GoRoute(path: AppRoutes.organizationAccessPatientDataView,builder: (context,state) => const OrganizationAccessPatientDataView()),
       GoRoute(path: AppRoutes.accessPatientDataView,builder: (context,state) => const AccessPatientDataView()),
