@@ -10,7 +10,7 @@ class OrganizationDashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: AppColors.whiteBackgroundColor,
-      body:  OrganizationDashboardBody(),
+      body: OrganizationDashboardBody(),
     );
   }
 }
