@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/app_search_bar.dart';
@@ -20,7 +22,12 @@ class MedicalRecordsBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const CustomAppBar(),
-            const AppHeader(title: 'Medical Records', subtitle: 'Securely store and manage your health documents'),
+            AppHeader(
+              title: 'Medical Records',
+              subtitle: 'Securely store and manage your health documents',
+              actionText: 'Upload Document',
+              onActionPressed: () => context.push(AppRoutes.editRecordView),
+            ),
             const AppSearchBar(hintText: 'Search records by title , type'),
             const MedicalRecordsSummary(),
             28.verticalSpace,
