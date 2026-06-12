@@ -33,6 +33,7 @@ import 'package:smart_medi/features/meidcal_records/presentation/views/medical_r
 import 'package:smart_medi/features/meidcal_records/presentation/views/record_details_view.dart';
 import 'package:smart_medi/features/meidcal_records/presentation/views/edit_record_view.dart';
 import 'package:smart_medi/features/notifications/presentation/views/notifications_view.dart';
+import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
 
 abstract class AppRouter {
 
@@ -259,46 +260,17 @@ abstract class AppRouter {
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
 
-      GoRoute(
-        path: AppRoutes.appointmentsView,
-        builder: (context, state) => const AppointmentView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.bookAppointmentsView,
-        builder: (context, state) => const BookAppointmentsView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.appointmentsCancelView,
-        builder: (context, state) => const AppointmentsCancelView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.appointmentsRescheduleView,
-        builder: (context, state) => const AppointmentsRescheduleView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.appointmentsDetailsView,
-        builder: (context, state) => const AppointmentsDetailsView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.appointmentsConfirmedView,
-        builder: (context, state) => const AppointmentsConfirmedView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.availableAppointmentView,
-        builder: (context, state) => const AvailableAppointmentView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
-      GoRoute(
-        path: AppRoutes.completeBookingView,
-        builder: (context, state) => const CompleteBookingView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
-      ),
+      GoRoute(path: AppRoutes.appointmentsView,builder: (context,state) => const AppointmentView()),
+      GoRoute(path: AppRoutes.bookAppointmentsView,builder: (context,state) => const BookAppointmentsView()),
+      GoRoute(path: AppRoutes.appointmentsCancelView,builder: (context,state) => const AppointmentsCancelView()),
+      GoRoute(path: AppRoutes.appointmentsRescheduleView,builder: (context,state) => const AppointmentsRescheduleView()),
+      GoRoute(path: AppRoutes.appointmentsDetailsView,builder: (context,state) => const AppointmentsDetailsView()),
+      GoRoute(path: AppRoutes.appointmentsConfirmedView,builder: (context,state) => const AppointmentsConfirmedView()),
+      GoRoute(path: AppRoutes.availableAppointmentView,builder: (context,state) => const AvailableAppointmentView()),
+      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
+      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
+      GoRoute(path: AppRoutes.organizationDashboardView,builder: (context,state) => const OrganizationDashboardView()),
+
       // GoRoute(
       //     path: AppRoutes.onboardingView,
       //     builder: (context, state) => const OnboardingView()),
