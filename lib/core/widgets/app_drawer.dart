@@ -168,7 +168,7 @@ class _AppDrawerState extends State<AppDrawer> {
             title: 'Settings',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to settings
+              GoRouter.of(context).push(AppRoutes.organizationDashboardView);
             },
             isSelected: widget.selectedItem == DrawerItem.settings,
           ),
