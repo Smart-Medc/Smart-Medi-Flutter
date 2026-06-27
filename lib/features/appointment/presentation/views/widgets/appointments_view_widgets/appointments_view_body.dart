@@ -10,18 +10,24 @@ class AppointmentsViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Column(
-        children: [
-          const CustomAppBar(),
-          const AppointmentsHeader(),
-          16.verticalSpace,
-          const AppointmentsSummary(),
-          20.verticalSpace,
-          const Expanded(child: AppointmentTabs()),
-        ],
-      ),
-    );;
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              const SliverToBoxAdapter(child: CustomAppBar()),
+              const SliverToBoxAdapter(child: AppointmentsHeader()),
+              SliverToBoxAdapter(child: 16.verticalSpace),
+              const SliverToBoxAdapter(child: AppointmentsSummary()),
+              SliverToBoxAdapter(child: 20.verticalSpace),
+              AppointmentTabs(),
+              SliverToBoxAdapter(child: 100.verticalSpace),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

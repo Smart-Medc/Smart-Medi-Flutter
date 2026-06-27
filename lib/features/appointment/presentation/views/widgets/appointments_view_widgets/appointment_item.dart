@@ -4,29 +4,22 @@ import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
 
 class AppointmentItem extends StatelessWidget {
-  final List<AppointmentModel> appointments;
 
-  const AppointmentItem({super.key, required this.appointments});
+  const AppointmentItem({super.key, required this.appointment});
+  final AppointmentModel appointment;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: appointments.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
-      itemBuilder: (context, index) =>
-          _AppointmentCard(data: appointments[index]),
-    );
+    return AppointmentCard(data: appointment);
   }
 }
 
 // ─── Single Card ──────────────────────────────────────────────────────────────
 
-class _AppointmentCard extends StatelessWidget {
-  final AppointmentModel data;
+class AppointmentCard extends StatelessWidget {
 
-  const _AppointmentCard({required this.data});
+  const AppointmentCard({super.key, required this.data});
+  final AppointmentModel data;
 
   Color get _statusColor {
     switch (data.status.toLowerCase()) {
@@ -44,12 +37,13 @@ class _AppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -218,10 +212,10 @@ class _AppointmentCard extends StatelessWidget {
 // ─── Shared sub-widgets ───────────────────────────────────────────────────────
 
 class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
 
   const _InfoChip({required this.icon, required this.label});
+  final IconData icon;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -244,10 +238,6 @@ class _InfoChip extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-  final bool isDestructive;
 
   const _ActionButton({
     required this.icon,
@@ -255,6 +245,10 @@ class _ActionButton extends StatelessWidget {
     this.onTap,
     this.isDestructive = false,
   });
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+  final bool isDestructive;
 
   @override
   Widget build(BuildContext context) {
