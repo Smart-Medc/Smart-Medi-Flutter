@@ -22,7 +22,7 @@ class AppointmentsViewBody extends StatelessWidget {
               SliverToBoxAdapter(child: 16.verticalSpace),
               const SliverToBoxAdapter(child: AppointmentsSummary()),
               SliverToBoxAdapter(child: 20.verticalSpace),
-              AppointmentTabs(),
+              const AppointmentTabs(),
               SliverToBoxAdapter(child: 100.verticalSpace),
             ],
           ),

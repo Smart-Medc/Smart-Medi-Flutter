@@ -1,27 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:smart_medi/core/widgets/app_header.dart';
 
 class AppointmentsDetailsHeader extends StatelessWidget {
   const AppointmentsDetailsHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
-          'Appointment Details',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-        SizedBox(height: 4),
-        Text(
-          'View and manage your appointment',
-          style: TextStyle(fontSize: 13, color: Colors.black45),
-        ),
-      ],
-    );
+    return const AppHeader(title: 'Appointment Details', subtitle: 'View and manage your appointment');
   }
 }
