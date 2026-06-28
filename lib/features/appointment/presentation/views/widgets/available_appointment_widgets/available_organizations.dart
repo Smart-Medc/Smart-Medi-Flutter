@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
+import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/available_appointment_detail_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/provider_card.dart';
 class AvailableOrganizations extends StatelessWidget {
-  const AvailableOrganizations({super.key, required this.providers});
-  final List<ProviderModel> providers;
+  const AvailableOrganizations({super.key, required this.organizations});
+  final List<GetOrganizationsResponse> organizations;
 
   @override
   Widget build(BuildContext context) {
 
     return Expanded(
-      child: providers.isEmpty
+      child: organizations.isEmpty
           ? _EmptyState()
           : ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: providers.length,
+        itemCount: organizations.length,
         padding: const EdgeInsets.only(bottom: 10),
         itemBuilder: (context, index) {
-          return ProviderCard(
-            provider: providers[index],
+          return OrganizationCard(
+            organization: organizations[index],
             onViewDetails: () =>
-                _navigateToDetail(providers[index], context),
-            onBookNow: () => _navigateToDetail(providers[index], context),
+                _navigateToDetail(organizations[index], context),
+            onBookNow: () => _navigateToDetail(organizations[index], context),
           );
         },
       ),
     );
   }
 // ── Navigation ─────────────────────────────────────────────────────────────
-  void _navigateToDetail(ProviderModel provider,context) {
+  void _navigateToDetail(GetOrganizationsResponse organization, BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => AvailableAppointmentDetailView(provider: provider),
+        builder: (_) => AvailableAppointmentDetailView(provider: sampleProviders[1]),
       ),
     );
   }

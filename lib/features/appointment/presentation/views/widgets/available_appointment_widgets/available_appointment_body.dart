@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/appointment_header.dart';
-import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/available_organizations.dart';
+import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/available_organizations_bloc_builder.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/results_count_label.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/search_filter_bar.dart';
 
@@ -74,7 +74,7 @@ class _AvailableAppointmentBodyState extends State<AvailableAppointmentBody> {
           const SizedBox(height: 14),
 
           // ── 4. Provider Cards List ────────────────────────────────────
-          AvailableOrganizations(providers: providers),
+          const AvailableOrganizationsBlocBuilder(),
 
           // ── 5. Pagination Bar ─────────────────────────────────────────
           // Padding(

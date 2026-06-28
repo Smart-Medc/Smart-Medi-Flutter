@@ -7,7 +7,7 @@ import 'package:smart_medi/features/appointment/data/models/get_organizations_mo
 import 'package:smart_medi/features/appointment/data/repos/appointment_repo.dart';
 
 class AppointmentRepoImpl extends AppointmentRepo{
-  AppointmentRepoImpl(this.apiService);
+  AppointmentRepoImpl({required this.apiService});
   final ApiService apiService;
   @override
   Future<Either<Failure, List<GetOrganizationsResponse>>> getOrganizations() {
