@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
-
-// ==========================================
-// WIDGET: Affiliated Doctors Card
-// Lists doctors with specialty and rating
-// ==========================================
+import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 
 class AffiliatedDoctorsCard extends StatelessWidget {
-  final List<AffiliatedDoctor> doctors;
+  final List<DoctorModel> doctors;
 
   const AffiliatedDoctorsCard({super.key, required this.doctors});
 
@@ -20,7 +15,7 @@ class AffiliatedDoctorsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -66,7 +61,7 @@ class AffiliatedDoctorsCard extends StatelessWidget {
 // ─── Sub-widget ───────────────────────────────────────────────────────────────
 
 class _DoctorRow extends StatelessWidget {
-  final AffiliatedDoctor doctor;
+  final DoctorModel doctor;
 
   const _DoctorRow({required this.doctor});
 
@@ -106,7 +101,7 @@ class _DoctorRow extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                doctor.specialty,
+                doctor.specialization,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey.shade500,

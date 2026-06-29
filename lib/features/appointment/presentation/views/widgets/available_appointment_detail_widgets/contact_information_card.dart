@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
-
-// ==========================================
-// WIDGET: Contact Information Card
-// Address, Phone, Email, Website
-// ==========================================
+import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 
 class ContactInformationCard extends StatelessWidget {
-  final ProviderModel provider;
 
-  const ContactInformationCard({super.key, required this.provider});
+  const ContactInformationCard({super.key, required this.organizationDetails});
+  final OrganizationDetailsResponse organizationDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +15,7 @@ class ContactInformationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -45,8 +40,8 @@ class ContactInformationCard extends StatelessWidget {
           _ContactRow(
             icon: Icons.location_on_outlined,
             label: 'Address',
-            value: provider.address.isNotEmpty
-                ? '${provider.address}\nDowntown, City 12345'
+            value: organizationDetails.address.isNotEmpty
+                ? organizationDetails.address
                 : '—',
             isMultiLine: true,
           ),
@@ -57,7 +52,7 @@ class ContactInformationCard extends StatelessWidget {
           _ContactRow(
             icon: Icons.phone_outlined,
             label: 'Phone',
-            value: provider.phone ?? '—',
+            value: organizationDetails.phone,
           ),
 
           const _Divider(),
@@ -66,7 +61,7 @@ class ContactInformationCard extends StatelessWidget {
           _ContactRow(
             icon: Icons.email_outlined,
             label: 'Email',
-            value: provider.email ?? '—',
+            value: organizationDetails.email,
           ),
 
           const _Divider(),
@@ -75,7 +70,7 @@ class ContactInformationCard extends StatelessWidget {
           _ContactRow(
             icon: Icons.language_outlined,
             label: 'Website',
-            value: provider.website ?? '—',
+            value: organizationDetails.website,
             isLink: true,
           ),
         ],
@@ -87,11 +82,6 @@ class ContactInformationCard extends StatelessWidget {
 // ─── Sub-widgets ──────────────────────────────────────────────────────────────
 
 class _ContactRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-  final bool isMultiLine;
-  final bool isLink;
 
   const _ContactRow({
     required this.icon,
@@ -100,6 +90,11 @@ class _ContactRow extends StatelessWidget {
     this.isMultiLine = false,
     this.isLink = false,
   });
+  final IconData icon;
+  final String label;
+  final String value;
+  final bool isMultiLine;
+  final bool isLink;
 
   @override
   Widget build(BuildContext context) {

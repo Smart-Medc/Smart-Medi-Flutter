@@ -21,17 +21,17 @@ class AvailableOrganizations extends StatelessWidget {
           return OrganizationCard(
             organization: organizations[index],
             onViewDetails: () =>
-                _navigateToDetail(organizations[index].id, context),
-            onBookNow: () => _navigateToDetail(organizations[index].id, context),
+                _navigateToDetail(organizations[index], context),
+            onBookNow: () => _navigateToDetail(organizations[index], context),
           );
         },
       ),
     );
   }
 // ── Navigation ─────────────────────────────────────────────────────────────
-  void _navigateToDetail(String organizationId, BuildContext context) {
+  void _navigateToDetail(GetOrganizationsResponse organization, BuildContext context) {
     GoRouter.of(context).push(AppRoutes.availableAppointmentDetailView,extra: {
-      'organizationId': organizationId,
+      'organization': organization,
     });
   }
 }

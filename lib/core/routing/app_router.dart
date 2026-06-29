@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/routing/auth_guard.dart';
+import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_cancel_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_confirmed_view.dart';
@@ -317,13 +318,18 @@ abstract class AppRouter {
           final extraData = state.extra as Map<String, dynamic>?;
 
           if (extraData == null ||
-              !extraData.containsKey('organizationId')) {
+              !extraData.containsKey('organization')) {
             return AppRoutes.availableAppointmentView;
           }
 
-          final organizationId = extraData['organizationId'];
+          if(extraData['organization'] == null || extraData['organization'].toString().trim().isEmpty) {
+            return AppRoutes.availableAppointmentView;
+          }
 
-          if (organizationId is! String || organizationId.trim().isEmpty) {
+          final organization = extraData['organization'] as GetOrganizationsResponse;
+          final organizationId = organization.id;
+
+          if (organizationId.trim().isEmpty) {
             return AppRoutes.availableAppointmentView;
           }
 
@@ -332,8 +338,9 @@ abstract class AppRouter {
 
         builder: (context, state) {
           final extraData = state.extra as Map<String, dynamic>?;
-          final organizationId = extraData?['organizationId'] as String?;
-          return AvailableAppointmentDetailView(organizationId: organizationId!);
+          final organization = extraData!['organization'] as GetOrganizationsResponse;
+          final organizationId = organization.id;
+          return AvailableAppointmentDetailView(organizationId: organizationId, organization: organization);
         },
       ),
       GoRoute(
