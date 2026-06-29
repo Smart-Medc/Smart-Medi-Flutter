@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/utils/app_colors.dart';
+import 'package:smart_medi/core/utils/app_styles.dart';
+import 'package:smart_medi/core/widgets/icon_with_background.dart';
 import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/specialty_chip.dart';
 
 
-// ==========================================
-// WIDGET: Provider Detail Header Card
-// Name, type badge, rating, specialties,
-// description, and Book Now button
-// ==========================================
+class OrganizationDetailsHeader extends StatelessWidget {
 
-class ProviderDetailHeader extends StatelessWidget {
-  final ProviderModel provider;
-  final VoidCallback? onBookNow;
-
-  const ProviderDetailHeader({
+  const OrganizationDetailsHeader({
     super.key,
     required this.provider,
     this.onBookNow,
   });
+  final ProviderModel provider;
+  final VoidCallback? onBookNow;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class ProviderDetailHeader extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -41,22 +39,8 @@ class ProviderDetailHeader extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Icon
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFE3F2FD),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(
-                  Icons.local_hospital_outlined,
-                  color: Color(0xFF2196F3),
-                  size: 26,
-                ),
-              ),
-              const SizedBox(width: 12),
-              // Name + type badge
+              const IconWithBackground(icon: Icons.local_hospital_outlined, backgroundColor: AppColors.iconBGCyan, iconColor: AppColors.iconBlue),
+              12.horizontalSpace,
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,14 +50,10 @@ class ProviderDetailHeader extends StatelessWidget {
                         Expanded(
                           child: Text(
                             provider.name,
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF1A1A2E),
-                            ),
+                            style: AppStyles.textStyle15W600Black
                           ),
                         ),
-                        const SizedBox(width: 6),
+                       6.horizontalSpace,
                         Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 3),
