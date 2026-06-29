@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
-import 'package:smart_medi/features/appointment/presentation/views/available_appointment_detail_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/provider_card.dart';
 class AvailableOrganizations extends StatelessWidget {
   const AvailableOrganizations({super.key, required this.organizations});
@@ -21,20 +21,18 @@ class AvailableOrganizations extends StatelessWidget {
           return OrganizationCard(
             organization: organizations[index],
             onViewDetails: () =>
-                _navigateToDetail(organizations[index], context),
-            onBookNow: () => _navigateToDetail(organizations[index], context),
+                _navigateToDetail(organizations[index].id, context),
+            onBookNow: () => _navigateToDetail(organizations[index].id, context),
           );
         },
       ),
     );
   }
 // ── Navigation ─────────────────────────────────────────────────────────────
-  void _navigateToDetail(GetOrganizationsResponse organization, BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => AvailableAppointmentDetailView(provider: sampleProviders[1]),
-      ),
-    );
+  void _navigateToDetail(String organizationId, BuildContext context) {
+    GoRouter.of(context).push(AppRoutes.availableAppointmentDetailView,extra: {
+      'organizationId': organizationId,
+    });
   }
 }
 class _EmptyState extends StatelessWidget {

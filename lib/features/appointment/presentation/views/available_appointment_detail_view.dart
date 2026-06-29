@@ -17,12 +17,13 @@ import 'package:smart_medi/features/appointment/presentation/views/widgets/avail
 // ==========================================
 
 class AvailableAppointmentDetailView extends StatelessWidget {
-  final ProviderModel provider;
 
-  const AvailableAppointmentDetailView({super.key, required this.provider});
+  const AvailableAppointmentDetailView({super.key, required this.organizationId});
+  final String organizationId;
 
   @override
   Widget build(BuildContext context) {
+    final provider = sampleProviders[1];
     return Scaffold(
       backgroundColor: const Color(0xFFF5F7FB),
       body: SafeArea(
@@ -101,7 +102,7 @@ class _DetailTopBar extends StatelessWidget {
       child: Row(
         children: [
           AppBackButton(
-            onTap: () => Navigator.of(context).maybePop(),
+            onTap: () => GoRouter.of(context).pop(),
           ),
         ],
       ),
