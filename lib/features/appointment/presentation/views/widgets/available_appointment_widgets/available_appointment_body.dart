@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/appointment_header.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/available_organizations_bloc_builder.dart';
-import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/results_count_label.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/available_appointment_widgets/search_filter_bar.dart';
 
 // ==========================================
@@ -21,32 +19,13 @@ class AvailableAppointmentBody extends StatefulWidget {
 }
 
 class _AvailableAppointmentBodyState extends State<AvailableAppointmentBody> {
-  // ── State Variables ────────────────────────────────────────────────────────
   String _searchQuery = '';
-  // int _currentPage = 1;
-  // final int _totalPages = 3;
-
-  List<ProviderModel> get _filteredProviders {
-    if (_searchQuery.isEmpty) return sampleProviders;
-    return sampleProviders
-        .where(
-          (p) =>
-              p.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              p.type.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-              p.specialties.any(
-                (s) => s.toLowerCase().contains(_searchQuery.toLowerCase()),
-              ),
-        )
-        .toList();
-  }
 
 
 
   // ── Build ──────────────────────────────────────────────────────────────────
   @override
   Widget build(BuildContext context) {
-    final providers = _filteredProviders;
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
@@ -69,9 +48,9 @@ class _AvailableAppointmentBodyState extends State<AvailableAppointmentBody> {
           const SizedBox(height: 14),
 
           // ── 3. Results Count Label ────────────────────────────────────
-          ResultsCountLabel(count: providers.length),
-
-          const SizedBox(height: 14),
+          // ResultsCountLabel(count: providers.length),
+          //
+          // const SizedBox(height: 14),
 
           // ── 4. Provider Cards List ────────────────────────────────────
           const AvailableOrganizationsBlocBuilder(),

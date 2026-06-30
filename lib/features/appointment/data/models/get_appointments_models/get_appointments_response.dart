@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class GetAppointmentsResponse {
 
   GetAppointmentsResponse({
@@ -13,7 +15,7 @@ class GetAppointmentsResponse {
   factory GetAppointmentsResponse.fromJson(Map<String, dynamic> json) {
     return GetAppointmentsResponse(
       items: (json['items'] as List<dynamic>?)
-          ?.map((e) => AppointmentItem.fromJson(e))
+          ?.map((e) => AppointmentItemModel.fromJson(e))
           .toList() ??
           [],
       totalCount: json['totalCount'] ?? 0,
@@ -24,7 +26,7 @@ class GetAppointmentsResponse {
       hasPreviousPage: json['hasPreviousPage'] ?? false,
     );
   }
-  final List<AppointmentItem> items;
+  final List<AppointmentItemModel> items;
   final int totalCount;
   final int pageNumber;
   final int pageSize;
@@ -45,9 +47,8 @@ class GetAppointmentsResponse {
   }
 }
 
-class AppointmentItem {
-
-  AppointmentItem({
+class AppointmentItemModel {
+  AppointmentItemModel({
     required this.id,
     required this.appointmentNumber,
     required this.organizationName,
@@ -60,8 +61,8 @@ class AppointmentItem {
     required this.visitType,
   });
 
-  factory AppointmentItem.fromJson(Map<String, dynamic> json) {
-    return AppointmentItem(
+  factory AppointmentItemModel.fromJson(Map<String, dynamic> json) {
+    return AppointmentItemModel(
       id: json['id'] ?? '',
       appointmentNumber: json['appointmentNumber'] ?? '',
       organizationName: json['organizationName'] ?? '',
@@ -74,6 +75,7 @@ class AppointmentItem {
       visitType: json['visitType'] ?? '',
     );
   }
+
   final String id;
   final String appointmentNumber;
   final String organizationName;
@@ -84,6 +86,25 @@ class AppointmentItem {
   final int durationMinutes;
   final String status;
   final String visitType;
+
+  String get formattedDate =>
+      DateFormat('MMM dd, yyyy').format(date);
+
+  String get formattedTime {
+    try {
+      return DateFormat('hh:mm a').format(
+        DateFormat('HH:mm:ss').parse(time),
+      );
+    } catch (_) {
+      try {
+        return DateFormat('hh:mm a').format(
+          DateFormat('HH:mm').parse(time),
+        );
+      } catch (_) {
+        return time;
+      }
+    }
+  }
 
   Map<String, dynamic> toJson() {
     return {

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 
 class AppointmentItem extends StatelessWidget {
-
   const AppointmentItem({super.key, required this.appointment});
-  final AppointmentModel appointment;
+
+  final AppointmentItemModel appointment;
 
   @override
   Widget build(BuildContext context) {
-    return AppointmentCard(data: appointment);
+    return AppointmentCard(appointment: appointment);
   }
 }
 
 // ─── Single Card ──────────────────────────────────────────────────────────────
 
 class AppointmentCard extends StatelessWidget {
+  const AppointmentCard({super.key, required this.appointment});
 
-  const AppointmentCard({super.key, required this.data});
-  final AppointmentModel data;
+  final AppointmentItemModel appointment;
 
   Color get _statusColor {
-    switch (data.status.toLowerCase()) {
+    switch (appointment.status.toLowerCase()) {
       case 'confirmed':
         return const Color(0xFF2563EB);
       case 'pending':
@@ -55,7 +55,6 @@ class AppointmentCard extends StatelessWidget {
         children: [
           // ── Header ──────────────────────────────────────────────────────────
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 48,
@@ -76,7 +75,7 @@ class AppointmentCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        data.clinicName,
+                        appointment.organizationName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -95,7 +94,7 @@ class AppointmentCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        data.status,
+                        appointment.status,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -115,7 +114,7 @@ class AppointmentCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 60),
             child: Text(
-              '${data.doctorName} • ${data.specialty}',
+              '${appointment.doctorName} • there is no specialty field in the model',
               style: const TextStyle(
                 fontSize: 13,
                 color: Color(0xFF6B7280),
@@ -129,13 +128,19 @@ class AppointmentCard extends StatelessWidget {
           // ── Date / Time / Visit type ─────────────────────────────────────────
           Row(
             children: [
-              _InfoChip(icon: Icons.calendar_today_outlined, label: data.date),
+              _InfoChip(
+                icon: Icons.calendar_today_outlined,
+                label: appointment.formattedDate,
+              ),
               const SizedBox(width: 16),
-              _InfoChip(icon: Icons.access_time_outlined, label: data.time),
+              _InfoChip(
+                icon: Icons.access_time_outlined,
+                label: appointment.formattedTime,
+              ),
               const SizedBox(width: 16),
               _InfoChip(
                 icon: Icons.location_on_outlined,
-                label: data.visitType,
+                label: appointment.visitType,
               ),
             ],
           ),
@@ -143,17 +148,17 @@ class AppointmentCard extends StatelessWidget {
           const SizedBox(height: 6),
 
           // ── Address ──────────────────────────────────────────────────────────
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.location_on_outlined,
                 size: 15,
                 color: Color(0xFF9CA3AF),
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Text(
-                data.address,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                'There is no address field in the model',
+                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
               ),
             ],
           ),
@@ -176,7 +181,7 @@ class AppointmentCard extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: _ActionButton(
                   icon: Icons.sync_outlined,
@@ -188,7 +193,7 @@ class AppointmentCard extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: _ActionButton(
                   icon: Icons.cancel_outlined,
@@ -212,8 +217,8 @@ class AppointmentCard extends StatelessWidget {
 // ─── Shared sub-widgets ───────────────────────────────────────────────────────
 
 class _InfoChip extends StatelessWidget {
-
   const _InfoChip({required this.icon, required this.label});
+
   final IconData icon;
   final String label;
 
@@ -238,13 +243,13 @@ class _InfoChip extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-
   const _ActionButton({
     required this.icon,
     required this.label,
     this.onTap,
     this.isDestructive = false,
   });
+
   final IconData icon;
   final String label;
   final VoidCallback? onTap;
