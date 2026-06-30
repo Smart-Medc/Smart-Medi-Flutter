@@ -10,7 +10,7 @@ class AppointmentTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverCustomTabView(
       tabTitles: const ['Upcoming', 'Past Appointments'],
-      tabContents: [AppointmentsList(appointments: appointmentsResponse.items),AppointmentsList(appointments: appointmentsResponse.items)],
+      tabContents: [AppointmentsList(appointments: appointmentsResponse.upcomingAppointments), AppointmentsList(appointments: appointmentsResponse.pastAppointments, isPast: true)],
     );
   }
 }

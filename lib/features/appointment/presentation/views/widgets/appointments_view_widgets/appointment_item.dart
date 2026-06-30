@@ -4,22 +4,24 @@ import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 
 class AppointmentItem extends StatelessWidget {
-  const AppointmentItem({super.key, required this.appointment});
+  const AppointmentItem({super.key, required this.appointment,this.isPast = false});
 
   final AppointmentItemModel appointment;
+  final bool isPast;
 
   @override
   Widget build(BuildContext context) {
-    return AppointmentCard(appointment: appointment);
+    return AppointmentCard(appointment: appointment, isPast: isPast);
   }
 }
 
 // ─── Single Card ──────────────────────────────────────────────────────────────
 
 class AppointmentCard extends StatelessWidget {
-  const AppointmentCard({super.key, required this.appointment});
+  const AppointmentCard({super.key, required this.appointment, required this.isPast});
 
   final AppointmentItemModel appointment;
+  final bool isPast;
 
   Color get _statusColor {
     switch (appointment.status.toLowerCase()) {
@@ -168,46 +170,61 @@ class AppointmentCard extends StatelessWidget {
           const SizedBox(height: 12),
 
           // ── Action Buttons ───────────────────────────────────────────────────
-          Row(
-            children: [
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.visibility_outlined,
-                  label: 'View Details',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsDetailsView);
-                  },
+          if (!isPast) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.visibility_outlined,
+                    label: 'View Details',
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRoutes.appointmentsDetailsView);
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.sync_outlined,
-                  label: 'Reschedule',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsRescheduleView);
-                  },
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.sync_outlined,
+                    label: 'Reschedule',
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRoutes.appointmentsRescheduleView);
+                    },
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.cancel_outlined,
-                  label: 'Cancel',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsCancelView);
-                  },
-                  isDestructive: true,
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.cancel_outlined,
+                    label: 'Cancel',
+                    isDestructive: true,
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRoutes.appointmentsCancelView);
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ] else ...[
+            // Past appointments → فقط View Details
+            Row(
+              children: [
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.visibility_outlined,
+                    label: 'View Details',
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRoutes.appointmentsDetailsView);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ]
         ],
       ),
     );

@@ -34,6 +34,24 @@ class GetAppointmentsResponse {
   final bool hasNextPage;
   final bool hasPreviousPage;
 
+  List<AppointmentItemModel> get upcomingAppointments {
+    final now = DateTime.now();
+
+    return items
+        .where((a) => a.date.isAfter(now))
+        .toList()
+      ..sort((a, b) => a.date.compareTo(b.date));
+  }
+
+  List<AppointmentItemModel> get pastAppointments {
+    final now = DateTime.now();
+
+    return items
+        .where((a) => a.date.isBefore(now))
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'items': items.map((e) => e.toJson()).toList(),
