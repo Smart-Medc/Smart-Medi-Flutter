@@ -4,16 +4,16 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 /// ويدجت بطاقة المستشفى
 /// تعرض: أيقونة المستشفى + الاسم + الـ tag + العنوان
 class HospitalCardWidget extends StatelessWidget {
-  final String hospitalName;
-  final String hospitalTag;
-  final String hospitalAddress;
 
   const HospitalCardWidget({
     super.key,
-    this.hospitalName = 'City Medical Center',
-    this.hospitalTag = 'Hospital',
-    this.hospitalAddress = '123 Medical Plaza, Downtown',
+    required this.hospitalName,
+    required this.hospitalTag,
+    required this.hospitalAddress,
   });
+  final String hospitalName;
+  final String hospitalTag;
+  final String hospitalAddress;
 
   @override
   Widget build(BuildContext context) {
