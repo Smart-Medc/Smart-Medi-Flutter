@@ -296,8 +296,30 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.appointmentsDetailsView,
-        builder: (context, state) => const AppointmentsDetailsView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              extraData['appointmentId'] == null ||
+              extraData['appointmentId'].toString().trim().isEmpty) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final appointmentId = extraData['appointmentId'] as String;
+
+          return AppointmentsDetailsView(
+            appointmentId: appointmentId,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.appointmentsConfirmedView,

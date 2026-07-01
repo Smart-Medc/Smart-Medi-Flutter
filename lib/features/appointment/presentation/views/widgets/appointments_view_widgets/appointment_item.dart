@@ -178,8 +178,12 @@ class AppointmentCard extends StatelessWidget {
                     icon: Icons.visibility_outlined,
                     label: 'View Details',
                     onTap: () {
-                      GoRouter.of(context)
-                          .pushReplacement(AppRoutes.appointmentsDetailsView);
+                      GoRouter.of(context).push(
+                        AppRoutes.appointmentsDetailsView,
+                        extra: {
+                          'appointmentId': appointment.id,
+                        },
+                      );
                     },
                   ),
                 ),
@@ -217,8 +221,12 @@ class AppointmentCard extends StatelessWidget {
                     icon: Icons.visibility_outlined,
                     label: 'View Details',
                     onTap: () {
-                      GoRouter.of(context)
-                          .pushReplacement(AppRoutes.appointmentsDetailsView);
+                      GoRouter.of(context).push(
+                        AppRoutes.appointmentsDetailsView,
+                        extra: {
+                          'appointmentId': appointment.id,
+                        },
+                      );
                     },
                   ),
                 ),
