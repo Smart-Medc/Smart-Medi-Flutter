@@ -3,6 +3,7 @@ import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
@@ -40,6 +41,16 @@ class AppointmentRepoImpl extends AppointmentRepo{
         endpoint: ApiEndpoints.getPatientAppointments(patientId: patientId),
       );
       return GetAppointmentsResponse.fromJson(response);
+    });
+  }
+
+  @override
+  Future<Either<Failure, GetAppointmentDetailsResponse>> getPatientAppointmentDetails({required String appointmentId}) {
+    return ApiHelper.execute<GetAppointmentDetailsResponse>(() async {
+      final response = await apiService.get(
+        endpoint: ApiEndpoints.getPatientAppointmentDetails(appointmentId: appointmentId),
+      );
+      return GetAppointmentDetailsResponse.fromJson(response);
     });
   }
 
