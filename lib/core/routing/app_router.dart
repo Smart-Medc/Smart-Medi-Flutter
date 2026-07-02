@@ -281,8 +281,28 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.bookAppointmentsView,
-        builder: (context, state) => const BookAppointmentsView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              extraData['organization'] == null ||
+              extraData['organization'].toString().trim().isEmpty) {
+            return AppRoutes.bookAppointmentsView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final organization = extraData['organization'] as GetOrganizationsResponse;
+
+          return BookAppointmentsView(
+            organization: organization,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.appointmentsCancelView,

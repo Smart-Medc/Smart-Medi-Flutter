@@ -52,14 +52,16 @@ class HospitalCardWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      hospitalName,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textBlack,
+                      Expanded(
+                        child: Text(
+                          hospitalName,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textBlack,
+                          ),
+                        ),
                       ),
-                    ),
                     const SizedBox(width: 8),
                     // Hospital Tag
                     Container(

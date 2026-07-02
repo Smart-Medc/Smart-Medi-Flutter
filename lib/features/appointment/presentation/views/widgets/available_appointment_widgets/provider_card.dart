@@ -79,7 +79,7 @@ class OrganizationCard extends StatelessWidget {
 
           // ── Action Buttons ────────────────────────────
           _CardActions(
-            onViewDetails: onViewDetails,
+            onViewDetails: onViewDetails, organization: organization,
           ),
         ],
       ),
@@ -217,8 +217,9 @@ class _InfoRow extends StatelessWidget {
 
 class _CardActions extends StatelessWidget {
 
-  const _CardActions({this.onViewDetails,});
+  const _CardActions({this.onViewDetails, required this.organization,});
   final VoidCallback? onViewDetails;
+  final GetOrganizationsResponse organization;
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +252,9 @@ class _CardActions extends StatelessWidget {
         // Book Now (filled)
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () => context.push(AppRoutes.bookAppointmentsView),
+            onPressed: () => context.push(AppRoutes.bookAppointmentsView, extra: {
+              'organization': organization
+            }),
             icon: const Icon(Icons.calendar_today_rounded, size: 14),
             label: const Text(
               'Book Now',

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/helpers/extensions.dart';
+import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/presentation/manager/book_appointment_cubit/book_appointment_cubit.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/book_appointment_widgets/booking_header_section.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/book_appointment_widgets/continue_button_widget.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/book_appointment_widgets/date_time_selection_section.dart';
 
 class BookAppointmentBody extends StatelessWidget {
-  const BookAppointmentBody({super.key});
-
+  const BookAppointmentBody({super.key, required this.organization});
+  final GetOrganizationsResponse organization;
   void _showConfirmationSnackBar(BuildContext context, DateTime date, String time) {
     context.showSnackBar(
       Text(
@@ -48,7 +49,7 @@ class BookAppointmentBody extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const BookingHeaderSection(),
+                      BookingHeaderSection(organization: organization,),
                       16.verticalSpace,
                       DateTimeSelectionSection(
                         selectedDate: state.selectedDate,

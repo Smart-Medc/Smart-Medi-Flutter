@@ -32,7 +32,9 @@ class AvailableOrganizationDetails extends StatelessWidget {
             OrganizationDetailsHeader(
               organization: organization,
               onBookNow: () {
-                context.push(AppRoutes.bookAppointmentsView);
+                context.push(AppRoutes.bookAppointmentsView,extra: {
+                  'organization': organization,
+                });
                 // ScaffoldMessenger.of(context).showSnackBar(
                 //   SnackBar(
                 //     content: Text(
