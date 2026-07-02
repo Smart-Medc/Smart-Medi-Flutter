@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/extensions.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/presentation/manager/book_appointment_cubit/book_appointment_cubit.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/book_appointment_widgets/booking_header_section.dart';
@@ -55,7 +57,7 @@ class BookAppointmentBody extends StatelessWidget {
               ),
             ),
           ),
-          const _ContinueButtonSection(),
+          _ContinueButtonSection(organization: organization),
         ],
       ),
     );
@@ -63,7 +65,8 @@ class BookAppointmentBody extends StatelessWidget {
 }
 
 class _ContinueButtonSection extends StatelessWidget {
-  const _ContinueButtonSection();
+  const _ContinueButtonSection({required this.organization});
+  final GetOrganizationsResponse organization;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +81,19 @@ class _ContinueButtonSection extends StatelessWidget {
       ),
       child: ContinueButtonWidget(
         selectedTime: selectedTime,
-        onPressed: () => context.read<BookAppointmentCubit>().confirmBooking(),
+        onPressed: selectedTime == null
+            ? null
+            : () {
+                final state = context.read<BookAppointmentCubit>().state;
+                context.push(
+                  AppRoutes.completeBookingView,
+                  extra: {
+                    'date': state.selectedDate,
+                    'time': state.selectedTime,
+                    'organizationId': organization.id,
+                  },
+                );
+              },
       ),
     );
   }

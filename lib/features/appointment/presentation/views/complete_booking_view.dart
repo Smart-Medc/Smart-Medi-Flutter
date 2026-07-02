@@ -10,7 +10,16 @@ import 'package:smart_medi/features/appointment/presentation/views/widgets/compl
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/visit_type_selector.dart';
 
 class CompleteBookingView extends StatefulWidget {
-  const CompleteBookingView({super.key});
+  const CompleteBookingView({
+    super.key,
+    required this.selectedDate,
+    required this.selectedTime,
+    required this.organizationId,
+  });
+
+  final DateTime selectedDate;
+  final String selectedTime;
+  final String organizationId;
 
   @override
   State<CompleteBookingView> createState() => _BookAppointmentScreenState();
@@ -23,24 +32,30 @@ class _BookAppointmentScreenState extends State<CompleteBookingView> {
   bool _agreeCancellationPolicy = false;
   final TextEditingController _reasonController = TextEditingController();
 
+  // ── Passed Data ──────────────────────────────────────────
+  late String _formattedDate;
+  late String _formattedTime;
+
   // ── Static Demo Data ────────────────────────────────────
   final String _hospitalName = 'City Medical Center';
   final String _hospitalType = 'Hospital';
   final String _address = '123 Medical Plaza, Downtown';
   final String _patientName = 'Alex Johnson (from profile)';
-  final String _date = '12/27/2025';
-  final String _time = '2:00 PM';
 
   // ── Derived State ────────────────────────────────────────
   bool get _isFormValid =>
-      _selectedVisitType != null &&
-          _reasonController.text.trim().isNotEmpty &&
-          _agreeCancellationPolicy;
+     _selectedVisitType != null &&
+         _reasonController.text.trim().isNotEmpty &&
+         _agreeCancellationPolicy;
 
   @override
   void initState() {
     super.initState();
     _reasonController.addListener(() => setState(() {}));
+
+    // Format the passed date and time
+    _formattedDate = '${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}';
+    _formattedTime = widget.selectedTime;
   }
 
   @override
@@ -86,8 +101,8 @@ class _BookAppointmentScreenState extends State<CompleteBookingView> {
             // ── 2. Patient Info (Appointment Details) Card ──
             PatientInfoCard(
               patientName: _patientName,
-              appointmentDate: _date,
-              appointmentTime: _time,
+              appointmentDate: _formattedDate,
+              appointmentTime: _formattedTime,
             ),
 
             const SizedBox(height: 16),
@@ -120,8 +135,8 @@ class _BookAppointmentScreenState extends State<CompleteBookingView> {
             // ── 6. Booking Summary Card ─────────────────────
             BookingSummaryCard(
               organization: _hospitalName,
-              date: _date,
-              time: _time,
+              date: _formattedDate,
+              time: _formattedTime,
               visitType: _selectedVisitType ?? '—',
               shareRecords: _shareMedicalRecords,
             ),

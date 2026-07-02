@@ -387,8 +387,32 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.completeBookingView,
-        builder: (context, state) => const CompleteBookingView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('date') ||
+              !extraData.containsKey('time') ||
+              !extraData.containsKey('organizationId')) {
+            return AppRoutes.availableAppointmentView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final DateTime selectedDate = extraData['date'] as DateTime;
+          final String selectedTime = extraData['time'] as String;
+          final String organizationId = extraData['organizationId'] as String;
+
+          return CompleteBookingView(
+            selectedDate: selectedDate,
+            selectedTime: selectedTime,
+            organizationId: organizationId,
+          );
+        },
       ),
       // GoRoute(
       //   path: AppRoutes.completeBookingView,
