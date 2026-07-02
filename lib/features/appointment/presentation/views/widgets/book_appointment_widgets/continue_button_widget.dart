@@ -17,13 +17,17 @@ class ContinueButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final VoidCallback? effectiveOnPressed = _isEnabled
+        ? onPressed ?? () => context.push(AppRoutes.completeBookingView)
+        : null;
+
     return SizedBox(
       width: double.infinity,
       height: 54,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         child: ElevatedButton(
-          onPressed: () => context.push(AppRoutes.completeBookingView),
+          onPressed: effectiveOnPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: _isEnabled
                 ? AppColors.primaryColor

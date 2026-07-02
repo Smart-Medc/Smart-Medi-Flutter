@@ -33,6 +33,7 @@ class DioFactory {
       dio.options.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        // 'X-Client-Type': 'Mobile',
       };
 
       _addInterceptors(dio);

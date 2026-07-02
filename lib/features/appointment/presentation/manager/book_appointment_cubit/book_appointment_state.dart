@@ -6,6 +6,8 @@ class BookAppointmentState {
   final String? selectedTime;
   final bool isConfirmed;
 
+  static const Object _unset = Object();
+
   const BookAppointmentState({
     required this.selectedDate,
     this.selectedTime,
@@ -14,12 +16,13 @@ class BookAppointmentState {
 
   BookAppointmentState copyWith({
     DateTime? selectedDate,
-    String? selectedTime,
+    Object? selectedTime = _unset,
     bool? isConfirmed,
   }) {
     return BookAppointmentState(
       selectedDate: selectedDate ?? this.selectedDate,
-      selectedTime: selectedTime ?? this.selectedTime,
+      selectedTime:
+          identical(selectedTime, _unset) ? this.selectedTime : selectedTime as String?,
       isConfirmed: isConfirmed ?? this.isConfirmed,
     );
   }
