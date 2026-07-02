@@ -5,6 +5,8 @@ import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
+import 'package:smart_medi/features/appointment/data/models/get_availability_days/get_availability_days_request.dart';
+import 'package:smart_medi/features/appointment/data/models/get_availability_days/get_availability_days_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/data/repos/appointment_repo.dart';
@@ -51,6 +53,19 @@ class AppointmentRepoImpl extends AppointmentRepo{
         endpoint: ApiEndpoints.getPatientAppointmentDetails(appointmentId: appointmentId),
       );
       return GetAppointmentDetailsResponse.fromJson(response);
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<GetAvailabilityDaysResponse>>> getAvailabilityDays({required GetAvailabilityDaysRequest request}) {
+    return ApiHelper.execute<List<GetAvailabilityDaysResponse>>(() async {
+      final response = await apiService.get(
+        endpoint: ApiEndpoints.getAvailabilityDays(organizationId: request.organizationId),
+        queryParameters: request.toQueryParameters(),
+      );
+      return (response as List)
+          .map((e) => GetAvailabilityDaysResponse.fromJson(e))
+          .toList();
     });
   }
 
