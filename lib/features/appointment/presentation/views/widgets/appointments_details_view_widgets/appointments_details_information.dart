@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/shared_reusable_widgets.dart';
 
 class AppointmentsDetailsInformation extends StatelessWidget {
-  const AppointmentsDetailsInformation({super.key});
-
+  const AppointmentsDetailsInformation({super.key, required this.appointmentDetails});
+  final GetAppointmentDetailsResponse appointmentDetails;
   @override
   Widget build(BuildContext context) {
-    return const BaseCard(
+    return  BaseCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Appointment Information',
             style: TextStyle(
               fontSize: 15,
@@ -18,7 +19,7 @@ class AppointmentsDetailsInformation extends StatelessWidget {
               color: Colors.black87,
             ),
           ),
-          SizedBox(height: 14),
+          const SizedBox(height: 14),
           // Date + Time row
           Row(
             children: [
@@ -26,27 +27,27 @@ class AppointmentsDetailsInformation extends StatelessWidget {
                 child: InfoItem(
                   icon: Icons.calendar_today_outlined,
                   label: 'DATE',
-                  value: 'March 25, 2024',
+                  value: appointmentDetails.formattedDate,
                 ),
               ),
               Expanded(
                 child: InfoItem(
                   icon: Icons.access_time_outlined,
                   label: 'Time & Duration',
-                  value: '10:00 AM (30 minutes)',
+                  value: '${appointmentDetails.formattedTime} (${appointmentDetails.durationMinutes} minutes)',
                 ),
               ),
             ],
           ),
-          SizedBox(height: 14),
-          LabelValue(label: 'Appointment Type', value: 'First Visit'),
-          SizedBox(height: 12),
+          const SizedBox(height: 14),
+          LabelValue(label: 'Appointment Type', value: appointmentDetails.visitType),
+          const SizedBox(height: 12),
           LabelValue(
             label: 'Reason for Visit',
-            value: 'Annual checkup and general health consultation',
+            value: appointmentDetails.reason,
           ),
-          SizedBox(height: 12),
-          LabelValueLink(label: 'Appointment ID', value: 'APT-2024-001'),
+          const SizedBox(height: 12),
+          LabelValueLink(label: 'Appointment ID', value: appointmentDetails.id),
         ],
       ),
     );

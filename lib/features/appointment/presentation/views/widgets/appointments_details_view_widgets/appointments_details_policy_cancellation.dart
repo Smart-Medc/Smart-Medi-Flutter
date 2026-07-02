@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppointmentsDetailsPolicyCancellation extends StatelessWidget {
-  const AppointmentsDetailsPolicyCancellation({super.key});
-
+  const AppointmentsDetailsPolicyCancellation({super.key, required this.cancellationPolicy});
+  final String cancellationPolicy;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,17 +12,17 @@ class AppointmentsDetailsPolicyCancellation extends StatelessWidget {
         border: Border.all(color: const Color(0xFFFED7AA)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       padding: const EdgeInsets.all(16),
-      child: const Column(
+      child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
               Icon(Icons.info_outline, size: 18, color: Color(0xFFF97316)),
               SizedBox(width: 8),
@@ -36,10 +36,10 @@ class AppointmentsDetailsPolicyCancellation extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
-            'Cancellations must be made at least 24 hours before the appointment. Late cancellations may incur a fee.',
-            style: TextStyle(fontSize: 12, color: Color(0xFFC2410C)),
+            cancellationPolicy,
+            style: const TextStyle(fontSize: 12, color: Color(0xFFC2410C)),
           ),
         ],
       ),

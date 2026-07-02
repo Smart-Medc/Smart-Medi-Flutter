@@ -14,17 +14,17 @@ class AppointmentDetailsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const AppointmentsDetailsMedicalCard(),
+        AppointmentsDetailsMedicalCard(appointmentDetails: appointmentDetails),
         12.verticalSpace,
-        const AppointmentsDetailsInformation(),
+        AppointmentsDetailsInformation(appointmentDetails: appointmentDetails),
         12.verticalSpace,
-        const AppointmentsDetailsSharedRecord(),
+        if (appointmentDetails.isRecordsShared) AppointmentsDetailsSharedRecord(accessCode: appointmentDetails.accessCode ?? 'There is no access code available.') else const SizedBox(),
         12.verticalSpace,
         const AppointmentsDetailsActionsCard(),
         12.verticalSpace,
         const AppointmentsDetailsReminderCard(),
         12.verticalSpace,
-        const AppointmentsDetailsPolicyCancellation(),
+        AppointmentsDetailsPolicyCancellation(cancellationPolicy: appointmentDetails.cancellationPolicy,),
         24.verticalSpace,
       ],
     );

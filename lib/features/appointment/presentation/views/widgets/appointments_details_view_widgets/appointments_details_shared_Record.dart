@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppointmentsDetailsSharedRecord extends StatelessWidget {
-  const AppointmentsDetailsSharedRecord({super.key});
-
+  const AppointmentsDetailsSharedRecord({super.key, required this.accessCode});
+  final String accessCode;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,7 +13,7 @@ class AppointmentsDetailsSharedRecord extends StatelessWidget {
         border: Border.all(color: const Color(0xFF3B82F6), width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -66,27 +66,30 @@ class AppointmentsDetailsSharedRecord extends StatelessWidget {
             ),
             child: Row(
               children: [
-                const Column(
+                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Access Code',
                       style: TextStyle(fontSize: 11, color: Colors.black45),
                     ),
-                    SizedBox(height: 2),
-                    Text(
-                      'ABC123XY',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                        letterSpacing: 1.2,
+                    const SizedBox(height: 2),
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        accessCode,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          letterSpacing: 1.2,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const Spacer(),
-                GestureDetector(
+                if (accessCode == 'There is no access code available.') const SizedBox() else GestureDetector(
                   onTap: () {
                     Clipboard.setData(const ClipboardData(text: 'ABC123XY'));
                   },

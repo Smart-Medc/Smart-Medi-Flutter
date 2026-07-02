@@ -1,5 +1,6 @@
-class GetAppointmentDetailsResponse {
+import 'package:intl/intl.dart';
 
+class GetAppointmentDetailsResponse {
   GetAppointmentDetailsResponse({
     required this.address,
     required this.phone,
@@ -68,6 +69,7 @@ class GetAppointmentDetailsResponse {
       visitType: json['visitType'] ?? '',
     );
   }
+
   final String address;
   final String phone;
   final String reason;
@@ -97,6 +99,27 @@ class GetAppointmentDetailsResponse {
   final int durationMinutes;
   final String status;
   final String visitType;
+
+  // ✅ FORMATTED DATE
+  String get formattedDate =>
+      DateFormat('MMM dd, yyyy').format(date);
+
+  // ✅ FORMATTED TIME (handles HH:mm:ss or HH:mm)
+  String get formattedTime {
+    try {
+      return DateFormat('hh:mm a').format(
+        DateFormat('HH:mm:ss').parse(time),
+      );
+    } catch (_) {
+      try {
+        return DateFormat('hh:mm a').format(
+          DateFormat('HH:mm').parse(time),
+        );
+      } catch (_) {
+        return time;
+      }
+    }
+  }
 
   Map<String, dynamic> toJson() {
     return {
