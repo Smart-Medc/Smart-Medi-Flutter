@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/helpers/secure_storage_helper.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_request.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/booking_summary_card.dart';
-import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/confirm_booking_button.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/consent_checkboxes.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/hospital_header_card.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/patient_info_card.dart';
+import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/post_appointment_bloc_consumer.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/reason_for_visit_field.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/visit_type_selector.dart';
 
@@ -71,10 +70,6 @@ class _CompleteBookingBodyState extends State<CompleteBookingBody> {
     super.dispose();
   }
 
-  // ── Confirm Action ───────────────────────────────────────
-  void _onConfirmBooking() {
-    context.push(AppRoutes.appointmentsConfirmedView);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +133,17 @@ class _CompleteBookingBodyState extends State<CompleteBookingBody> {
           const SizedBox(height: 24),
 
           // ── 7. Confirm Booking Button ───────────────────
-          ConfirmBookingButton(
-            isEnabled: _isFormValid,
-            onPressed: _onConfirmBooking,
+          PostAppointmentBlocConsumer(
+            isFormValid: _isFormValid,
+            postAppointmentRequest: PostAppointmentRequest(
+              organizationId: widget.organization.id,
+              date: widget.selectedDate,
+              startTime: widget.selectedTime,
+              visitType: _selectedVisitType ?? '',
+              reason: _reasonController.text,
+              shareRecords: _shareMedicalRecords,
+              recordsToShare: const [],
+            ),
           ),
 
           const SizedBox(height: 24),

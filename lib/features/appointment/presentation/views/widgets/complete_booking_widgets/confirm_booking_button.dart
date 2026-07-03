@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 /// ========================================================
 class ConfirmBookingButton extends StatelessWidget {
   final bool isEnabled;
+  final bool isLoading;
   final VoidCallback? onPressed;
 
   const ConfirmBookingButton({
     super.key,
     required this.isEnabled,
+    required this.isLoading,
     this.onPressed,
   });
 
@@ -21,17 +23,28 @@ class ConfirmBookingButton extends StatelessWidget {
       width: double.infinity,
       height: 52,
       child: ElevatedButton(
-        onPressed: isEnabled ? onPressed : null,
+        onPressed: (isEnabled && !isLoading)
+            ? onPressed
+            : null,
         style: ElevatedButton.styleFrom(
           backgroundColor:
-              isEnabled ? const Color(0xFF4A90D9) : const Color(0xFFB8D4F0),
+          isEnabled ? const Color(0xFF4A90D9) : const Color(0xFFB8D4F0),
           disabledBackgroundColor: const Color(0xFFB8D4F0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           elevation: isEnabled ? 2 : 0,
         ),
-        child: const Text(
+        child: isLoading
+            ? const SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Colors.white,
+          ),
+        )
+            : const Text(
           'Confirm Booking',
           style: TextStyle(
             fontSize: 16,
