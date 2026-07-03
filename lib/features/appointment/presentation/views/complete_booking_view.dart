@@ -1,5 +1,9 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_medi/core/helpers/service_locator.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
+import 'package:smart_medi/features/appointment/data/repos/appointment_repo.dart';
+import 'package:smart_medi/features/appointment/presentation/manager/post_appointment_cubit/post_appointment_cubit.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/complete_booking_widgets/complete_booking_body.dart';
 
 class CompleteBookingView extends StatelessWidget {
@@ -19,10 +23,13 @@ class CompleteBookingView extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F4F8),
       appBar: _buildAppBar(context),
-      body: CompleteBookingBody(
-        selectedDate: selectedDate,
-        selectedTime: selectedTime,
-        organization: organization,
+      body: BlocProvider(
+        create: (context) => PostAppointmentCubit(getIt<AppointmentRepo>()),
+        child: CompleteBookingBody(
+          selectedDate: selectedDate,
+          selectedTime: selectedTime,
+          organization: organization,
+        ),
       ),
     );
   }
