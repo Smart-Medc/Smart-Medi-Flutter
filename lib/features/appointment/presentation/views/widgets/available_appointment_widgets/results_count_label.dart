@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 // ==========================================
 
 class ResultsCountLabel extends StatelessWidget {
-  final int count;
 
   const ResultsCountLabel({super.key, required this.count});
+  final int count;
 
   @override
   Widget build(BuildContext context) {

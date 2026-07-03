@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/core/widgets/app_header.dart';
 import 'app_back_button.dart';
 
 // ==========================================
@@ -15,25 +17,8 @@ class AppointmentHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const AppBackButton(),
-        const SizedBox(height: 20),
-        const Text(
-          'Appointment Details',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF1A1A2E),
-            letterSpacing: -0.3,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'View and manage your appointment',
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.grey.shade500,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
+        20.verticalSpace,
+        const AppHeader(title: 'Appointment Details', subtitle: 'View and manage your appointment'),
       ],
     );
   }

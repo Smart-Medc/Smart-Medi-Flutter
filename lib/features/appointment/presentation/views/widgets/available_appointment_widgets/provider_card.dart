@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
+import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'specialty_chip.dart';
 
 // ==========================================
@@ -9,29 +10,29 @@ import 'specialty_chip.dart';
 // Displays one hospital/clinic/doctor item
 // ==========================================
 
-class ProviderCard extends StatelessWidget {
-  final ProviderModel provider;
-  final VoidCallback? onViewDetails;
-  final VoidCallback? onBookNow;
+class OrganizationCard extends StatelessWidget {
 
-  const ProviderCard({
+  const OrganizationCard({
     super.key,
-    required this.provider,
+    required this.organization,
     this.onViewDetails,
     this.onBookNow,
   });
+  final GetOrganizationsResponse organization;
+  final VoidCallback? onViewDetails;
+  final VoidCallback? onBookNow;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      padding: const EdgeInsets.all(16),
+      margin:  EdgeInsets.only(bottom: 14.h),
+      padding:  const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -41,12 +42,12 @@ class ProviderCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Header: Icon + Name + Type ──────────────
-          _CardHeader(name: provider.name, type: provider.type),
+          _CardHeader(name: organization.name, type: organization.type),
 
           const SizedBox(height: 8),
 
           // ── Rating ───────────────────────────────────
-          _RatingRow(rating: provider.rating, reviewCount: provider.reviewCount),
+          _RatingRow(rating: organization.rating, reviewCount: organization.reviewCount),
 
           const SizedBox(height: 8),
 
@@ -54,17 +55,16 @@ class ProviderCard extends StatelessWidget {
           Wrap(
             spacing: 6,
             runSpacing: 6,
-            children: provider.specialties
+            children: organization.specializations
                 .map((s) => SpecialtyChip(label: s))
                 .toList(),
           ),
-
-          const SizedBox(height: 10),
+          10.verticalSpace,
 
           // ── Address ───────────────────────────────────
           _InfoRow(
             icon: Icons.location_on_outlined,
-            text: provider.address,
+            text: organization.address,
           ),
 
           const SizedBox(height: 4),
@@ -72,14 +72,14 @@ class ProviderCard extends StatelessWidget {
           // ── Next Available ────────────────────────────
           _InfoRow(
             icon: Icons.access_time_rounded,
-            text: 'Next: ${provider.nextAvailable}',
+            text: 'Next: ${organization.nextAvailable}',
           ),
 
           const SizedBox(height: 14),
 
           // ── Action Buttons ────────────────────────────
           _CardActions(
-            onViewDetails: onViewDetails,
+            onViewDetails: onViewDetails, organization: organization,
           ),
         ],
       ),
@@ -90,10 +90,10 @@ class ProviderCard extends StatelessWidget {
 // ─── Sub-widgets ──────────────────────────────────────────────────────────────
 
 class _CardHeader extends StatelessWidget {
-  final String name;
-  final String type;
 
   const _CardHeader({required this.name, required this.type});
+  final String name;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -156,10 +156,10 @@ class _CardHeader extends StatelessWidget {
 }
 
 class _RatingRow extends StatelessWidget {
-  final double rating;
-  final int reviewCount;
 
   const _RatingRow({required this.rating, required this.reviewCount});
+  final double rating;
+  final int reviewCount;
 
   @override
   Widget build(BuildContext context) {
@@ -189,10 +189,10 @@ class _RatingRow extends StatelessWidget {
 }
 
 class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String text;
 
   const _InfoRow({required this.icon, required this.text});
+  final IconData icon;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -216,9 +216,10 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _CardActions extends StatelessWidget {
-  final VoidCallback? onViewDetails;
 
-  const _CardActions({this.onViewDetails,});
+  const _CardActions({this.onViewDetails, required this.organization,});
+  final VoidCallback? onViewDetails;
+  final GetOrganizationsResponse organization;
 
   @override
   Widget build(BuildContext context) {
@@ -251,7 +252,9 @@ class _CardActions extends StatelessWidget {
         // Book Now (filled)
         Expanded(
           child: ElevatedButton.icon(
-            onPressed: () => context.push(AppRoutes.bookAppointmentsView),
+            onPressed: () => context.push(AppRoutes.bookAppointmentsView, extra: {
+              'organization': organization
+            }),
             icon: const Icon(Icons.calendar_today_rounded, size: 14),
             label: const Text(
               'Book Now',

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_details_view_widgets/shared_reusable_widgets.dart';
 
 class AppointmentsDetailsMedicalCard extends StatelessWidget {
-  const AppointmentsDetailsMedicalCard({super.key});
-
+  const AppointmentsDetailsMedicalCard({super.key, required this.appointmentDetails});
+  final GetAppointmentDetailsResponse appointmentDetails;
   @override
   Widget build(BuildContext context) {
     return BaseCard(
@@ -12,11 +14,10 @@ class AppointmentsDetailsMedicalCard extends StatelessWidget {
         children: [
           // Title row
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 40,
-                height: 40,
+                width: 40.w,
+                height: 40.h,
                 decoration: BoxDecoration(
                   color: const Color(0xFFEFF6FF),
                   borderRadius: BorderRadius.circular(10),
@@ -31,9 +32,9 @@ class AppointmentsDetailsMedicalCard extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    const Text(
-                      'City Medical Center',
-                      style: TextStyle(
+                     Text(
+                      appointmentDetails.organizationName,
+                      style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -47,9 +48,9 @@ class AppointmentsDetailsMedicalCard extends StatelessWidget {
                         color: const Color(0xFF22C55E),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Confirmed',
-                        style: TextStyle(
+                      child:  Text(
+                        appointmentDetails.status,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
@@ -63,31 +64,31 @@ class AppointmentsDetailsMedicalCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           // Doctor
-          const Text(
-            'Dr. Sarah Johnson • Cardiology',
-            style: TextStyle(fontSize: 13, color: Colors.black54),
+          Text(
+            appointmentDetails.doctorName,
+            style: const TextStyle(fontSize: 13, color: Colors.black54),
           ),
           const SizedBox(height: 6),
           // Address
-          const Row(
+           Row(
             children: [
-              Icon(Icons.location_on_outlined, size: 14, color: Colors.black45),
-              SizedBox(width: 4),
+              const Icon(Icons.location_on_outlined, size: 14, color: Colors.black45),
+              const SizedBox(width: 4),
               Text(
-                '123 Medical Plaza, Downtown, City 12345',
-                style: TextStyle(fontSize: 12, color: Colors.black45),
+                appointmentDetails.address,
+                style: const TextStyle(fontSize: 12, color: Colors.black45),
               ),
             ],
           ),
           const SizedBox(height: 4),
           // Phone
-          const Row(
+           Row(
             children: [
-              Icon(Icons.phone_outlined, size: 14, color: Colors.black45),
-              SizedBox(width: 4),
+              const Icon(Icons.phone_outlined, size: 14, color: Colors.black45),
+              const SizedBox(width: 4),
               Text(
-                '+1 (555) 123-4567',
-                style: TextStyle(fontSize: 12, color: Colors.black45),
+                appointmentDetails.phone,
+                style: const TextStyle(fontSize: 12, color: Colors.black45),
               ),
             ],
           ),

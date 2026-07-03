@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:smart_medi/features/appointment/data/models/get_availability_days/get_availability_days_response.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 
 class DateSelectorWidget extends StatefulWidget {
   final DateTime selectedDate;
+  final List<GetAvailabilityDaysResponse> availabilityDays;
   final ValueChanged<DateTime> onDateSelected;
 
   const DateSelectorWidget({
     super.key,
     required this.selectedDate,
+    required this.availabilityDays,
     required this.onDateSelected,
   });
-
   @override
   State<DateSelectorWidget> createState() => _DateSelectorWidgetState();
 }
 
 class _DateSelectorWidgetState extends State<DateSelectorWidget> {
   late DateTime _currentMonth;
+  late Set<String> _availableDateKeys;
 
   // أيام الأسبوع
   static const List<String> _weekDays = [
@@ -36,7 +39,34 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
       widget.selectedDate.year,
       widget.selectedDate.month,
     );
+    _syncAvailableDates();
   }
+
+  @override
+  void didUpdateWidget(covariant DateSelectorWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.availabilityDays != widget.availabilityDays) {
+      _syncAvailableDates();
+    }
+    if (oldWidget.selectedDate.year != widget.selectedDate.year ||
+        oldWidget.selectedDate.month != widget.selectedDate.month) {
+      _currentMonth = DateTime(
+        widget.selectedDate.year,
+        widget.selectedDate.month,
+      );
+    }
+  }
+
+  void _syncAvailableDates() {
+    _availableDateKeys = widget.availabilityDays
+        .where((day) => day.status == AvailabilityStatus.available)
+        .map((day) => _dateKey(day.date))
+        .toSet();
+  }
+
+  String _dateKey(DateTime date) => '${date.year}-${date.month}-${date.day}';
+
+  bool _isAvailable(DateTime date) => _availableDateKeys.contains(_dateKey(date));
 
   /// الانتقال للشهر السابق
   void _previousMonth() {
@@ -77,7 +107,7 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
     final lastDayOfMonth = DateTime(_currentMonth.year, _currentMonth.month + 1, 0);
     final startWeekday = firstDayOfMonth.weekday % 7; // 0 = Sunday
 
-    List<Widget> cells = [];
+    final cells = <Widget>[];
 
     // خلايا فارغة قبل بداية الشهر
     for (int i = 0; i < startWeekday; i++) {
@@ -87,7 +117,9 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
     // أيام الشهر
     for (int day = 1; day <= lastDayOfMonth.day; day++) {
       final date = DateTime(_currentMonth.year, _currentMonth.month, day);
+      final isAvailable = _isAvailable(date);
       final isSelected =
+          isAvailable &&
           widget.selectedDate.year == date.year &&
           widget.selectedDate.month == date.month &&
           widget.selectedDate.day == date.day;
@@ -100,7 +132,8 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
         day: day,
         isSelected: isSelected,
         isToday: isToday && !isSelected,
-        onTap: () => widget.onDateSelected(date),
+        isAvailable: isAvailable,
+        onTap: isAvailable ? () => widget.onDateSelected(date) : null,
       ));
     }
 
@@ -126,15 +159,15 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // عنوان القسم
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today_outlined,
                 color: AppColors.primaryColor,
                 size: 18,
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 'Select New Date',
                 style: TextStyle(
                   fontSize: 15,
@@ -221,12 +254,14 @@ class _DayCell extends StatelessWidget {
   final int day;
   final bool isSelected;
   final bool isToday;
-  final VoidCallback onTap;
+  final bool isAvailable;
+  final VoidCallback? onTap;
 
   const _DayCell({
     required this.day,
     required this.isSelected,
     required this.isToday,
+    required this.isAvailable,
     required this.onTap,
   });
 
@@ -237,7 +272,11 @@ class _DayCell extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryColor : Colors.transparent,
+          color: isSelected
+              ? AppColors.primaryColor
+              : isAvailable
+                  ? Colors.transparent
+                  : AppColors.grey.withValues(alpha: 0.12),
           shape: BoxShape.circle,
         ),
         alignment: Alignment.center,
@@ -249,7 +288,9 @@ class _DayCell extends StatelessWidget {
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
             color: isSelected
                 ? AppColors.white
-                : isToday
+                : !isAvailable
+                    ? AppColors.textDarkGrey.withValues(alpha: 0.35)
+                    : isToday
                     ? AppColors.primaryColor
                     : AppColors.textDarkGrey,
           ),

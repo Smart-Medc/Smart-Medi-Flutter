@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_cancel_widgets/card_wrapper.dart';
 
 class AppointmentsCancelAppointmentCard extends StatelessWidget {
-  const AppointmentsCancelAppointmentCard({super.key});
-
+  const AppointmentsCancelAppointmentCard({super.key, required this.appointment});
+  final AppointmentItemModel appointment;
   @override
   Widget build(BuildContext context) {
     return // ── Appointment to cancel card ─────────────────────────────────
@@ -36,9 +37,9 @@ class AppointmentsCancelAppointmentCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              const Text(
-                'City Medical Center',
-                style: TextStyle(
+              Text(
+                appointment.organizationName,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: Color(0xFF111827),
@@ -55,9 +56,9 @@ class AppointmentsCancelAppointmentCard extends StatelessWidget {
                 color: Color(0xFF6B7280),
               ),
               const SizedBox(width: 5),
-              const Text(
-                'Mar 10, 2024',
-                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+               Text(
+                appointment.formattedDate,
+                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
               ),
               const SizedBox(width: 16),
               const Icon(
@@ -66,16 +67,16 @@ class AppointmentsCancelAppointmentCard extends StatelessWidget {
                 color: Color(0xFF6B7280),
               ),
               const SizedBox(width: 5),
-              const Text(
-                '3:00 PM',
-                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+               Text(
+                appointment.formattedTime,
+                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
               ),
             ],
           ),
           const SizedBox(height: 4),
-          const Text(
-            'ID: APT-2024-001',
-            style: TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
+           Text(
+            appointment.appointmentNumber,
+            style: const TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
           ),
         ],
       ),

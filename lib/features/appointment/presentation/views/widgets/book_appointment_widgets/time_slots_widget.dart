@@ -1,45 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:smart_medi/features/appointment/data/models/get_availability_hours_models/get_availability_hours_response.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 
-/// موديل الوقت المتاح
-class TimeSlot {
-  final String time;
-  final bool isAvailable;
-
-  const TimeSlot({required this.time, this.isAvailable = true});
-}
-
-/// ويدجت الأوقات المتاحة
-/// تعرض: عنوان القسم + التاريخ المختار + شبكة الأوقات المتاحة وغير المتاحة
 class TimeSlotsWidget extends StatelessWidget {
   final DateTime selectedDate;
   final String? selectedTime;
+  final List<GetAvailabilityHoursResponse> availabilityHours;
   final ValueChanged<String> onTimeSelected;
-
-  /// قائمة الأوقات المتاحة - بعضها غير متاح (isAvailable = false)
-  static const List<TimeSlot> _timeSlots = [
-    TimeSlot(time: '9:00 AM', isAvailable: true),
-    TimeSlot(time: '9:30 AM', isAvailable: true),
-    TimeSlot(time: '10:00 AM', isAvailable: true),
-    TimeSlot(time: '10:30 AM', isAvailable: false),
-    TimeSlot(time: '11:00 AM', isAvailable: true),
-    TimeSlot(time: '11:30 AM', isAvailable: true),
-    TimeSlot(time: '2:00 PM', isAvailable: true),
-    TimeSlot(time: '2:30 PM', isAvailable: true),
-    TimeSlot(time: '3:00 PM', isAvailable: true),
-    TimeSlot(time: '3:30 PM', isAvailable: false),
-    TimeSlot(time: '4:00 PM', isAvailable: true),
-    TimeSlot(time: '4:30 PM', isAvailable: true),
-  ];
 
   const TimeSlotsWidget({
     super.key,
     required this.selectedDate,
     required this.selectedTime,
+    required this.availabilityHours,
     required this.onTimeSelected,
   });
 
-  /// تنسيق اسم اليوم من التاريخ
   String _formatDate(DateTime date) {
     const days = [
       'Monday',
@@ -69,6 +45,10 @@ class TimeSlotsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final hasAvailableHours = availabilityHours.any(
+          (e) => e.status == AvailabilityStatus.available,
+    );
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -85,7 +65,7 @@ class TimeSlotsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // عنوان القسم
+          // Header
           const Row(
             children: [
               Icon(
@@ -104,9 +84,9 @@ class TimeSlotsWidget extends StatelessWidget {
               ),
             ],
           ),
+
           const SizedBox(height: 6),
 
-          // التاريخ المختار
           Text(
             _formatDate(selectedDate),
             style: const TextStyle(
@@ -115,41 +95,77 @@ class TimeSlotsWidget extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
           ),
+
           const SizedBox(height: 14),
 
-          // شبكة الأوقات
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              childAspectRatio: 2.8,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemCount: _timeSlots.length,
-            itemBuilder: (context, index) {
-              final slot = _timeSlots[index];
-              final isSelected = selectedTime == slot.time && slot.isAvailable;
+          // EMPTY STATE
+          if (!hasAvailableHours)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: AppColors.primaryLightColor.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: AppColors.primaryLightColor,
+                ),
+              ),
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.info_outline,
+                    color: AppColors.primaryColor,
+                    size: 18,
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'No available time slots for this date',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textBlack,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          else
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 2.8,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemCount: availabilityHours.length,
+              itemBuilder: (context, index) {
+                final slot = availabilityHours[index];
+                final isAvailable =
+                    slot.status == AvailabilityStatus.available;
+                final isSelected =
+                    selectedTime == slot.startTime && isAvailable;
 
-              return _TimeSlotCell(
-                slot: slot,
-                isSelected: isSelected,
-                onTap: slot.isAvailable
-                    ? () => onTimeSelected(slot.time)
-                    : null,
-              );
-            },
-          ),
+                return _TimeSlotCell(
+                  slot: slot,
+                  isSelected: isSelected,
+                  onTap: isAvailable
+                      ? () => onTimeSelected(slot.startTime)
+                      : null,
+                );
+              },
+            ),
         ],
       ),
     );
   }
 }
 
-/// خلية وقت واحد في شبكة الأوقات
 class _TimeSlotCell extends StatelessWidget {
-  final TimeSlot slot;
+  final GetAvailabilityHoursResponse slot;
   final bool isSelected;
   final VoidCallback? onTap;
 
@@ -161,7 +177,8 @@ class _TimeSlotCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDisabled = !slot.isAvailable;
+    final bool isDisabled =
+        slot.status != AvailabilityStatus.available;
 
     return GestureDetector(
       onTap: onTap,
@@ -171,29 +188,30 @@ class _TimeSlotCell extends StatelessWidget {
           color: isSelected
               ? AppColors.primaryLightColor
               : isDisabled
-                  ? AppColors.grey
-                  : AppColors.white,
+              ? AppColors.grey
+              : AppColors.white,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: isSelected
                 ? AppColors.primaryColor
                 : isDisabled
-                    ? AppColors.textDarkGrey
-                    : AppColors.iconBGRed,
+                ? AppColors.textDarkGrey
+                : AppColors.iconBGRed,
             width: isSelected ? 1.5 : 1,
           ),
         ),
         alignment: Alignment.center,
         child: Text(
-          slot.time,
+          slot.startTime,
           style: TextStyle(
             fontSize: 12,
-            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+            fontWeight:
+            isSelected ? FontWeight.w700 : FontWeight.w500,
             color: isSelected
                 ? AppColors.primaryColor
                 : isDisabled
-                    ? AppColors.textDarkGrey
-                    : AppColors.textBlack,
+                ? AppColors.textDarkGrey
+                : AppColors.textBlack,
           ),
         ),
       ),

@@ -23,9 +23,12 @@ class _VisitTypeSelectorState extends State<VisitTypeSelector> {
   bool _isOpen = false;
 
   final List<String> _visitTypes = [
-    'First Visit',
-    'Follow-up',
-    'Specific Concern',
+    'FirstVisit',
+    'FollowUp',
+    'SpecificConcern',
+    'AnnualPhysical',
+    'LabReview',
+    'Consultation',
   ];
 
   void _toggleDropdown() {

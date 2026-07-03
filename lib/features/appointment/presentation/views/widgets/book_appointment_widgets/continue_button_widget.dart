@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 
 class ContinueButtonWidget extends StatelessWidget {
@@ -17,13 +15,15 @@ class ContinueButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final VoidCallback? effectiveOnPressed = _isEnabled ? onPressed : null;
+
     return SizedBox(
       width: double.infinity,
       height: 54,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         child: ElevatedButton(
-          onPressed: () => context.push(AppRoutes.completeBookingView),
+          onPressed: effectiveOnPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: _isEnabled
                 ? AppColors.primaryColor

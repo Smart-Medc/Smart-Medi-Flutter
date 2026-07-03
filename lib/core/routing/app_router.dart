@@ -1,11 +1,15 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/routing/auth_guard.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
+import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_cancel_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_confirmed_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_details_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_reschedule_view.dart';
+import 'package:smart_medi/features/appointment/presentation/views/available_appointment_detail_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/available_appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/book_appointments_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/complete_booking_view.dart';
@@ -41,7 +45,6 @@ import 'package:smart_medi/features/organization_feature/patient_data_access/pre
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/organization_access_patient_data_view.dart';
 
 abstract class AppRouter {
-
   static final router = GoRouter(
     routes: [
       GoRoute(
@@ -79,7 +82,8 @@ abstract class AppRouter {
         builder: (context, state) {
           // Safe to cast - redirect already validated
           final extraData = state.extra as Map<String, dynamic>;
-          final bool isComingFromSignUp = extraData['isComingFromSignUp'] as bool;
+          final bool isComingFromSignUp =
+              extraData['isComingFromSignUp'] as bool;
           final String email = extraData['email'] as String;
 
           return OtpVerificationView(
@@ -180,9 +184,14 @@ abstract class AppRouter {
             medicationName: (extraData['medicationName'] as String?) ?? '',
             dosage: (extraData['dosage'] as String?) ?? '',
             frequency: (extraData['frequency'] as String?) ?? '',
-            dosageRoute: ((extraData['dosageRoute'] ?? extraData['type']) as String?) ?? '',
+            dosageRoute:
+                ((extraData['dosageRoute'] ?? extraData['type']) as String?) ??
+                '',
             startDate: (extraData['startDate'] as String?) ?? '',
-            prescribingDoctor: ((extraData['prescribingDoctor'] ?? extraData['doctorName']) as String?) ?? '',
+            prescribingDoctor:
+                ((extraData['prescribingDoctor'] ?? extraData['doctorName'])
+                    as String?) ??
+                '',
           );
         },
       ),
@@ -205,10 +214,12 @@ abstract class AppRouter {
         builder: (context, state) => const MedicalJournalView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
-      GoRoute(path: AppRoutes.journalElementDetails, builder: (context, state) {
-        final journalEntry = state.extra as JournalListItem;
-        return JournalElementDetailsView(journalEntry: journalEntry);
-      },
+      GoRoute(
+        path: AppRoutes.journalElementDetails,
+        builder: (context, state) {
+          final journalEntry = state.extra as JournalListItem;
+          return JournalElementDetailsView(journalEntry: journalEntry);
+        },
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
       GoRoute(
@@ -265,21 +276,223 @@ abstract class AppRouter {
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
 
-      GoRoute(path: AppRoutes.appointmentsView,builder: (context,state) => const AppointmentView()),
-      GoRoute(path: AppRoutes.bookAppointmentsView,builder: (context,state) => const BookAppointmentsView()),
-      GoRoute(path: AppRoutes.appointmentsCancelView,builder: (context,state) => const AppointmentsCancelView()),
-      GoRoute(path: AppRoutes.appointmentsRescheduleView,builder: (context,state) => const AppointmentsRescheduleView()),
-      GoRoute(path: AppRoutes.appointmentsDetailsView,builder: (context,state) => const AppointmentsDetailsView()),
-      GoRoute(path: AppRoutes.appointmentsConfirmedView,builder: (context,state) => const AppointmentsConfirmedView()),
-      GoRoute(path: AppRoutes.availableAppointmentView,builder: (context,state) => const AvailableAppointmentView()),
-      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
-      GoRoute(path: AppRoutes.completeBookingView,builder: (context,state) => const CompleteBookingView()),
-      GoRoute(path: AppRoutes.organizationDashboardView,builder: (context,state) => const OrganizationDashboardView()),
-      GoRoute(path: AppRoutes.organizationAccessPatientDataView,builder: (context,state) => const OrganizationAccessPatientDataView()),
-      GoRoute(path: AppRoutes.accessPatientDataView,builder: (context,state) => const AccessPatientDataView()),
-      GoRoute(path: AppRoutes.organizationAvailabilityCalenderView ,builder: (context,state) => const AvailabilityCalenderView()),
-      GoRoute(path: AppRoutes.appointmentRequestsView ,builder: (context,state) => const AppointmentRequestsView()),
-      GoRoute(path: AppRoutes.appointmentDetailsScreen ,builder: (context,state) => const AppointmentDetailsScreen()),
+      GoRoute(
+        path: AppRoutes.appointmentsView,
+        builder: (context, state) => const AppointmentView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.bookAppointmentsView,
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              extraData['organization'] == null ||
+              extraData['organization'].toString().trim().isEmpty) {
+            return AppRoutes.bookAppointmentsView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final organization = extraData['organization'] as GetOrganizationsResponse;
+
+          return BookAppointmentsView(
+            organization: organization,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentsCancelView,
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              !extraData.containsKey('appointment')) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return AppointmentsCancelView(
+            appointment: extraData['appointment']
+            as AppointmentItemModel,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentsRescheduleView,
+        builder: (context, state) => const AppointmentsRescheduleView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentsDetailsView,
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              extraData['appointmentId'] == null ||
+              extraData['appointmentId'].toString().trim().isEmpty) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final appointmentId = extraData['appointmentId'] as String;
+
+          return AppointmentsDetailsView(
+            appointmentId: appointmentId,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentsConfirmedView,
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              !extraData.containsKey('postAppointmentResponse') ||
+              !extraData.containsKey('address')) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return AppointmentsConfirmedView(
+            postAppointmentResponse:
+            extraData['postAppointmentResponse'] as PostAppointmentResponse,
+            address: extraData['address'] as String,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.availableAppointmentView,
+        builder: (context, state) => const AvailableAppointmentView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.availableAppointmentDetailView,
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              !extraData.containsKey('organization')) {
+            return AppRoutes.availableAppointmentView;
+          }
+
+          if(extraData['organization'] == null || extraData['organization'].toString().trim().isEmpty) {
+            return AppRoutes.availableAppointmentView;
+          }
+
+          final organization = extraData['organization'] as GetOrganizationsResponse;
+          final organizationId = organization.id;
+
+          if (organizationId.trim().isEmpty) {
+            return AppRoutes.availableAppointmentView;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>?;
+          final organization = extraData!['organization'] as GetOrganizationsResponse;
+          final organizationId = organization.id;
+          return AvailableAppointmentDetailView(organizationId: organizationId, organization: organization);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.completeBookingView,
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+          if (extraData == null ||
+              !extraData.containsKey('date') ||
+              !extraData.containsKey('time') ||
+              !extraData.containsKey('organization')) {
+            return AppRoutes.medicalRecords;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+          final DateTime selectedDate = extraData['date'] as DateTime;
+          final String selectedTime = extraData['time'] as String;
+          final GetOrganizationsResponse organization = extraData['organization'] as GetOrganizationsResponse;
+
+          return CompleteBookingView(
+            selectedDate: selectedDate,
+            selectedTime: selectedTime,
+            organization: organization,
+          );
+        },
+      ),
+      // GoRoute(
+      //   path: AppRoutes.completeBookingView,
+      //   builder: (context, state) => const CompleteBookingView(),
+      //   redirect: (context, state) => AuthGuard.checkAuth(state),
+      // ),
+      GoRoute(
+        path: AppRoutes.organizationDashboardView,
+        builder: (context, state) => const OrganizationDashboardView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.organizationAccessPatientDataView,
+        builder: (context, state) => const OrganizationAccessPatientDataView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.accessPatientDataView,
+        builder: (context, state) => const AccessPatientDataView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.organizationAvailabilityCalenderView,
+        builder: (context, state) => const AvailabilityCalenderView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentRequestsView,
+        builder: (context, state) => const AppointmentRequestsView(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.appointmentDetailsScreen,
+        builder: (context, state) => const AppointmentDetailsScreen(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
 
       // GoRoute(
       //     path: AppRoutes.onboardingView,

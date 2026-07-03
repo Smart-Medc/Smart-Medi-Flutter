@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
-
-// ==========================================
-// WIDGET: Operating Hours Card
-// Shows each day and its working hours
-// ==========================================
+import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 
 class OperatingHoursCard extends StatelessWidget {
-  final List<OperatingHour> hours;
 
   const OperatingHoursCard({super.key, required this.hours});
+  final List<OperatingHourModel> hours;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +15,7 @@ class OperatingHoursCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 12,
             offset: const Offset(0, 3),
           ),
@@ -70,9 +65,9 @@ class OperatingHoursCard extends StatelessWidget {
 // ─── Sub-widget ───────────────────────────────────────────────────────────────
 
 class _HourRow extends StatelessWidget {
-  final OperatingHour hour;
 
   const _HourRow({required this.hour});
+  final OperatingHourModel hour;
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +88,9 @@ class _HourRow extends StatelessWidget {
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.w500,
-              color: hour.isClosed
-                  ? const Color(0xFFE53935)
-                  : const Color(0xFF1A1A2E),
+              // color: hour.isClosed
+              //     ? const Color(0xFFE53935)
+              //     : const Color(0xFF1A1A2E),
             ),
           ),
         ],

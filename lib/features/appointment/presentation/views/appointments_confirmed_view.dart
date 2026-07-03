@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
 
 
 class AppointmentsConfirmedView extends StatelessWidget {
-  const AppointmentsConfirmedView({super.key});
-
+  const AppointmentsConfirmedView({super.key, required this.postAppointmentResponse, required this.address});
+  final PostAppointmentResponse postAppointmentResponse;
+  final String address;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,21 +25,21 @@ class AppointmentsConfirmedView extends StatelessWidget {
         ),
         leading: const BackButton(color: Colors.black87),
       ),
-      body: SingleChildScrollView(
+      body:  SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Column(
-          children: const [
-            SizedBox(height: 12),
-            _SuccessIconWidget(),
-            SizedBox(height: 16),
-            _ConfirmedTitleWidget(),
-            SizedBox(height: 20),
-            _AppointmentDetailsCard(),
-            SizedBox(height: 12),
-            _ConfirmationSentCard(),
-            SizedBox(height: 24),
-            _ActionButtons(),
-            SizedBox(height: 16),
+          children: [
+            const SizedBox(height: 12),
+            const _SuccessIconWidget(),
+            const SizedBox(height: 16),
+            const _ConfirmedTitleWidget(),
+            const SizedBox(height: 20),
+            _AppointmentDetailsCard(postAppointmentResponse, address),
+            const SizedBox(height: 12),
+            const _ConfirmationSentCard(),
+            const SizedBox(height: 24),
+            _ActionButtons(postAppointmentResponse.id),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -54,8 +58,8 @@ class _SuccessIconWidget extends StatelessWidget {
     return Container(
       width: 72,
       height: 72,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
+      decoration: const BoxDecoration(
+        color: Color(0xFFE8F5E9),
         shape: BoxShape.circle,
       ),
       child: const Icon(
@@ -75,8 +79,8 @@ class _ConfirmedTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: const [
+    return const Column(
+      children: [
         Text(
           'Appointment Confirmed!',
           style: TextStyle(
@@ -104,8 +108,9 @@ class _ConfirmedTitleWidget extends StatelessWidget {
 // 3. APPOINTMENT DETAILS CARD
 // ─────────────────────────────────────────────
 class _AppointmentDetailsCard extends StatelessWidget {
-  const _AppointmentDetailsCard();
-
+  const _AppointmentDetailsCard(this.postAppointmentResponse, this.address);
+  final PostAppointmentResponse postAppointmentResponse;
+  final String address;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -116,39 +121,42 @@ class _AppointmentDetailsCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Column(
+      child:  Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Hospital Header
-          const _HospitalHeaderWidget(),
+          _HospitalHeaderWidget(
+            postAppointmentResponse.organizationName,
+            postAppointmentResponse.visitType,
+          ),
           const Divider(height: 24, thickness: 1, color: Color(0xFFEEEEEE)),
           // Detail Rows
           _DetailRow(
             icon: Icons.calendar_today_outlined,
             label: 'DATE',
-            value: 'March 25, 2024',
+            value: postAppointmentResponse.formattedDate,
           ),
           const SizedBox(height: 14),
           _DetailRow(
             icon: Icons.access_time_outlined,
             label: 'Time & Duration',
-            value: '10:00 AM (30 minutes)',
+            value: '${postAppointmentResponse.formattedTime} (${postAppointmentResponse.durationMinutes} minutes)',
           ),
           const SizedBox(height: 14),
           _DetailRow(
             icon: Icons.location_on_outlined,
             label: 'Location',
-            value: '123 Medical Plaza, Downtown, City 12345',
+            value: address,
           ),
           const SizedBox(height: 16),
           // Appointment ID
-          const _AppointmentIdWidget(),
+           _AppointmentIdWidget(postAppointmentResponse.appointmentNumber),
         ],
       ),
     );
@@ -157,8 +165,9 @@ class _AppointmentDetailsCard extends StatelessWidget {
 
 // ─── Hospital Header ───────────────────────
 class _HospitalHeaderWidget extends StatelessWidget {
-  const _HospitalHeaderWidget();
-
+  const _HospitalHeaderWidget(this.orgName, this.type);
+  final String orgName;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -176,21 +185,21 @@ class _HospitalHeaderWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        Column(
+         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
             Text(
-              'City Medical Center',
-              style: TextStyle(
+              orgName,
+              style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),
             ),
-            SizedBox(height: 2),
+            const SizedBox(height: 2),
             Text(
-              'First Visit',
-              style: TextStyle(
+              type,
+              style: const TextStyle(
                 fontSize: 12,
                 color: Colors.black45,
               ),
@@ -253,11 +262,11 @@ class _DetailRow extends StatelessWidget {
 
 // ─── Appointment ID ────────────────────────
 class _AppointmentIdWidget extends StatelessWidget {
-  const _AppointmentIdWidget();
-
+  const _AppointmentIdWidget(this.appointmentNumber);
+  final String appointmentNumber;
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return  Row(
       children: [
         const Text(
           'Appointment ID:',
@@ -268,7 +277,7 @@ class _AppointmentIdWidget extends StatelessWidget {
         ),
         const SizedBox(width: 6),
         Text(
-          'APT-2024-001',
+          appointmentNumber,
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
@@ -296,10 +305,10 @@ class _ConfirmationSentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: const Color(0xFFFFCDD2), width: 1),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Confirmation Sent',
             style: TextStyle(
               fontSize: 13,
@@ -307,12 +316,12 @@ class _ConfirmationSentCard extends StatelessWidget {
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10),
           _ConfirmationRow(
             icon: Icons.email_outlined,
             text: 'Email confirmation sent to alex@email.com',
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           _ConfirmationRow(
             icon: Icons.sms_outlined,
             text: 'SMS confirmation sent to alex@email.com',
@@ -354,8 +363,8 @@ class _ConfirmationRow extends StatelessWidget {
 // 5. ACTION BUTTONS WIDGET
 // ─────────────────────────────────────────────
 class _ActionButtons extends StatelessWidget {
-  const _ActionButtons();
-
+  const _ActionButtons(this.appointmentId);
+  final String appointmentId;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -365,7 +374,14 @@ class _ActionButtons extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              GoRouter.of(context).push(
+                AppRoutes.appointmentsDetailsView,
+                extra: {
+                  'appointmentId': appointmentId,
+                },
+              );
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF1976D2),
               foregroundColor: Colors.white,
@@ -389,7 +405,9 @@ class _ActionButtons extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              GoRouter.of(context).go(AppRoutes.appointmentsView);
+            },
             style: TextButton.styleFrom(
               foregroundColor: Colors.black54,
               shape: RoundedRectangleBorder(

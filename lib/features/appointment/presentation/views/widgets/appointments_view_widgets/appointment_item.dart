@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
-import 'package:smart_medi/features/appointment/data/models/appointment_model.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 
 class AppointmentItem extends StatelessWidget {
-  final List<AppointmentModel> appointments;
+  const AppointmentItem({super.key, required this.appointment,this.isPast = false});
 
-  const AppointmentItem({super.key, required this.appointments});
+  final AppointmentItemModel appointment;
+  final bool isPast;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: appointments.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 16),
-      itemBuilder: (context, index) =>
-          _AppointmentCard(data: appointments[index]),
-    );
+    return AppointmentCard(appointment: appointment, isPast: isPast);
   }
 }
 
 // ─── Single Card ──────────────────────────────────────────────────────────────
 
-class _AppointmentCard extends StatelessWidget {
-  final AppointmentModel data;
+class AppointmentCard extends StatelessWidget {
+  const AppointmentCard({super.key, required this.appointment, required this.isPast});
 
-  const _AppointmentCard({required this.data});
+  final AppointmentItemModel appointment;
+  final bool isPast;
 
   Color get _statusColor {
-    switch (data.status.toLowerCase()) {
+    switch (appointment.status.toLowerCase()) {
       case 'confirmed':
         return const Color(0xFF2563EB);
       case 'pending':
@@ -44,12 +39,13 @@ class _AppointmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -61,7 +57,6 @@ class _AppointmentCard extends StatelessWidget {
         children: [
           // ── Header ──────────────────────────────────────────────────────────
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 width: 48,
@@ -82,7 +77,7 @@ class _AppointmentCard extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        data.clinicName,
+                        appointment.organizationName,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -101,7 +96,7 @@ class _AppointmentCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        data.status,
+                        appointment.status,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
@@ -121,7 +116,7 @@ class _AppointmentCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 60),
             child: Text(
-              '${data.doctorName} • ${data.specialty}',
+              '${appointment.doctorName} • there is no specialty field in the model',
               style: const TextStyle(
                 fontSize: 13,
                 color: Color(0xFF6B7280),
@@ -135,13 +130,19 @@ class _AppointmentCard extends StatelessWidget {
           // ── Date / Time / Visit type ─────────────────────────────────────────
           Row(
             children: [
-              _InfoChip(icon: Icons.calendar_today_outlined, label: data.date),
+              _InfoChip(
+                icon: Icons.calendar_today_outlined,
+                label: appointment.formattedDate,
+              ),
               const SizedBox(width: 16),
-              _InfoChip(icon: Icons.access_time_outlined, label: data.time),
+              _InfoChip(
+                icon: Icons.access_time_outlined,
+                label: appointment.formattedTime,
+              ),
               const SizedBox(width: 16),
               _InfoChip(
                 icon: Icons.location_on_outlined,
-                label: data.visitType,
+                label: appointment.visitType,
               ),
             ],
           ),
@@ -149,17 +150,17 @@ class _AppointmentCard extends StatelessWidget {
           const SizedBox(height: 6),
 
           // ── Address ──────────────────────────────────────────────────────────
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.location_on_outlined,
                 size: 15,
                 color: Color(0xFF9CA3AF),
               ),
-              const SizedBox(width: 4),
+              SizedBox(width: 4),
               Text(
-                data.address,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                'There is no address field in the model',
+                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
               ),
             ],
           ),
@@ -169,46 +170,71 @@ class _AppointmentCard extends StatelessWidget {
           const SizedBox(height: 12),
 
           // ── Action Buttons ───────────────────────────────────────────────────
-          Row(
-            children: [
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.visibility_outlined,
-                  label: 'View Details',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsDetailsView);
-                  },
+          if (!isPast) ...[
+            Row(
+              children: [
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.visibility_outlined,
+                    label: 'View Details',
+                    onTap: () {
+                      GoRouter.of(context).push(
+                        AppRoutes.appointmentsDetailsView,
+                        extra: {
+                          'appointmentId': appointment.id,
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.sync_outlined,
-                  label: 'Reschedule',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsRescheduleView);
-                  },
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.sync_outlined,
+                    label: 'Reschedule',
+                    onTap: () {
+                      GoRouter.of(context)
+                          .pushReplacement(AppRoutes.appointmentsRescheduleView);
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(width: 8),
-              Expanded(
-                child: _ActionButton(
-                  icon: Icons.cancel_outlined,
-                  label: 'Cancel',
-                  onTap: () {
-                    GoRouter.of(
-                      context,
-                    ).pushReplacement(AppRoutes.appointmentsCancelView);
-                  },
-                  isDestructive: true,
+                const SizedBox(width: 8),
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.cancel_outlined,
+                    label: 'Cancel',
+                    isDestructive: true,
+                    onTap: () {
+                      GoRouter.of(context)
+                          .push(AppRoutes.appointmentsCancelView,extra: {
+                            'appointment': appointment,
+                      });
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ] else ...[
+            // Past appointments → فقط View Details
+            Row(
+              children: [
+                Expanded(
+                  child: _ActionButton(
+                    icon: Icons.visibility_outlined,
+                    label: 'View Details',
+                    onTap: () {
+                      GoRouter.of(context).push(
+                        AppRoutes.appointmentsDetailsView,
+                        extra: {
+                          'appointmentId': appointment.id,
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ]
         ],
       ),
     );
@@ -218,10 +244,10 @@ class _AppointmentCard extends StatelessWidget {
 // ─── Shared sub-widgets ───────────────────────────────────────────────────────
 
 class _InfoChip extends StatelessWidget {
+  const _InfoChip({required this.icon, required this.label});
+
   final IconData icon;
   final String label;
-
-  const _InfoChip({required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -244,17 +270,17 @@ class _InfoChip extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback? onTap;
-  final bool isDestructive;
-
   const _ActionButton({
     required this.icon,
     required this.label,
     this.onTap,
     this.isDestructive = false,
   });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+  final bool isDestructive;
 
   @override
   Widget build(BuildContext context) {
