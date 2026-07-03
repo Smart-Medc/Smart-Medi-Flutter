@@ -395,8 +395,8 @@ abstract class AppRouter {
           if (extraData == null ||
               !extraData.containsKey('date') ||
               !extraData.containsKey('time') ||
-              !extraData.containsKey('organizationId')) {
-            return AppRoutes.availableAppointmentView;
+              !extraData.containsKey('organization')) {
+            return AppRoutes.medicalRecords;
           }
 
           return null;
@@ -405,12 +405,12 @@ abstract class AppRouter {
           final extraData = state.extra as Map<String, dynamic>;
           final DateTime selectedDate = extraData['date'] as DateTime;
           final String selectedTime = extraData['time'] as String;
-          final String organizationId = extraData['organizationId'] as String;
+          final GetOrganizationsResponse organization = extraData['organization'] as GetOrganizationsResponse;
 
           return CompleteBookingView(
             selectedDate: selectedDate,
             selectedTime: selectedTime,
-            organizationId: organizationId,
+            organization: organization,
           );
         },
       ),

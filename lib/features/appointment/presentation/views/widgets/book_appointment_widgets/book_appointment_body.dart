@@ -90,7 +90,7 @@ class _ContinueButtonSection extends StatelessWidget {
                   extra: {
                     'date': state.selectedDate,
                     'time': state.selectedTime,
-                    'organizationId': organization.id,
+                    'organization': organization,
                   },
                 );
               },
