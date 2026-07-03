@@ -39,7 +39,7 @@ class _CompleteBookingBodyState extends State<CompleteBookingBody> {
   late String _formattedDate;
   late String _formattedTime;
 
-  String _patientName = 'Alex Johnson (from profile)';
+  String _patientName = '';
 
   // ── Derived State ────────────────────────────────────────
   bool get _isFormValid =>

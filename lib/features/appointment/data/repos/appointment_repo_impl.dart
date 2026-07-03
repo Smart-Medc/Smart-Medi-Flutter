@@ -11,6 +11,8 @@ import 'package:smart_medi/features/appointment/data/models/get_availability_hou
 import 'package:smart_medi/features/appointment/data/models/get_availability_hours_models/get_availability_hours_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organization_details_models/get_organization_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_request.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
 import 'package:smart_medi/features/appointment/data/repos/appointment_repo.dart';
 
 class AppointmentRepoImpl extends AppointmentRepo{
@@ -81,6 +83,17 @@ class AppointmentRepoImpl extends AppointmentRepo{
       return (response as List)
           .map((e) => GetAvailabilityHoursResponse.fromJson(e))
           .toList();
+    });
+  }
+
+  @override
+  Future<Either<Failure, PostAppointmentResponse>> postAppointment({required PostAppointmentRequest postAppointmentRequest}) {
+    return ApiHelper.execute<PostAppointmentResponse>(() async {
+      final response = await apiService.post(
+        endpoint: ApiEndpoints.postAppointment(),
+        data: postAppointmentRequest.toJson(),
+      );
+      return PostAppointmentResponse.fromJson(response);
     });
   }
 
