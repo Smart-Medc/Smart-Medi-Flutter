@@ -206,7 +206,9 @@ class AppointmentCard extends StatelessWidget {
                     isDestructive: true,
                     onTap: () {
                       GoRouter.of(context)
-                          .pushReplacement(AppRoutes.appointmentsCancelView);
+                          .push(AppRoutes.appointmentsCancelView,extra: {
+                            'appointment': appointment,
+                      });
                     },
                   ),
                 ),

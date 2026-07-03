@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart_medi/features/appointment/data/models/cancel_appointment_models/cancel_appointment_request.dart';
+import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_cancel_widgets/cancel_appointment_bloc_consumer.dart';
 import 'package:smart_medi/features/appointment/presentation/views/widgets/appointments_cancel_widgets/card_wrapper.dart';
 
 class ReasonForCancellationAndPolicy extends StatefulWidget {
-  ReasonForCancellationAndPolicy({super.key});
-
+  const ReasonForCancellationAndPolicy({super.key, required this.appointmentId});
+  final String appointmentId;
   @override
   State<ReasonForCancellationAndPolicy> createState() =>
       _ReasonForCancellationCardState();
@@ -146,10 +149,10 @@ class _ReasonForCancellationCardState extends State<ReasonForCancellationAndPoli
                       : null,
                 ),
                 const SizedBox(width: 12),
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         'I understand the cancellation policy',
                         style: TextStyle(
@@ -179,34 +182,18 @@ class _ReasonForCancellationCardState extends State<ReasonForCancellationAndPoli
         // ── Bottom action buttons ──────────────────────────────────────
         Row(
           children: [
-            Expanded(
-              flex: 3,
-              child: ElevatedButton(
-                onPressed: _canConfirm ? () {} : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFEF4444),
-                  disabledBackgroundColor: const Color(0xFFFCA5A5),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  'Confirm Cancellation',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
-                ),
+            CancelAppointmentBlocConsumer(
+              isEnabled: _canConfirm,
+              request: CancelAppointmentRequest(
+                appointmentId: widget.appointmentId,
+                reason: _selectedReason ?? '',
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               flex: 2,
               child: OutlinedButton(
-                onPressed: () => Navigator.maybePop(context),
+                onPressed: () => GoRouter.of(context).pop(),
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Color(0xFFE5E7EB)),
                   shape: RoundedRectangleBorder(

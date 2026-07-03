@@ -43,19 +43,19 @@ class AppointmentsCancelHeader extends StatelessWidget {
             border: Border.all(color: const Color(0xFFFECACA)),
           ),
           padding: const EdgeInsets.all(14),
-          child: Row(
+          child: const Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
+              Icon(
                 Icons.warning_amber_rounded,
                 color: Color(0xFFEF4444),
                 size: 20,
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Are you sure you want to cancel?',
                       style: TextStyle(

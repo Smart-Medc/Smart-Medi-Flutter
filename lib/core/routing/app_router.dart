@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/routing/auth_guard.dart';
+import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointment_view.dart';
@@ -307,8 +308,29 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.appointmentsCancelView,
-        builder: (context, state) => const AppointmentsCancelView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              !extraData.containsKey('appointment')) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return AppointmentsCancelView(
+            appointment: extraData['appointment']
+            as AppointmentItemModel,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.appointmentsRescheduleView,
