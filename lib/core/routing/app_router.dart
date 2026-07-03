@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/routing/auth_guard.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
+import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointment_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_cancel_view.dart';
 import 'package:smart_medi/features/appointment/presentation/views/appointments_confirmed_view.dart';
@@ -343,8 +344,29 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.appointmentsConfirmedView,
-        builder: (context, state) => const AppointmentsConfirmedView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              !extraData.containsKey('postAppointmentResponse') ||
+              !extraData.containsKey('address')) {
+            return AppRoutes.appointmentsView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return AppointmentsConfirmedView(
+            postAppointmentResponse:
+            extraData['postAppointmentResponse'] as PostAppointmentResponse,
+            address: extraData['address'] as String,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.availableAppointmentView,

@@ -10,11 +10,12 @@ class PostAppointmentBlocConsumer extends StatelessWidget {
   const PostAppointmentBlocConsumer({
     super.key,
     required this.isFormValid,
-    required this.postAppointmentRequest,
+    required this.postAppointmentRequest, required this.address,
   });
 
   final bool isFormValid;
   final PostAppointmentRequest postAppointmentRequest;
+  final String address;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,10 @@ class PostAppointmentBlocConsumer extends StatelessWidget {
         if (state is PostAppointmentSuccess) {
           GoRouter.of(context).push(
             AppRoutes.appointmentsConfirmedView,
+            extra: {
+              'postAppointmentResponse': state.postAppointmentResponse,
+              'address': address,
+            }
           );
         }
 

@@ -135,6 +135,7 @@ class _CompleteBookingBodyState extends State<CompleteBookingBody> {
           // ── 7. Confirm Booking Button ───────────────────
           PostAppointmentBlocConsumer(
             isFormValid: _isFormValid,
+            address: widget.organization.address,
             postAppointmentRequest: PostAppointmentRequest(
               organizationId: widget.organization.id,
               date: widget.selectedDate,
