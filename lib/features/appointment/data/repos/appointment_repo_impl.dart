@@ -3,6 +3,7 @@ import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
+import 'package:smart_medi/features/appointment/data/models/cancel_appointment_models/cancel_appointment_request.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_availability_days/get_availability_days_request.dart';
@@ -94,6 +95,17 @@ class AppointmentRepoImpl extends AppointmentRepo{
         data: postAppointmentRequest.toJson(),
       );
       return PostAppointmentResponse.fromJson(response);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> cancelAppointment({required CancelAppointmentRequest request}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.put(
+        endpoint: ApiEndpoints.cancelAppointment(appointmentId: request.appointmentId),
+        data: request.toJson(),
+      );
+      return unit;
     });
   }
 

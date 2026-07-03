@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
+import 'package:smart_medi/features/appointment/data/models/cancel_appointment_models/cancel_appointment_request.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointment_details_models/get_appointment_details_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_availability_days/get_availability_days_request.dart';
@@ -19,4 +20,5 @@ abstract class AppointmentRepo{
   Future<Either<Failure, List<GetAvailabilityDaysResponse>>> getAvailabilityDays({required GetAvailabilityDaysRequest request});
   Future<Either<Failure, List<GetAvailabilityHoursResponse>>> getAvailabilityHours({required GetAvailabilityHoursRequest request});
   Future<Either<Failure, PostAppointmentResponse>> postAppointment({required PostAppointmentRequest postAppointmentRequest});
+  Future<Either<Failure, Unit>> cancelAppointment({required CancelAppointmentRequest request});
 }
