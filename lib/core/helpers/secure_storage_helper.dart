@@ -7,7 +7,9 @@ class SecureStorageHelper {
 
   // Keys
   static const String _accessTokenKey = 'access_token';
+  static const String _refreshTokenKey = 'refresh_token';
   static const String _accessTokenExpiresAtKey = 'access_token_expires_at';
+  static const String _refreshTokenExpiresAtKey = 'refresh_token_expires_at';
   static const String _userIdKey = 'user_id';
   static const String _userEmailKey = 'user_email';
   static const String _userTypeKey = 'user_type';
@@ -23,7 +25,17 @@ class SecureStorageHelper {
   static Future<String?> getAccessToken() async {
     return await _storage.read(key: _accessTokenKey);
   }
+  
+  // Save refresh token
+  static Future<void> saveRefreshToken(String token) async {
+    await _storage.write(key: _refreshTokenKey, value: token);
+  }
 
+  // Get refresh token
+  static Future<String?> getRefreshToken() async {
+    return await _storage.read(key: _refreshTokenKey);
+  }
+  
   // Save token expiration date
   static Future<void> saveAccessTokenExpiresAt(String expiresAt) async {
     await _storage.write(key: _accessTokenExpiresAtKey, value: expiresAt);
@@ -32,6 +44,16 @@ class SecureStorageHelper {
   // Get token expiration date
   static Future<String?> getAccessTokenExpiresAt() async {
     return await _storage.read(key: _accessTokenExpiresAtKey);
+  }
+
+  // Save refresh token expiration date
+  static Future<void> saveRefreshTokenExpiresAt(String expiresAt) async {
+    await _storage.write(key: _refreshTokenExpiresAtKey, value: expiresAt);
+  }
+
+  // Get refresh token expiration date
+  static Future<String?> getRefreshTokenExpiresAt() async {
+    return await _storage.read(key: _refreshTokenExpiresAtKey);
   }
 
   // Save user ID
@@ -88,6 +110,8 @@ class SecureStorageHelper {
   static Future<void> saveLoginData({
     required String accessToken,
     required String accessTokenExpiresAt,
+    required String refreshToken,
+    required String refreshTokenExpiresAt,
     required String userId,
     required String userEmail,
     required String userType,
@@ -97,6 +121,8 @@ class SecureStorageHelper {
     await Future.wait([
       saveAccessToken(accessToken),
       saveAccessTokenExpiresAt(accessTokenExpiresAt),
+      saveRefreshToken(refreshToken),
+      saveRefreshTokenExpiresAt(refreshTokenExpiresAt),
       saveUserId(userId),
       saveUserEmail(userEmail),
       saveUserType(userType),

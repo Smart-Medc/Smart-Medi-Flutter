@@ -292,7 +292,7 @@ abstract class AppRouter {
           if (extraData == null ||
               extraData['organization'] == null ||
               extraData['organization'].toString().trim().isEmpty) {
-            return AppRoutes.bookAppointmentsView;
+            return AppRoutes.appointmentsView;
           }
 
           return null;
@@ -408,7 +408,7 @@ abstract class AppRouter {
             return AppRoutes.availableAppointmentView;
           }
 
-          if(extraData['organization'] == null || extraData['organization'].toString().trim().isEmpty) {
+          if(extraData['organization'] == null || extraData['organization'] is! GetOrganizationsResponse) {
             return AppRoutes.availableAppointmentView;
           }
 
@@ -440,7 +440,7 @@ abstract class AppRouter {
               !extraData.containsKey('date') ||
               !extraData.containsKey('time') ||
               !extraData.containsKey('organization')) {
-            return AppRoutes.medicalRecords;
+            return AppRoutes.bookAppointmentsView;
           }
 
           return null;

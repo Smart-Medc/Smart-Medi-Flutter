@@ -29,6 +29,8 @@ class OtpBlocListener extends StatelessWidget {
           await SecureStorageHelper.saveLoginData(
             accessToken: state.loginResponse.data.accessToken,
             accessTokenExpiresAt: state.loginResponse.data.accessTokenExpiresAt,
+            refreshToken: state.loginResponse.data.refreshToken,
+            refreshTokenExpiresAt: state.loginResponse.data.refreshTokenExpiresAt,
             userId: state.loginResponse.data.user.id,
             userEmail: state.loginResponse.data.user.email,
             userType: state.loginResponse.data.user.userType,

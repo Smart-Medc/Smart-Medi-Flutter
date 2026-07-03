@@ -9,13 +9,9 @@ class DioFactory {
 
   static Dio? _dioInstance;
 
-  /// Prevents multiple refresh calls from running at the same time
   static bool _isRefreshing = false;
-
-  /// Shared future used by all requests waiting for the same refresh process
   static Future<void>? _refreshFuture;
 
-  /// Extra key used to ensure each request is retried after refresh only once.
   static const String _refreshRetriedExtraKey = 'refreshRetried';
 
   static Future<Dio> getInstance() async {
@@ -29,11 +25,10 @@ class DioFactory {
         ..options.connectTimeout = timeout
         ..options.sendTimeout = timeout;
 
-      /// Default headers for all requests
       dio.options.headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        // 'X-Client-Type': 'Mobile',
+        'X-Client-Type': 'Mobile',
       };
 
       _addInterceptors(dio);
@@ -47,8 +42,6 @@ class DioFactory {
   static void _addInterceptors(Dio dio) {
     dio.interceptors.add(
       InterceptorsWrapper(
-        /// ================= REQUEST =================
-        /// Automatically attach the latest access token to every request
         onRequest: (options, handler) async {
           final token = await SecureStorageHelper.getAccessToken();
 
@@ -59,46 +52,44 @@ class DioFactory {
           handler.next(options);
         },
 
-        /// ================= ERROR =================
-        /// Handle token expiration (401) and perform automatic refresh
         onError: (error, handler) async {
           final requestOptions = error.requestOptions;
 
-          /// If the error is not 401, just pass it through
+          /// Not 401 → pass through
           if (error.response?.statusCode != 401) {
             return handler.next(error);
           }
 
-          /// Prevent endless refresh/retry loops for the same request.
+          /// Already retried once → stop loop
           if (requestOptions.extra[_refreshRetriedExtraKey] == true) {
             return handler.next(error);
           }
 
-          /// If this request is already the refresh call, avoid infinite loop
-          if (error.requestOptions.path.contains(ApiEndpoints.refreshToken)) {
+          /// Avoid refresh endpoint loop
+          if (requestOptions.path.contains(ApiEndpoints.refreshToken)) {
             await SecureStorageHelper.clearAll();
             return handler.next(error);
           }
 
           try {
-            /// If no refresh is currently running, start one
+            /// Start refresh only once
             if (!_isRefreshing) {
               _isRefreshing = true;
               _refreshFuture = _performRefresh();
             }
 
-            /// All failed requests wait for the same refresh process
             await _refreshFuture;
           } catch (e) {
-            /// If refresh fails -> clear session (force logout)
             await SecureStorageHelper.clearAll();
             return handler.next(error);
           } finally {
-            _isRefreshing = false;
-            _refreshFuture = null;
+            if (_isRefreshing) {
+              _isRefreshing = false;
+              _refreshFuture = null;
+            }
           }
 
-          /// Retry the original request using the new token
+          /// Get new token
           final newToken = await SecureStorageHelper.getAccessToken();
           if (newToken == null || newToken.isEmpty) {
             return handler.next(error);
@@ -116,7 +107,8 @@ class DioFactory {
             receiveTimeout: requestOptions.receiveTimeout,
             followRedirects: requestOptions.followRedirects,
             validateStatus: requestOptions.validateStatus,
-            receiveDataWhenStatusError: requestOptions.receiveDataWhenStatusError,
+            receiveDataWhenStatusError:
+            requestOptions.receiveDataWhenStatusError,
             extra: {
               ...requestOptions.extra,
               _refreshRetriedExtraKey: true,
@@ -136,13 +128,15 @@ class DioFactory {
 
             return handler.resolve(response);
           } catch (e) {
+            if (kDebugMode) {
+              print("Retry failed: $e");
+            }
             return handler.next(error);
           }
         },
       ),
     );
 
-    /// Pretty logger for debugging network calls
     if (kDebugMode) {
       dio.interceptors.add(
         PrettyDioLogger(
@@ -158,51 +152,55 @@ class DioFactory {
     }
   }
 
-  /// ================= REFRESH TOKEN CALL =================
-  /// Calls the refresh-token endpoint and stores the new token securely
+  /// ================= REFRESH TOKEN =================
   static Future<void> _performRefresh() async {
-    /// Use a separate Dio instance to avoid interceptor recursion
     final refreshDio = Dio(
       BaseOptions(
         baseUrl: ApiEndpoints.baseUrl,
-        headers: {'Accept': '*/*'},
+        headers: {'Accept': 'application/json'},
       ),
     );
 
-    final token = await SecureStorageHelper.getAccessToken();
+    final refreshToken = await SecureStorageHelper.getRefreshToken();
+
+    if (refreshToken == null || refreshToken.isEmpty) {
+      throw Exception('Missing refresh token');
+    }
 
     final response = await refreshDio.post(
       ApiEndpoints.refreshToken,
-      options: Options(
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      ),
+      data: {
+        'refreshToken': refreshToken,
+      },
     );
 
     if (response.statusCode != 200 || response.data == null) {
       throw Exception('Refresh token failed');
     }
 
-    if (response.data is! Map<String, dynamic>) {
-      throw Exception('Invalid refresh response format');
-    }
-
     final payload = response.data as Map<String, dynamic>;
-    final nestedData = payload['data'];
-    final tokenContainer = nestedData is Map<String, dynamic> ? nestedData : payload;
 
-    final newAccessToken =
-        (tokenContainer['accessToken'] ?? tokenContainer['token'])?.toString();
-    if (newAccessToken == null || newAccessToken.isEmpty) {
-      throw Exception('Refresh response missing access token');
+    if (payload['data'] == null || payload['data'] is! Map<String, dynamic>) {
+      throw Exception('Invalid refresh response');
     }
 
-    final expiresAt =
-        (tokenContainer['accessTokenExpiresAt'] ?? tokenContainer['expiresAt'])
-            ?.toString();
+    final data = payload['data'] as Map<String, dynamic>;
+
+    final newAccessToken = data['accessToken']?.toString();
+    final newRefreshToken = data['refreshToken']?.toString();
+
+    if (newAccessToken == null || newAccessToken.isEmpty) {
+      throw Exception('Missing access token');
+    }
 
     await SecureStorageHelper.saveAccessToken(newAccessToken);
+
+    if (newRefreshToken != null && newRefreshToken.isNotEmpty) {
+      await SecureStorageHelper.saveRefreshToken(newRefreshToken);
+    }
+
+    final expiresAt = data['accessTokenExpiresAt']?.toString();
+
     if (expiresAt != null && expiresAt.isNotEmpty) {
       await SecureStorageHelper.saveAccessTokenExpiresAt(expiresAt);
     }

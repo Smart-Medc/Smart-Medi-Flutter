@@ -30,25 +30,33 @@ class LoginData {
 
   LoginData({
     required this.accessToken,
+    required this.refreshToken,
     required this.accessTokenExpiresAt,
+    required this.refreshTokenExpiresAt,
     required this.user,
   });
 
   factory LoginData.fromJson(Map<String, dynamic> json) {
     return LoginData(
       accessToken: json['accessToken'] ?? '',
+      refreshToken: json['refreshToken'] ?? '',
       accessTokenExpiresAt: json['accessTokenExpiresAt'] ?? '',
+      refreshTokenExpiresAt: json['refreshTokenExpiresAt'] ?? '',
       user: UserData.fromJson(json['user'] ?? {}),
     );
   }
   final String accessToken;
+  final String refreshToken;
   final String accessTokenExpiresAt;
+  final String refreshTokenExpiresAt;
   final UserData user;
 
   Map<String, dynamic> toJson() {
     return {
       'accessToken': accessToken,
+      'refreshToken': refreshToken,
       'accessTokenExpiresAt': accessTokenExpiresAt,
+      'refreshTokenExpiresAt': refreshTokenExpiresAt,
       'user': user.toJson(),
     };
   }
