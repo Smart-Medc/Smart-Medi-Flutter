@@ -1,0 +1,7 @@
+import 'package:dartz/dartz.dart';
+import 'package:smart_medi/core/networking/api_failure.dart';
+import 'package:smart_medi/features/medical_records/data/models/get_medical_records_models/get_medical_records_response.dart';
+
+abstract class MedicalRecordsRepo{
+  Future<Either<Failure, GetMedicalRecordsResponse>> getMedicalRecords({required String patientId});
+}
