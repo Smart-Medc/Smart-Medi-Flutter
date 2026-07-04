@@ -15,7 +15,7 @@ class MedicalRecordsView extends StatelessWidget {
       child: Scaffold(
         body: BlocProvider(
           create: (context) =>
-              GetMedicalRecordsCubit(getIt<MedicalRecordsRepo>()),
+              GetMedicalRecordsCubit(getIt<MedicalRecordsRepo>())..getMedicalRecords(),
           child: const MedicalRecordsBody(),
         ),
         drawer: const AppDrawer(selectedItem: DrawerItem.medicalRecords),
