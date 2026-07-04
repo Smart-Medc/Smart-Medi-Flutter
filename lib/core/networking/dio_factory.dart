@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:smart_medi/core/helpers/secure_storage_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
+import 'package:smart_medi/core/routing/app_router.dart';
+import 'package:smart_medi/core/routing/app_routes.dart';
 
 class DioFactory {
   DioFactory._();
@@ -55,24 +57,29 @@ class DioFactory {
         onError: (error, handler) async {
           final requestOptions = error.requestOptions;
 
-          /// Not 401 → pass through
           if (error.response?.statusCode != 401) {
             return handler.next(error);
           }
 
-          /// Already retried once → stop loop
           if (requestOptions.extra[_refreshRetriedExtraKey] == true) {
             return handler.next(error);
           }
 
-          /// Avoid refresh endpoint loop
           if (requestOptions.path.contains(ApiEndpoints.refreshToken)) {
             await SecureStorageHelper.clearAll();
-            return handler.next(error);
+
+            AppRouter.router.go(AppRoutes.loginView);
+
+            return handler.reject(
+              DioException(
+                requestOptions: requestOptions,
+                type: DioExceptionType.cancel,
+                error: 'Session expired',
+              ),
+            );
           }
 
           try {
-            /// Start refresh only once
             if (!_isRefreshing) {
               _isRefreshing = true;
               _refreshFuture = _performRefresh();
@@ -81,18 +88,35 @@ class DioFactory {
             await _refreshFuture;
           } catch (e) {
             await SecureStorageHelper.clearAll();
-            return handler.next(error);
+
+            AppRouter.router.go(AppRoutes.loginView);
+
+            return handler.reject(
+              DioException(
+                requestOptions: requestOptions,
+                type: DioExceptionType.cancel,
+                error: 'Session expired',
+              ),
+            );
           } finally {
-            if (_isRefreshing) {
-              _isRefreshing = false;
-              _refreshFuture = null;
-            }
+            _isRefreshing = false;
+            _refreshFuture = null;
           }
 
-          /// Get new token
           final newToken = await SecureStorageHelper.getAccessToken();
+
           if (newToken == null || newToken.isEmpty) {
-            return handler.next(error);
+            await SecureStorageHelper.clearAll();
+
+            AppRouter.router.go(AppRoutes.loginView);
+
+            return handler.reject(
+              DioException(
+                requestOptions: requestOptions,
+                type: DioExceptionType.cancel,
+                error: 'Session expired',
+              ),
+            );
           }
 
           final options = Options(
@@ -128,13 +152,19 @@ class DioFactory {
 
             return handler.resolve(response);
           } catch (e) {
-            if (kDebugMode) {
-              print("Retry failed: $e");
-            }
-            return handler.next(error);
+            await SecureStorageHelper.clearAll();
+
+            AppRouter.router.go(AppRoutes.loginView);
+
+            return handler.reject(
+              DioException(
+                requestOptions: requestOptions,
+                type: DioExceptionType.cancel,
+                error: 'Session expired',
+              ),
+            );
           }
-        },
-      ),
+        },      ),
     );
 
     if (kDebugMode) {
@@ -169,7 +199,7 @@ class DioFactory {
 
     final response = await refreshDio.post(
       ApiEndpoints.refreshToken,
-      data: {
+      queryParameters: {
         'refreshToken': refreshToken,
       },
     );
