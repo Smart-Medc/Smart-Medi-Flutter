@@ -6,7 +6,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_share_download_button.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_share_download_button.dart';
 
 class MedicalRecordsDocument extends StatelessWidget {
   const MedicalRecordsDocument({
@@ -27,6 +27,7 @@ class MedicalRecordsDocument extends StatelessWidget {
         GoRouter.of(context).push(AppRoutes.recordDetailsView);
       },
       child: CardContainer(
+        margin: EdgeInsets.only(bottom: 16.h),
         padding: EdgeInsets.only(
           left: 24.w,
           right: 24.w,

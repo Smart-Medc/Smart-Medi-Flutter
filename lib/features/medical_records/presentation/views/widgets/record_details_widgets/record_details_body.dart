@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/record_details_widgets/record_details_box.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/record_details_widgets/record_details_buttons.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/record_details_widgets/record_info_box.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/record_details_widgets/record_test_results_box.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/record_details_widgets/record_details_box.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/record_details_widgets/record_details_buttons.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/record_details_widgets/record_info_box.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/record_details_widgets/record_test_results_box.dart';
 class RecordDetailsBody extends StatelessWidget {
   const RecordDetailsBody({super.key});
   @override

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/medical_records_share_download_button.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_share_download_button.dart';
 
 class RecordDetailsButtons extends StatelessWidget {
   const RecordDetailsButtons({super.key});

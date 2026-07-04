@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/edit_record_widgets/edit_record_body.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_body.dart';
 
 class EditRecordView extends StatelessWidget {
   const EditRecordView({super.key});

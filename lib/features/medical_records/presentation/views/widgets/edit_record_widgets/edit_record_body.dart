@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/edit_record_widgets/edit_record_basic_information.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/edit_record_widgets/edit_record_action_buttons.dart';
-import 'package:smart_medi/features/meidcal_records/presentation/views/widgets/upload_new_document.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_action_buttons.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_basic_information.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/upload_new_document.dart';
 
 class EditRecordBody extends StatelessWidget {
   const EditRecordBody({super.key});
