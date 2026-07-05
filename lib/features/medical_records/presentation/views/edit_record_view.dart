@@ -22,7 +22,7 @@ class EditRecordView extends StatelessWidget {
             ? BlocProvider(
                 create: (context) =>
                     EditMedicalRecordCubit(getIt<MedicalRecordsRepo>()),
-                child: EditRecordBody(isEdit: isEdit),
+                child: EditRecordBody(isEdit: isEdit, recordId: recordId),
               )
             : BlocProvider(
                 create: (context) =>

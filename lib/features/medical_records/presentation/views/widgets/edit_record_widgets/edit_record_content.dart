@@ -8,13 +8,15 @@ import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/custom_text_form_field.dart';
 import 'package:smart_medi/features/medical_records/data/models/add_medical_record_models/add_medical_record_request.dart';
 import 'package:smart_medi/features/medical_records/presentation/manager/add_medical_record_cubit/add_medical_record_cubit.dart';
+import 'package:smart_medi/features/medical_records/presentation/manager/edit_medical_record_cubit/edit_medical_record_cubit.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_action_buttons.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/upload_new_document.dart';
 
 class EditRecordContent extends StatefulWidget {
-  const EditRecordContent({super.key, required this.isEdit});
+  const EditRecordContent({super.key, required this.isEdit, this.recordId});
 
   final bool isEdit;
+  final String? recordId;
 
   @override
   State<EditRecordContent> createState() => _EditRecordContentState();
@@ -199,7 +201,6 @@ class _EditRecordContentState extends State<EditRecordContent> {
             isEdit: widget.isEdit,
             onPrimaryPressed: () {
               if (_formKey.currentState!.validate()) {
-                if(!widget.isEdit){
                   final request = AddMedicalRecordRequest(
                     title: _recordTitleController.text.trim(),
                     recordDate: DateTime.parse(_startDateController.text),
@@ -221,11 +222,17 @@ class _EditRecordContentState extends State<EditRecordContent> {
                         ? null
                         : _findingSummaryController.text.trim(),
                   );
+                  if(widget.isEdit) {
+                    context.read<EditMedicalRecordCubit>().editMedicalRecord(
+                      addMedicalRecordRequest: request,
+                      recordId: widget.recordId!,
+                    );
+                  } else {
+                    context.read<AddMedicalRecordCubit>().addMedicalRecord(
+                      addMedicalRecordRequest: request,
+                    );
+                  }
 
-                  context.read<AddMedicalRecordCubit>().addMedicalRecord(
-                    addMedicalRecordRequest: request,
-                  );
-                }
 
               }
             },
