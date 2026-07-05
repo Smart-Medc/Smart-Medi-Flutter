@@ -3,6 +3,7 @@ import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
+import 'package:smart_medi/features/medical_records/data/models/add_medical_record_models/add_medical_record_request.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_record_details_models/get_medical_record_details_response.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_records_models/get_medical_records_response.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_records_statistics/get_medical_records_statistics_response.dart';
@@ -49,6 +50,17 @@ class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
         endpoint: ApiEndpoints.getMedicalRecordsStatistics(patientId: patientId),
       );
       return GetMedicalRecordsStatisticsResponse.fromJson(response);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> addMedicalRecord({required AddMedicalRecordRequest addMedicalRecordRequest, required String patientId}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.post(
+        endpoint: ApiEndpoints.addMedicalRecord(patientId: patientId),
+        data: addMedicalRecordRequest.toJson(),
+      );
+      return unit;
     });
   }
 }
