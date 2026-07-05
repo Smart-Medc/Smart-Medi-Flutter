@@ -7,6 +7,7 @@ import 'package:smart_medi/core/widgets/app_search_bar.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_view_widgets/delete_medical_record_listener.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_view_widgets/medical_records_bloc_builder.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_view_widgets/medical_records_summary_bloc_builder.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/upload_new_document.dart';
 class MedicalRecordsBody extends StatelessWidget {
   const MedicalRecordsBody({super.key});
@@ -29,6 +30,8 @@ class MedicalRecordsBody extends StatelessWidget {
                   onActionPressed: () => context.push(AppRoutes.editRecordView),
                 )),
                 const SliverToBoxAdapter(child: AppSearchBar(hintText: 'Search records by title , type')),
+                const MedicalRecordsSummaryBlocBuilder(),
+                SliverToBoxAdapter(child: 28.verticalSpace),
                 const MedicalRecordsBlocBuilder(),
                 SliverToBoxAdapter(child: 16.verticalSpace),
                 const SliverToBoxAdapter(child: SizedBox(width: double.infinity,child: UploadNewDocument())),

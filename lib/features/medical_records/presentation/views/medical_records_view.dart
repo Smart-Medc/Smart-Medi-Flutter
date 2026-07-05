@@ -27,7 +27,7 @@ class MedicalRecordsView extends StatelessWidget {
             ),
             BlocProvider(
               create: (context) =>
-                  GetMedicalRecordsStatisticsCubit(getIt<MedicalRecordsRepo>()),
+                  GetMedicalRecordsStatisticsCubit(getIt<MedicalRecordsRepo>())..getMedicalRecordsStatistics(),
             ),
 
           ],
