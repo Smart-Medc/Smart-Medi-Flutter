@@ -6,6 +6,7 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
+import 'package:smart_medi/core/widgets/item_action_menu.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_share_download_button.dart';
 
 class MedicalRecordsDocument extends StatelessWidget {
@@ -51,7 +52,10 @@ class MedicalRecordsDocument extends StatelessWidget {
                   backgroundColor: AppColors.iconBGBlue,
                   iconColor: AppColors.iconBlue,
                 ),
-                Text(documentName, style: AppStyles.textStyle15W600Black),
+                10.horizontalSpace,
+                Expanded(child: Text(documentName, style: AppStyles.textStyle15W600Black)),
+                const Spacer(),
+                const ItemActionMenu()
               ],
             ),
             34.verticalSpace,
