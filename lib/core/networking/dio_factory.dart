@@ -164,7 +164,8 @@ class DioFactory {
               ),
             );
           }
-        },      ),
+        },
+      ),
     );
 
     if (kDebugMode) {
@@ -187,7 +188,12 @@ class DioFactory {
     final refreshDio = Dio(
       BaseOptions(
         baseUrl: ApiEndpoints.baseUrl,
-        headers: {'Accept': 'application/json'},
+        headers: {
+          'Accept': 'application/json',
+          'X-Client-Type': 'Mobile',
+        },
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
       ),
     );
 
