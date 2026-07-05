@@ -63,4 +63,15 @@ class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
       return unit;
     });
   }
+
+  @override
+  Future<Either<Failure, Unit>> editMedicalRecord({required AddMedicalRecordRequest addMedicalRecordRequest, required String patientId, required String recordId}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.put(
+        endpoint: ApiEndpoints.editMedicalRecord(patientId: patientId, recordId: recordId),
+        data: addMedicalRecordRequest.toJson(),
+      );
+      return unit;
+    });
+  }
 }

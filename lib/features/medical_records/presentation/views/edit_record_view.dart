@@ -4,6 +4,7 @@ import 'package:smart_medi/core/helpers/service_locator.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/features/medical_records/data/repos/medical_records_repo.dart';
 import 'package:smart_medi/features/medical_records/presentation/manager/add_medical_record_cubit/add_medical_record_cubit.dart';
+import 'package:smart_medi/features/medical_records/presentation/manager/edit_medical_record_cubit/edit_medical_record_cubit.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_body.dart';
 
 class EditRecordView extends StatelessWidget {
@@ -18,7 +19,11 @@ class EditRecordView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
         body: isEdit
-            ? EditRecordView(isEdit: isEdit)
+            ? BlocProvider(
+                create: (context) =>
+                    EditMedicalRecordCubit(getIt<MedicalRecordsRepo>()),
+                child: EditRecordBody(isEdit: isEdit),
+              )
             : BlocProvider(
                 create: (context) =>
                     AddMedicalRecordCubit(getIt<MedicalRecordsRepo>()),

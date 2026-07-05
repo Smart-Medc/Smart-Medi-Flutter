@@ -11,4 +11,5 @@ abstract class MedicalRecordsRepo{
   Future<Either<Failure, Unit>> deleteMedicalRecord({required String patientId, required String recordId});
   Future<Either<Failure, GetMedicalRecordsStatisticsResponse>> getMedicalRecordsStatistics({required String patientId});
   Future<Either<Failure, Unit>> addMedicalRecord({required AddMedicalRecordRequest addMedicalRecordRequest,required String patientId});
+  Future<Either<Failure, Unit>> editMedicalRecord({required AddMedicalRecordRequest addMedicalRecordRequest,required String patientId,required String recordId});
 }
