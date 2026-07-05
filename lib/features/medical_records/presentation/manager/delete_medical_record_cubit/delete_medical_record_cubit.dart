@@ -9,7 +9,7 @@ class DeleteMedicalRecordCubit extends Cubit<DeleteMedicalRecordState> {
   DeleteMedicalRecordCubit(this.medicalRecordsRepo) : super(DeleteMedicalRecordInitial());
   final MedicalRecordsRepo medicalRecordsRepo;
 
-  Future<void> deleteMedicalRecord(String recordId) async {
+  Future<void> deleteMedicalRecord({required String recordId}) async {
     emit(DeleteMedicalRecordLoading());
     final patientId = await SecureStorageHelper.getPatientId();
     if (patientId == null || patientId.trim().isEmpty) {
