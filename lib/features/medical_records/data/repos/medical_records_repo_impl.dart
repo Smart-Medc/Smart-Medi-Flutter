@@ -3,6 +3,7 @@ import 'package:smart_medi/core/helpers/api_helper.dart';
 import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
+import 'package:smart_medi/features/medical_records/data/models/get_medical_record_details_models/get_medical_record_details_response.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_records_models/get_medical_records_response.dart';
 import 'package:smart_medi/features/medical_records/data/repos/medical_records_repo.dart';
 
@@ -17,6 +18,16 @@ class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
         endpoint: ApiEndpoints.getMedicalRecords(patientId: patientId),
       );
       return GetMedicalRecordsResponse.fromJson(response);
+    });
+  }
+
+  @override
+  Future<Either<Failure, GetMedicalRecordDetailsResponse>> getMedicalRecordDetails({required String patientId, required String recordId}) {
+    return ApiHelper.execute<GetMedicalRecordDetailsResponse>(() async {
+      final response = await apiService.get(
+        endpoint: ApiEndpoints.getMedicalRecordDetails(patientId: patientId, recordId: recordId),
+      );
+      return GetMedicalRecordDetailsResponse.fromJson(response);
     });
   }
 }
