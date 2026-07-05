@@ -5,8 +5,8 @@ import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_basic_content.dart';
 
 class EditRecordBody extends StatelessWidget {
-  const EditRecordBody({super.key});
-
+  const EditRecordBody({super.key, required this.isEdit});
+  final bool isEdit;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -17,12 +17,12 @@ class EditRecordBody extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AppBarBackButton(),
-            const AppHeader(
-              title: 'Edit Medical Record',
-              subtitle: 'Update your medical record information',
+            AppHeader(
+              title: isEdit ? 'Edit Medical Record' : 'Create Medical Record',
+              subtitle: isEdit ? 'Update your medical record information' : 'Fill in the details for your new medical record',
             ),
             24.verticalSpace,
-            const EditRecordBasicContent(),
+            EditRecordBasicContent(isEdit: isEdit),
           ],
         ),
       ),

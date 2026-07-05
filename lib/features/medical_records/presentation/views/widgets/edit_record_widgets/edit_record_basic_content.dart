@@ -9,8 +9,8 @@ import 'package:smart_medi/features/medical_records/presentation/views/widgets/e
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/upload_new_document.dart';
 
 class EditRecordBasicContent extends StatefulWidget {
-  const EditRecordBasicContent({super.key});
-
+  const EditRecordBasicContent({super.key, required this.isEdit});
+  final bool isEdit;
   @override
   State<EditRecordBasicContent> createState() => _EditRecordBasicContentState();
 }
@@ -176,7 +176,9 @@ class _EditRecordBasicContentState extends State<EditRecordBasicContent> {
           16.verticalSpace,
           const SizedBox(width: double.infinity,child: UploadNewDocument()),
           40.verticalSpace,
-           EditRecordActionButtons(onPrimaryPressed: (){
+           EditRecordActionButtons(
+             isEdit: widget.isEdit,
+             onPrimaryPressed: (){
              if (_formKey.currentState!.validate()) {
              }
           },),

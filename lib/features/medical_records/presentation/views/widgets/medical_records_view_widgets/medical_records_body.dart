@@ -11,7 +11,6 @@ import 'package:smart_medi/features/medical_records/presentation/views/widgets/m
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/upload_new_document.dart';
 class MedicalRecordsBody extends StatelessWidget {
   const MedicalRecordsBody({super.key});
-
   @override
    Widget build(BuildContext context) {
     return DeleteMedicalRecordListener(
@@ -27,7 +26,9 @@ class MedicalRecordsBody extends StatelessWidget {
                   title: 'Medical Records',
                   subtitle: 'Securely store and manage your health documents',
                   actionText: 'Upload Document',
-                  onActionPressed: () => context.push(AppRoutes.editRecordView),
+                  onActionPressed: () => context.push(AppRoutes.editRecordView,extra: {
+                    'isEdit': false,
+                  }),
                 )),
                 const SliverToBoxAdapter(child: AppSearchBar(hintText: 'Search records by title , type')),
                 const MedicalRecordsSummaryBlocBuilder(),

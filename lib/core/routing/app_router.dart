@@ -169,8 +169,46 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.editRecordView,
-        builder: (context, state) => const EditRecordView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          final isEdit = extraData?['isEdit'] as bool?;
+
+          // ❌ لازم isEdit يكون موجود
+          if (isEdit == null) {
+            return AppRoutes.medicalRecords;
+          }
+
+          // 🟢 ADD MODE → ادخل مباشرة بدون أي validation
+          if (isEdit == false) {
+            return null;
+          }
+
+          // 🔵 EDIT MODE → لازم recordId
+          final recordId = extraData?['recordId'];
+
+          if (recordId == null || recordId.toString().trim().isEmpty) {
+            return AppRoutes.medicalRecords;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>? ?? {};
+
+          final isEdit = extraData['isEdit'] as bool? ?? false;
+          final recordId = extraData['recordId'] as String?;
+
+          return EditRecordView(
+            isEdit: isEdit,
+            recordId: recordId, // 👈 مهم جدًا
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.medicationManagement,
@@ -323,11 +361,10 @@ abstract class AppRouter {
         },
         builder: (context, state) {
           final extraData = state.extra as Map<String, dynamic>;
-          final organization = extraData['organization'] as GetOrganizationsResponse;
+          final organization =
+              extraData['organization'] as GetOrganizationsResponse;
 
-          return BookAppointmentsView(
-            organization: organization,
-          );
+          return BookAppointmentsView(organization: organization);
         },
       ),
       GoRoute(
@@ -339,8 +376,7 @@ abstract class AppRouter {
 
           final extraData = state.extra as Map<String, dynamic>?;
 
-          if (extraData == null ||
-              !extraData.containsKey('appointment')) {
+          if (extraData == null || !extraData.containsKey('appointment')) {
             return AppRoutes.appointmentsView;
           }
 
@@ -351,8 +387,7 @@ abstract class AppRouter {
           final extraData = state.extra as Map<String, dynamic>;
 
           return AppointmentsCancelView(
-            appointment: extraData['appointment']
-            as AppointmentItemModel,
+            appointment: extraData['appointment'] as AppointmentItemModel,
           );
         },
       ),
@@ -383,9 +418,7 @@ abstract class AppRouter {
           final extraData = state.extra as Map<String, dynamic>;
           final appointmentId = extraData['appointmentId'] as String;
 
-          return AppointmentsDetailsView(
-            appointmentId: appointmentId,
-          );
+          return AppointmentsDetailsView(appointmentId: appointmentId);
         },
       ),
       GoRoute(
@@ -409,7 +442,7 @@ abstract class AppRouter {
 
           return AppointmentsConfirmedView(
             postAppointmentResponse:
-            extraData['postAppointmentResponse'] as PostAppointmentResponse,
+                extraData['postAppointmentResponse'] as PostAppointmentResponse,
             address: extraData['address'] as String,
           );
         },
@@ -427,16 +460,17 @@ abstract class AppRouter {
 
           final extraData = state.extra as Map<String, dynamic>?;
 
-          if (extraData == null ||
-              !extraData.containsKey('organization')) {
+          if (extraData == null || !extraData.containsKey('organization')) {
             return AppRoutes.availableAppointmentView;
           }
 
-          if(extraData['organization'] == null || extraData['organization'] is! GetOrganizationsResponse) {
+          if (extraData['organization'] == null ||
+              extraData['organization'] is! GetOrganizationsResponse) {
             return AppRoutes.availableAppointmentView;
           }
 
-          final organization = extraData['organization'] as GetOrganizationsResponse;
+          final organization =
+              extraData['organization'] as GetOrganizationsResponse;
           final organizationId = organization.id;
 
           if (organizationId.trim().isEmpty) {
@@ -448,9 +482,13 @@ abstract class AppRouter {
 
         builder: (context, state) {
           final extraData = state.extra as Map<String, dynamic>?;
-          final organization = extraData!['organization'] as GetOrganizationsResponse;
+          final organization =
+              extraData!['organization'] as GetOrganizationsResponse;
           final organizationId = organization.id;
-          return AvailableAppointmentDetailView(organizationId: organizationId, organization: organization);
+          return AvailableAppointmentDetailView(
+            organizationId: organizationId,
+            organization: organization,
+          );
         },
       ),
       GoRoute(
@@ -473,7 +511,8 @@ abstract class AppRouter {
           final extraData = state.extra as Map<String, dynamic>;
           final DateTime selectedDate = extraData['date'] as DateTime;
           final String selectedTime = extraData['time'] as String;
-          final GetOrganizationsResponse organization = extraData['organization'] as GetOrganizationsResponse;
+          final GetOrganizationsResponse organization =
+              extraData['organization'] as GetOrganizationsResponse;
 
           return CompleteBookingView(
             selectedDate: selectedDate,

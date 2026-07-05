@@ -67,7 +67,7 @@ class MedicalRecordsDocument extends StatelessWidget {
                   onEdit: (){
                     GoRouter.of(context).push(
                       AppRoutes.editRecordView,
-                      extra: {'recordId': recordId, 'patientId': patientId},
+                      extra: {'recordId': recordId,'isEdit': true},
                     );
                   },
                   onDelete: () {
