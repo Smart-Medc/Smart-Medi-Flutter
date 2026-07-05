@@ -5,6 +5,7 @@ import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_record_details_models/get_medical_record_details_response.dart';
 import 'package:smart_medi/features/medical_records/data/models/get_medical_records_models/get_medical_records_response.dart';
+import 'package:smart_medi/features/medical_records/data/models/get_medical_records_statistics/get_medical_records_statistics_response.dart';
 import 'package:smart_medi/features/medical_records/data/repos/medical_records_repo.dart';
 
 class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
@@ -38,6 +39,16 @@ class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
         endpoint: ApiEndpoints.deleteMedicalRecord(patientId: patientId, recordId: recordId),
       );
       return unit;
+    });
+  }
+
+  @override
+  Future<Either<Failure, GetMedicalRecordsStatisticsResponse>> getMedicalRecordsStatistics({required String patientId}) {
+    return ApiHelper.execute<GetMedicalRecordsStatisticsResponse>(() async {
+      final response = await apiService.get(
+        endpoint: ApiEndpoints.getMedicalRecordsStatistics(patientId: patientId),
+      );
+      return GetMedicalRecordsStatisticsResponse.fromJson(response);
     });
   }
 }
