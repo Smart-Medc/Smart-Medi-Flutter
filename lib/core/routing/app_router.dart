@@ -140,8 +140,32 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.recordDetailsView,
-        builder: (context, state) => const RecordDetailsView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null ||
+              extraData['patientId'] == null ||
+              extraData['recordId'] == null ||
+              extraData['patientId'].toString().trim().isEmpty ||
+              extraData['recordId'].toString().trim().isEmpty) {
+            return AppRoutes.medicalRecords;
+          }
+
+          return null;
+        },
+
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return RecordDetailsView(
+            patientId: extraData['patientId'] as String,
+            recordId: extraData['recordId'] as String,
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.editRecordView,

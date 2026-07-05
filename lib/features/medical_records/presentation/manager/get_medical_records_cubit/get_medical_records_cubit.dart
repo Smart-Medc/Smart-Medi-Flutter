@@ -22,7 +22,7 @@ class GetMedicalRecordsCubit extends Cubit<GetMedicalRecordsState> {
     final result = await medicalRecordsRepo.getMedicalRecords(patientId: patientId);
     result.fold(
       (failure) => emit(GetMedicalRecordsFailure(message: failure.message)),
-      (response) => emit(GetMedicalRecordsSuccess(medicalRecordsResponse: response)),
+      (response) => emit(GetMedicalRecordsSuccess(medicalRecordsResponse: response, patientId: patientId)),
     );
   }
 }

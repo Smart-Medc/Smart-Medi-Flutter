@@ -5,8 +5,9 @@ import 'package:smart_medi/features/medical_records/data/models/get_medical_reco
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_view_widgets/medical_records_list.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/medical_records_view_widgets/medical_records_summary.dart';
 class MedicalRecordsContent extends StatelessWidget {
-  const MedicalRecordsContent({super.key, required this.medicalRecordsResponse});
+  const MedicalRecordsContent({super.key, required this.medicalRecordsResponse, required this.patientId});
   final GetMedicalRecordsResponse medicalRecordsResponse;
+  final String patientId;
   @override
   Widget build(BuildContext context) {
     return SliverMainAxisGroup(slivers: [
@@ -14,7 +15,7 @@ class MedicalRecordsContent extends StatelessWidget {
       SliverToBoxAdapter(child: 28.verticalSpace),
       SliverToBoxAdapter(child: Text('Records',style: AppStyles.textStyle24W600Black,)),
       SliverToBoxAdapter(child: 14.verticalSpace),
-      MedicalRecordsList(medicalRecords: medicalRecordsResponse.items,),
+      MedicalRecordsList(medicalRecords: medicalRecordsResponse.items, patientId: patientId,),
     ]);
   }
 }

@@ -14,17 +14,24 @@ class MedicalRecordsDocument extends StatelessWidget {
     required this.documentName,
     required this.date,
     required this.size,
+    required this.recordId,
+    required this.patientId,
   });
 
   final String documentName;
+  final String recordId;
   final String date;
   final double size;
+  final String patientId;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        GoRouter.of(context).push(AppRoutes.recordDetailsView);
+        GoRouter.of(context).push(AppRoutes.recordDetailsView,extra: {
+          'recordId': recordId,
+          'patientId': patientId,
+        });
       },
       child: CardContainer(
         margin: EdgeInsets.only(bottom: 16.h),

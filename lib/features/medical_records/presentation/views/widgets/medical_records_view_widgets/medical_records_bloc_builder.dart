@@ -6,7 +6,6 @@ import 'package:smart_medi/features/medical_records/presentation/views/widgets/m
 
 class MedicalRecordsBlocBuilder extends StatelessWidget {
   const MedicalRecordsBlocBuilder({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetMedicalRecordsCubit, GetMedicalRecordsState>(
@@ -31,7 +30,7 @@ class MedicalRecordsBlocBuilder extends StatelessWidget {
         }
 
         if (state is GetMedicalRecordsSuccess) {
-          return MedicalRecordsContent(medicalRecordsResponse: state.medicalRecordsResponse);
+          return MedicalRecordsContent(medicalRecordsResponse: state.medicalRecordsResponse, patientId: state.patientId);
         }
 
         return const SliverToBoxAdapter(child: SizedBox.shrink());
