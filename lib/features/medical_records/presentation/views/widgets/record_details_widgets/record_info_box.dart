@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
+import 'package:smart_medi/features/medical_records/data/models/get_medical_record_details_models/get_medical_record_details_response.dart';
 
 class RecordInfoBox extends StatelessWidget {
-  const RecordInfoBox({super.key});
-
+  const RecordInfoBox({super.key, required this.medicalRecordDetails});
+  final GetMedicalRecordDetailsResponse medicalRecordDetails;
   @override
   Widget build(BuildContext context) {
     return CardContainer(
@@ -15,7 +16,6 @@ class RecordInfoBox extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
               'Record Info',
@@ -28,16 +28,16 @@ class RecordInfoBox extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    infoItem(title: 'Type', value: 'Imaging'),
+                    infoItem(title: 'Type', value: medicalRecordDetails.recordType),
                     10.verticalSpace,
-                    infoItem(title: 'Date', value: 'Mar 10, 2024'),
+                    infoItem(title: 'Date', value: medicalRecordDetails.formattedRecordDate),
                   ],
                 ),
                 const Spacer(),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    infoItem(title: 'File Size', value: '8.1 MB'),
+                    infoItem(title: 'File Size', value: '${medicalRecordDetails.totalDocumentSize.toStringAsFixed(2)} MB'),
                     10.verticalSpace,
                     infoItem(title: 'Format', value: 'DICOM'),
                   ],

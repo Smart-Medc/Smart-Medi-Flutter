@@ -3,10 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
+import 'package:smart_medi/features/medical_records/data/models/get_medical_record_details_models/get_medical_record_details_response.dart';
 
 class RecordDetailsBox extends StatelessWidget {
-  const RecordDetailsBox({super.key});
-
+  const RecordDetailsBox({super.key, required this.medicalRecordDetails});
+  final GetMedicalRecordDetailsResponse medicalRecordDetails;
   @override
   Widget build(BuildContext context) {
     return CardContainer(
@@ -16,13 +17,13 @@ class RecordDetailsBox extends StatelessWidget {
         children: [
           Text('Record Details',style: AppStyles.textStyle24W600Black,),
           20.verticalSpace,
-          recordDetailsBoxItem(title: 'Exam Date', value: 'March 10, 2024'),
+          recordDetailsBoxItem(title: 'Record Date', value: medicalRecordDetails.formattedRecordDate),
           8.verticalSpace,
-          recordDetailsBoxItem(title: 'Radiologist', value: 'Dr. Michael Chen'),
+          recordDetailsBoxItem(title: 'Ordered By', value: medicalRecordDetails.orderedBy ?? 'N/A'),
           8.verticalSpace,
-          recordDetailsBoxItem(title: 'Facility', value: 'Radiology Center'),
+          recordDetailsBoxItem(title: 'Provider', value: medicalRecordDetails.providerName ?? 'N/A'),
           8.verticalSpace,
-          recordDetailsBoxItem(title: 'Status', value: 'Report Complete'),
+          recordDetailsBoxItem(title: 'Status', value: medicalRecordDetails.status),
         ],
       ),
     );
@@ -44,8 +45,8 @@ class RecordDetailsBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             21.horizontalSpace,
-            Text(title,style: AppStyles.textStyle10W400LightGrey,),
-            Spacer(),
+            Text(title,style: AppStyles.textStyle12W400LightGrey,),
+            const Spacer(),
             Text(value,style: AppStyles.textStyle11W500Black,),
             10.horizontalSpace,
           ],
