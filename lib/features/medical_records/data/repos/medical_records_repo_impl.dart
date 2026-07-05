@@ -30,4 +30,14 @@ class MedicalRecordsRepoImpl extends MedicalRecordsRepo {
       return GetMedicalRecordDetailsResponse.fromJson(response);
     });
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteMedicalRecord({required String patientId, required String recordId}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.delete(
+        endpoint: ApiEndpoints.deleteMedicalRecord(patientId: patientId, recordId: recordId),
+      );
+      return unit;
+    });
+  }
 }

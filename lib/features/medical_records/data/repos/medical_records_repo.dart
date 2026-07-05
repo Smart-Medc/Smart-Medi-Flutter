@@ -6,4 +6,5 @@ import 'package:smart_medi/features/medical_records/data/models/get_medical_reco
 abstract class MedicalRecordsRepo{
   Future<Either<Failure, GetMedicalRecordsResponse>> getMedicalRecords({required String patientId});
   Future<Either<Failure, GetMedicalRecordDetailsResponse>> getMedicalRecordDetails({required String patientId, required String recordId});
+  Future<Either<Failure, Unit>> deleteMedicalRecord({required String patientId, required String recordId});
 }
