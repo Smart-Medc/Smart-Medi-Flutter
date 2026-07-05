@@ -199,31 +199,34 @@ class _EditRecordContentState extends State<EditRecordContent> {
             isEdit: widget.isEdit,
             onPrimaryPressed: () {
               if (_formKey.currentState!.validate()) {
-                final request = AddMedicalRecordRequest(
-                  title: _recordTitleController.text.trim(),
-                  recordDate: DateTime.parse(_startDateController.text),
-                  recordType: _recordTypeController.text.trim() == 'Consultation Notes' ? 'ConsultationNotes' : _recordTypeController.text.trim(),
+                if(!widget.isEdit){
+                  final request = AddMedicalRecordRequest(
+                    title: _recordTitleController.text.trim(),
+                    recordDate: DateTime.parse(_startDateController.text),
+                    recordType: _recordTypeController.text.trim() == 'Consultation Notes' ? 'ConsultationNotes' : _recordTypeController.text.trim(),
 
-                  providerName: _providerNameController.text.trim().isEmpty
-                      ? null
-                      : _providerNameController.text.trim(),
+                    providerName: _providerNameController.text.trim().isEmpty
+                        ? null
+                        : _providerNameController.text.trim(),
 
-                  orderedBy: _orderedByController.text.trim().isEmpty
-                      ? null
-                      : _orderedByController.text.trim(),
+                    orderedBy: _orderedByController.text.trim().isEmpty
+                        ? null
+                        : _orderedByController.text.trim(),
 
-                  description: _descriptionController.text.trim().isEmpty
-                      ? null
-                      : _descriptionController.text.trim(),
+                    description: _descriptionController.text.trim().isEmpty
+                        ? null
+                        : _descriptionController.text.trim(),
 
-                  findingsSummary: _findingSummaryController.text.trim().isEmpty
-                      ? null
-                      : _findingSummaryController.text.trim(),
-                );
+                    findingsSummary: _findingSummaryController.text.trim().isEmpty
+                        ? null
+                        : _findingSummaryController.text.trim(),
+                  );
 
-                context.read<AddMedicalRecordCubit>().addMedicalRecord(
-                  addMedicalRecordRequest: request,
-                );
+                  context.read<AddMedicalRecordCubit>().addMedicalRecord(
+                    addMedicalRecordRequest: request,
+                  );
+                }
+
               }
             },
           ),

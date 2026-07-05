@@ -17,12 +17,14 @@ class EditRecordView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
-        body: BlocProvider(
-          create: (context) => AddMedicalRecordCubit(getIt<MedicalRecordsRepo>()),
-          child: EditRecordBody(isEdit: isEdit,),
-        ),
+        body: isEdit
+            ? EditRecordView(isEdit: isEdit)
+            : BlocProvider(
+                create: (context) =>
+                    AddMedicalRecordCubit(getIt<MedicalRecordsRepo>()),
+                child: EditRecordBody(isEdit: isEdit),
+              ),
       ),
     );
   }
 }
-

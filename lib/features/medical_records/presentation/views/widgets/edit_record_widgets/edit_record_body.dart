@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/add_medical_record_bloc_listener.dart';
+import 'package:smart_medi/features/medical_records/presentation/views/widgets/edit_record_widgets/edit_record_content.dart';
 
 class EditRecordBody extends StatelessWidget {
   const EditRecordBody({super.key, required this.isEdit});
@@ -22,7 +23,7 @@ class EditRecordBody extends StatelessWidget {
               subtitle: isEdit ? 'Update your medical record information' : 'Fill in the details for your new medical record',
             ),
             24.verticalSpace,
-            AddMedicalRecordBlocListener(isEdit: isEdit),
+            if (!isEdit) AddMedicalRecordBlocListener(isEdit: isEdit) else EditRecordContent(isEdit: isEdit),
           ],
         ),
       ),
