@@ -75,7 +75,7 @@ class SharedRecordItem extends StatelessWidget {
 
           // Action buttons
           SharedRecordActions(
-            recordId: sharedRecord.id,
+            url: sharedRecord.shareUrl,
           ),
         ],
       ),

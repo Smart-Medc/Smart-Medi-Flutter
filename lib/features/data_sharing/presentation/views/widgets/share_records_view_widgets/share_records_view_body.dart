@@ -23,7 +23,9 @@ class ShareRecordsViewBody extends StatefulWidget {
 class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
   List<RecordTypeModel>? recordTypes;
   String? patientId;
-  final TextEditingController _expirationController = TextEditingController(text: '24 Hours');
+  final TextEditingController _expirationController = TextEditingController(
+    text: '24 Hours',
+  );
 
   @override
   void dispose() {
@@ -54,13 +56,20 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
 
     if (selectedIds.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select at least one record to share.')),
+        const SnackBar(
+          content: Text('Please select at least one record to share.'),
+        ),
       );
       return;
     }
 
     context.read<ShareRecordsCubit>().shareRecords(
-      shareRecordsRequest: ShareRecordsRequest(specificRecordIds: selectedIds, expirationType: mapExpirationLabelToApiValue(_expirationController.text)),
+      shareRecordsRequest: ShareRecordsRequest(
+        specificRecordIds: selectedIds,
+        expirationType: mapExpirationLabelToApiValue(
+          _expirationController.text,
+        ),
+      ),
     );
   }
 
@@ -81,12 +90,15 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
           BlocConsumer<GetMedicalRecordsCubit, GetMedicalRecordsState>(
             listener: (context, state) {
               if (state is GetMedicalRecordsSuccess) {
-                recordTypes = RecordTypeModel.fromMedicalRecords(state.medicalRecordsResponse.items);
+                recordTypes = RecordTypeModel.fromMedicalRecords(
+                  state.medicalRecordsResponse.items,
+                );
                 patientId = state.patientId;
               }
             },
             builder: (context, state) {
-              if (state is GetMedicalRecordsLoading || state is GetMedicalRecordsInitial) {
+              if (state is GetMedicalRecordsLoading ||
+                  state is GetMedicalRecordsInitial) {
                 return const Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 );
@@ -108,7 +120,9 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
                           12.verticalSpace,
                           CustomButton(
                             text: 'Retry',
-                            onPressed: () => context.read<GetMedicalRecordsCubit>().getMedicalRecords(),
+                            onPressed: () => context
+                                .read<GetMedicalRecordsCubit>()
+                                .getMedicalRecords(),
                           ),
                         ],
                       ),
@@ -142,14 +156,14 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
           BlocConsumer<ShareRecordsCubit, ShareRecordsState>(
             listener: (context, state) {
               if (state is ShareRecordsSuccess) {
-                GoRouter.of(context).push(
+                GoRouter.of(context).pushReplacement(
                   AppRoutes.codeGeneratedView,
-                  extra: state.sharedRecord,
+                  extra: {'sharedRecord': state.sharedRecord},
                 );
               } else if (state is ShareRecordsFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message)),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
               }
             },
             builder: (context, state) {
@@ -167,6 +181,7 @@ class _ShareRecordsViewBodyState extends State<ShareRecordsViewBody> {
     );
   }
 }
+
 String mapExpirationLabelToApiValue(String label) {
   switch (label) {
     case '1 Hour':

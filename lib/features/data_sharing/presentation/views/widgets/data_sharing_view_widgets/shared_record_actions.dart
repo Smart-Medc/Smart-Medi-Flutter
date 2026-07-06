@@ -9,10 +9,10 @@ import 'package:smart_medi/core/utils/app_styles.dart';
 class SharedRecordActions extends StatelessWidget {
   const SharedRecordActions({
     super.key,
-    required this.recordId,
+    required this.url,
   });
 
-  final String recordId;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class SharedRecordActions extends StatelessWidget {
     return InkWell(
       onTap: () {
         Clipboard.setData(
-          ClipboardData(text: 'https://smartmedi.app/share/$recordId'),
+          ClipboardData(text: url),
         );
         context.showSnackBar(const Text('Link copied to clipboard'));
       },
