@@ -21,6 +21,11 @@ class ShareRecordsView extends StatelessWidget {
               GetMedicalRecordsCubit(getIt<MedicalRecordsRepo>())
                 ..getMedicalRecords(),
             ),
+            BlocProvider(
+              create: (context) =>
+              GetMedicalRecordsCubit(getIt<MedicalRecordsRepo>())
+                ..getMedicalRecords(),
+            ),
           ],
           child: const ShareRecordsViewBody(),
         ),

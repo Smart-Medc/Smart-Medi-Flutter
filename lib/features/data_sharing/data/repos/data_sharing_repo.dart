@@ -4,5 +4,5 @@ import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_
 
 abstract class DataSharingRepo {
   Future<Either<Failure, GetSharedRecordsResponse>> getSharedRecords();
-  Future<Either<Failure, GetSharedRecordsResponse>> shareRecords();
+  Future<Either<Failure, SharedRecordModel>> shareRecords();
 }
