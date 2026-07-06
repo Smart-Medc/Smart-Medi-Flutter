@@ -20,4 +20,14 @@ class DataSharingRepoImpl extends DataSharingRepo{
     });
   }
 
+  @override
+  Future<Either<Failure, GetSharedRecordsResponse>> shareRecords() {
+    return ApiHelper.execute<GetSharedRecordsResponse>(() async {
+      final response = await apiService.post(
+        endpoint: ApiEndpoints.shareRecords(),
+      );
+      return GetSharedRecordsResponse.fromJson(response);
+    });
+  }
+
 }
