@@ -34,19 +34,30 @@ class GetSharedRecordsResponse {
   final bool hasNextPage;
   final bool hasPreviousPage;
 
-  /// ===== Summary Logic =====
+  /// ===== Summary =====
 
-  int get activeCount =>
-      items.where((e) => e.status.toLowerCase() == 'active').length;
+  int get activeCount => activeShares.length;
 
-  int get expiredCount =>
-      items.where((e) => e.isExpired).length;
+  int get expiredCount => expiredOnlyShares.length;
 
-  int get revokedCount =>
-      items.where((e) => e.status.toLowerCase() == 'revoked').length;
+  int get revokedCount => revokedShares.length;
 
   int get totalAccesses =>
       items.fold(0, (sum, item) => sum + item.accessCount);
+
+  /// ===== Filtered Lists =====
+
+  List<SharedRecordModel> get activeShares =>
+      items.where((e) => e.isActive).toList();
+
+  List<SharedRecordModel> get expiredOnlyShares =>
+      items.where((e) => e.isExpired && !e.isRevoked).toList();
+
+  List<SharedRecordModel> get revokedShares =>
+      items.where((e) => e.isRevoked).toList();
+
+  List<SharedRecordModel> get expiredOrRevokedShares =>
+      items.where((e) => e.isExpired || e.isRevoked).toList();
 
   Map<String, dynamic> toJson() {
     return {

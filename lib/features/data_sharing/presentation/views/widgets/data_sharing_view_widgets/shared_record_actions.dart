@@ -10,11 +10,9 @@ class SharedRecordActions extends StatelessWidget {
   const SharedRecordActions({
     super.key,
     required this.recordId,
-    required this.sharedWith,
   });
 
   final String recordId;
-  final String sharedWith;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +57,7 @@ class SharedRecordActions extends StatelessWidget {
 
   Widget _buildRevokeButton(BuildContext context) {
     return InkWell(
-      onTap: () => _showRevokeDialog(context),
+      // onTap: () => _showRevokeDialog(context),
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12.h),
         decoration: BoxDecoration(
@@ -83,33 +81,33 @@ class SharedRecordActions extends StatelessWidget {
     );
   }
 
-  void _showRevokeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Revoke Access'),
-        content: Text('Are you sure you want to revoke access for $sharedWith?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Access revoked successfully'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
-            },
-            style: TextButton.styleFrom(foregroundColor: AppColors.iconRed),
-            child: const Text('Revoke'),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _showRevokeDialog(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Revoke Access'),
+  //       content: Text('Are you sure you want to revoke access for $sharedWith?'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.pop(context);
+  //             ScaffoldMessenger.of(context).showSnackBar(
+  //               const SnackBar(
+  //                 content: Text('Access revoked successfully'),
+  //                 duration: Duration(seconds: 2),
+  //               ),
+  //             );
+  //           },
+  //           style: TextButton.styleFrom(foregroundColor: AppColors.iconRed),
+  //           child: const Text('Revoke'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 

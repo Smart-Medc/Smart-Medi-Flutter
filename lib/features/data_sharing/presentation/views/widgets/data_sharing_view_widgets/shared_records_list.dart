@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_medi/features/data_sharing/data/models/shared_record_model.dart';
+import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_models/get_shared_records_response.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item.dart';
 
 class SharedRecordsList extends StatelessWidget {

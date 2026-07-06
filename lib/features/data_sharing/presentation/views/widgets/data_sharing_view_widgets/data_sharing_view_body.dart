@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/widgets/custom_app_bar.dart';
+import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_bloc_builder.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_header.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_hint_box.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_summary.dart';
-import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/data_sharing_tabs.dart';
 class DataSharingViewBody extends StatelessWidget {
   const DataSharingViewBody({super.key});
 
@@ -20,11 +18,7 @@ class DataSharingViewBody extends StatelessWidget {
               const SliverToBoxAdapter(child: CustomAppBar()),
               const SliverToBoxAdapter(child: DataSharingHeader()),
               SliverToBoxAdapter(child: 16.verticalSpace),
-              const SliverToBoxAdapter(child: DataSharingSummary()),
-              SliverToBoxAdapter(child: 16.verticalSpace),
-              const SliverToBoxAdapter(child: DataSharingHintBox()),
-              SliverToBoxAdapter(child: 20.verticalSpace),
-              const DataSharingTabs(),
+              const DataSharingBlocBuilder(),
             ],
           ),
         ),
