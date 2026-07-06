@@ -9,6 +9,8 @@ import 'package:smart_medi/features/auth/data/repos/password_recovery_repo/passw
 import 'package:smart_medi/features/auth/data/repos/password_recovery_repo/password_recovery_repo_impl.dart';
 import 'package:smart_medi/features/auth/data/repos/registration_repo/registration_repo.dart';
 import 'package:smart_medi/features/auth/data/repos/registration_repo/registration_repo_impl.dart';
+import 'package:smart_medi/features/medical_records/data/repos/medical_records_repo.dart';
+import 'package:smart_medi/features/medical_records/data/repos/medical_records_repo_impl.dart';
 import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo.dart';
 import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo_impl.dart';
 import 'package:smart_medi/features/medical_journal/data/repos/medical_journal_repo.dart';
@@ -50,5 +52,10 @@ Future<void> setupServiceLocator() async {
   getIt.registerSingleton<AppointmentRepo>(AppointmentRepoImpl(
     apiService: getIt.get<ApiService>(),
   ));
+
+  // Medical Records repositories
+   getIt.registerSingleton<MedicalRecordsRepo>(MedicalRecordsRepoImpl(
+     apiService: getIt.get<ApiService>(),
+   ));
 
 }
