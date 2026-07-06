@@ -4,6 +4,7 @@ import 'package:smart_medi/core/networking/api_endpoints.dart';
 import 'package:smart_medi/core/networking/api_failure.dart';
 import 'package:smart_medi/core/networking/api_service.dart';
 import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_models/get_shared_records_response.dart';
+import 'package:smart_medi/features/data_sharing/data/models/share_records_models/share_records_request.dart';
 import 'package:smart_medi/features/data_sharing/data/repos/data_sharing_repo.dart';
 
 class DataSharingRepoImpl extends DataSharingRepo{
@@ -21,10 +22,11 @@ class DataSharingRepoImpl extends DataSharingRepo{
   }
 
   @override
-  Future<Either<Failure, SharedRecordModel>> shareRecords() {
+  Future<Either<Failure, SharedRecordModel>> shareRecords({required ShareRecordsRequest shareRecordsRequest}) {
     return ApiHelper.execute<SharedRecordModel>(() async {
       final response = await apiService.post(
         endpoint: ApiEndpoints.shareRecords(),
+        data: shareRecordsRequest.toJson(),
       );
       return SharedRecordModel.fromJson(response);
     });
