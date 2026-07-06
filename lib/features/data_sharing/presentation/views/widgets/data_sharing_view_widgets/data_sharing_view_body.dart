@@ -10,20 +10,25 @@ class DataSharingViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 25.w),
-      child: Column(
-        children: [
-          const CustomAppBar(),
-          const DataSharingHeader(),
-          16.verticalSpace,
-          const DataSharingSummary(),
-          16.verticalSpace,
-          const DataSharingHintBox(),
-          20.verticalSpace,
-          const Expanded(child: DataSharingTabs()),
-        ],
-      ),
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: 25.w),
+          sliver: SliverMainAxisGroup(
+            slivers: [
+              const SliverToBoxAdapter(child: CustomAppBar()),
+              const SliverToBoxAdapter(child: DataSharingHeader()),
+              SliverToBoxAdapter(child: 16.verticalSpace),
+              const SliverToBoxAdapter(child: DataSharingSummary()),
+              SliverToBoxAdapter(child: 16.verticalSpace),
+              const SliverToBoxAdapter(child: DataSharingHintBox()),
+              SliverToBoxAdapter(child: 20.verticalSpace),
+              const DataSharingTabs(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
