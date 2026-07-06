@@ -1,23 +1,26 @@
+import 'package:smart_medi/features/medical_records/data/models/get_medical_records_models/get_medical_records_response.dart';
+
 class RecordTypeModel {
   RecordTypeModel({
     required this.typeName,
     required this.records,
     this.isTypeSelected = false,
-  }) : selectedRecords = {for (var record in records) record: false};
+  }) : selectedRecords = {for (var record in records) record.id: false};
+
   final String typeName;
-  final List<String> records;
+  final List<MedicalRecordModel> records;
   bool isTypeSelected;
-  final Map<String, bool> selectedRecords;
+  final Map<String, bool> selectedRecords; // keyed by record id
 
   void toggleType() {
     isTypeSelected = !isTypeSelected;
     for (var record in records) {
-      selectedRecords[record] = isTypeSelected;
+      selectedRecords[record.id] = isTypeSelected;
     }
   }
 
-  void toggleRecord(String record) {
-    selectedRecords[record] = !(selectedRecords[record] ?? false);
+  void toggleRecord(String recordId) {
+    selectedRecords[recordId] = !(selectedRecords[recordId] ?? false);
 
     // Update type selection based on individual records
     isTypeSelected = selectedRecords.values.every((selected) => selected);
@@ -27,47 +30,20 @@ class RecordTypeModel {
     return selectedRecords.values.any((selected) => selected);
   }
 
-  List<String> get getSelectedRecords {
-    return selectedRecords.entries
-        .where((entry) => entry.value)
-        .map((entry) => entry.key)
-        .toList();
+  List<MedicalRecordModel> get getSelectedRecords {
+    return records.where((record) => selectedRecords[record.id] == true).toList();
   }
 
-  static List<RecordTypeModel> getRecordTypes() {
-    return [
-      RecordTypeModel(
-        typeName: 'Lab Results',
-        records: [
-          'Blood Test Results',
-          'Urine Analysis',
-          'Complete Blood Count',
-        ],
-      ),
-      RecordTypeModel(
-        typeName: 'Imaging',
-        records: ['X-Ray', 'MRI Scan', 'CT Scan'],
-      ),
-      RecordTypeModel(
-        typeName: 'Checkups',
-        records: [
-          'Annual Physical Examination',
-          'Routine Checkup',
-          'Follow-up Visit',
-        ],
-      ),
-      RecordTypeModel(
-        typeName: 'Cardiology',
-        records: ['ECG Report', 'Echocardiogram', 'Stress Test'],
-      ),
-      RecordTypeModel(
-        typeName: 'Medications',
-        records: [
-          'Prescriptionary',
-          'Current Medications',
-          'Medication History',
-        ],
-      ),
-    ];
+  /// Groups the flat list coming from the API into sections by [recordTypeName].
+  static List<RecordTypeModel> fromMedicalRecords(List<MedicalRecordModel> allRecords) {
+    final Map<String, List<MedicalRecordModel>> grouped = {};
+
+    for (final record in allRecords) {
+      grouped.putIfAbsent(record.recordTypeName, () => []).add(record);
+    }
+
+    return grouped.entries
+        .map((entry) => RecordTypeModel(typeName: entry.key, records: entry.value))
+        .toList();
   }
 }

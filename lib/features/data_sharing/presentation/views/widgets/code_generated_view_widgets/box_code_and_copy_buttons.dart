@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
 
 class BoxCodeAndCopyButtons extends StatelessWidget {
-  const BoxCodeAndCopyButtons({super.key});
-
+  const BoxCodeAndCopyButtons({super.key, required this.accessCode, required this.url});
+  final String accessCode;
+  final String url;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +22,7 @@ class BoxCodeAndCopyButtons extends StatelessWidget {
               children: [
                 Text('Access Code', style: AppStyles.textStyle10W400DarkGrey),
                 15.verticalSpace,
-                Text('ABCD-1234', style: AppStyles.textStyle24W600Black),
+                Text(accessCode, style: AppStyles.textStyle24W600Black),
               ],
             ),
           ),
@@ -30,7 +32,9 @@ class BoxCodeAndCopyButtons extends StatelessWidget {
           text: 'Copy Code',
           icon: Icons.copy,
           onTap: () {
-            // Implement copy functionality
+            Clipboard.setData(
+              ClipboardData(text: accessCode),
+            );
           },
         ),
         10.verticalSpace,
@@ -38,7 +42,9 @@ class BoxCodeAndCopyButtons extends StatelessWidget {
           text: 'Copy URL',
           icon: Icons.link,
           onTap: () {
-            // Implement share link functionality
+            Clipboard.setData(
+              ClipboardData(text: url),
+            );
           },
         ),
         10.verticalSpace,

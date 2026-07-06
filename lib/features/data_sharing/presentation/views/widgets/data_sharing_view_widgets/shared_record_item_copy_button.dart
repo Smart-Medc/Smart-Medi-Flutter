@@ -6,8 +6,8 @@ import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/icon_with_background.dart';
 class SharedRecordItemCopyButton extends StatelessWidget {
-  const SharedRecordItemCopyButton({super.key, required this.sharedRecordId});
-  final String sharedRecordId; // Example ID, replace with actual data
+  const SharedRecordItemCopyButton({super.key, required this.code});
+  final String code; // Example ID, replace with actual data
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,15 +19,15 @@ class SharedRecordItemCopyButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: Text(
-            sharedRecordId,
+          code,
             style: AppStyles.textStyle14W400Black,
           ),
         ),
         8.horizontalSpace,
         InkWell(
           onTap: () {
-            Clipboard.setData(ClipboardData(text: sharedRecordId));
-            context.showSnackBar(const Text('ID copied to clipboard'),);
+            Clipboard.setData(ClipboardData(text: code));
+            context.showSnackBar(const Text('Code copied to clipboard'),);
           },
           child: const IconWithBackground(icon: Icons.copy,backgroundColor: AppColors.greyBackgroundColor, iconColor: AppColors.textBlack,iconSize: 16,),
         ),

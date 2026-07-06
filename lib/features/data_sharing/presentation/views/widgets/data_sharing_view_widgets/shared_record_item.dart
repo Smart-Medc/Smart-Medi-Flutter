@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
 import 'package:smart_medi/core/widgets/card_container.dart';
-import 'package:smart_medi/features/data_sharing/data/models/shared_record_model.dart';
+import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_models/get_shared_records_response.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_actions.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item_chips.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/data_sharing_view_widgets/shared_record_item_copy_button.dart';
@@ -14,11 +13,6 @@ class SharedRecordItem extends StatelessWidget {
   const SharedRecordItem({super.key, required this.sharedRecord});
 
   final SharedRecordModel sharedRecord;
-
-  String _formatDate(DateTime date) {
-    return DateFormat.yMMMd().format(date);
-  }
-
 
 
   @override
@@ -34,7 +28,7 @@ class SharedRecordItem extends StatelessWidget {
           16.verticalSpace,
 
           // ID with copy button
-          SharedRecordItemCopyButton(sharedRecordId: sharedRecord.id),
+          SharedRecordItemCopyButton(code: sharedRecord.code),
           8.verticalSpace,
 
           // Created and Expires dates
@@ -47,7 +41,7 @@ class SharedRecordItem extends StatelessWidget {
               ),
               4.horizontalSpace,
               Text(
-                'Created: ${_formatDate(sharedRecord.createdDate)}  •  Expires: ${_formatDate(sharedRecord.expiresDate)}',
+                'Expires: ${sharedRecord.formattedExpiryDateTime}',
                 style: AppStyles.textStyle12W400DarkGrey,
               ),
             ],
@@ -64,7 +58,7 @@ class SharedRecordItem extends StatelessWidget {
               ),
               4.horizontalSpace,
               Text(
-                'Accessed ${sharedRecord.accessedCount} times',
+                'Accessed ${sharedRecord.accessCount} times',
                 style: AppStyles.textStyle12W400DarkGrey,
               ),
             ],
@@ -72,7 +66,7 @@ class SharedRecordItem extends StatelessWidget {
           13.verticalSpace,
 
           // Shared Records section
-          SharedRecordItemChips(records: sharedRecord.sharedRecords),
+          SharedRecordItemChips(records: sharedRecord.sharedRecordsSummary),
           16.verticalSpace,
 
           const Divider(color: AppColors.formFieldStrokeColor,),
@@ -81,8 +75,7 @@ class SharedRecordItem extends StatelessWidget {
 
           // Action buttons
           SharedRecordActions(
-            recordId: sharedRecord.id,
-            sharedWith: sharedRecord.sharedWith,
+            url: sharedRecord.shareUrl, codeId: sharedRecord.id, code: sharedRecord.code,
           ),
         ],
       ),

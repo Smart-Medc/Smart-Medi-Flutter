@@ -15,7 +15,6 @@ class RecordTypeItem extends StatelessWidget {
   final RecordTypeModel recordType;
   final VoidCallback onUpdate;
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,12 +47,10 @@ class RecordTypeItem extends StatelessWidget {
         // Child records
         ...recordType.records.map((record) {
           return Padding(
-            padding: EdgeInsets.only(
-              bottom: 8.h,
-            ),
+            padding: EdgeInsets.only(bottom: 8.h),
             child: InkWell(
               onTap: () {
-                recordType.toggleRecord(record);
+                recordType.toggleRecord(record.id);
                 onUpdate();
               },
               child: CardContainer(
@@ -61,16 +58,16 @@ class RecordTypeItem extends StatelessWidget {
                 child: Row(
                   children: [
                     RecordCheckbox(
-                      isSelected: recordType.selectedRecords[record] ?? false,
+                      isSelected: recordType.selectedRecords[record.id] ?? false,
                       onTap: () {
-                        recordType.toggleRecord(record);
+                        recordType.toggleRecord(record.id);
                         onUpdate();
                       },
                     ),
                     12.horizontalSpace,
                     Expanded(
                       child: Text(
-                        record,
+                        record.title,
                         style: AppStyles.textStyle14W400Black,
                       ),
                     ),
@@ -86,4 +83,3 @@ class RecordTypeItem extends StatelessWidget {
     );
   }
 }
-

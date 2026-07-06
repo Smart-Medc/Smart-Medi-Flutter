@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
-import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
 import 'package:smart_medi/core/widgets/custom_button.dart';
+import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_models/get_shared_records_response.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/code_generated_view_widgets/box_code_and_copy_buttons.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/code_generated_view_widgets/code_generated_successfully.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/widgets/code_generated_view_widgets/shared_records_info.dart';
 
 class CodeGeneratedBody extends StatelessWidget {
-  const CodeGeneratedBody({super.key});
-
+  const CodeGeneratedBody({super.key, required this.sharedRecord});
+  final SharedRecordModel sharedRecord;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -21,20 +21,16 @@ class CodeGeneratedBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const AppBarBackButton(),
+            60.verticalSpace,
             const AppHeader(title: 'Share Medical Records', subtitle: 'Select records to share and configure access settings'),
             20.verticalSpace,
             const CodeGeneratedSuccessfully(),
             32.verticalSpace,
-            const BoxCodeAndCopyButtons(),
+            BoxCodeAndCopyButtons(accessCode: sharedRecord.code, url: sharedRecord.shareUrl),
             32.verticalSpace,
-            const SharedRecordsInfo(
-              sharedRecords: [
-                'Prescription History',
-                'ECG Report',
-                'Annual Physical Examination',
-              ],
-              expirationDate: 'Dec 19, 2025',
+             SharedRecordsInfo(
+              sharedRecords: sharedRecord.sharedRecordsSummary,
+              expirationDate: sharedRecord.formattedExpiryDate,
             ),
             20.verticalSpace,
             CustomButton(text: 'Done',onPressed: (){

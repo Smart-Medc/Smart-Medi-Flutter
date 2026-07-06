@@ -19,6 +19,7 @@ import 'package:smart_medi/features/auth/presentation/view/login_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/otp_verification_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/reset_password_view.dart';
 import 'package:smart_medi/features/auth/presentation/view/sign_up_view.dart';
+import 'package:smart_medi/features/data_sharing/data/models/get_shared_records_models/get_shared_records_response.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/code_generated_view.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/data_sharing_view.dart';
 import 'package:smart_medi/features/data_sharing/presentation/views/share_records_view.dart';
@@ -334,8 +335,29 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: AppRoutes.codeGeneratedView,
-        builder: (context, state) => const CodeGeneratedView(),
-        redirect: (context, state) => AuthGuard.checkAuth(state),
+        redirect: (context, state) async {
+          final authRedirect = await AuthGuard.checkAuth(state);
+          if (authRedirect != null) return authRedirect;
+
+          final extraData = state.extra as Map<String, dynamic>?;
+
+          if (extraData == null || extraData['sharedRecord'] == null) {
+            return AppRoutes.shareRecordsView;
+          }
+
+          if (extraData['sharedRecord'] is! SharedRecordModel) {
+            return AppRoutes.shareRecordsView;
+          }
+
+          return null;
+        },
+        builder: (context, state) {
+          final extraData = state.extra as Map<String, dynamic>;
+
+          return CodeGeneratedView(
+            sharedRecord: extraData['sharedRecord'] as SharedRecordModel,
+          );
+        },
       ),
 
       GoRoute(
