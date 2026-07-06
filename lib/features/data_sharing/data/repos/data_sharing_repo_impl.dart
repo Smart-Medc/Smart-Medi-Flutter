@@ -32,4 +32,14 @@ class DataSharingRepoImpl extends DataSharingRepo{
     });
   }
 
+  @override
+  Future<Either<Failure, Unit>> revokeAccess({required String codeId}) {
+    return ApiHelper.execute<Unit>(() async {
+      await apiService.put(
+        endpoint: ApiEndpoints.revokeAccess(codeId: codeId),
+      );
+      return unit;
+    });
+  }
+
 }

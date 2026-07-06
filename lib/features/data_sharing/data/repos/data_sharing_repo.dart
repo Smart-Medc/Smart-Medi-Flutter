@@ -6,4 +6,6 @@ import 'package:smart_medi/features/data_sharing/data/models/share_records_model
 abstract class DataSharingRepo {
   Future<Either<Failure, GetSharedRecordsResponse>> getSharedRecords();
   Future<Either<Failure, SharedRecordModel>> shareRecords({required ShareRecordsRequest shareRecordsRequest});
+  Future<Either<Failure, Unit>> revokeAccess({required String codeId});
+
 }
