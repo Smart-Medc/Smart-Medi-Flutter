@@ -132,7 +132,9 @@ class _AppDrawerState extends State<AppDrawer> {
             title: 'AI Assistant',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to AI assistant
+              // NOTE: add `aiAssistantView` to AppRoutes and register the
+              // route in app_router.dart, then this will work as-is.
+              GoRouter.of(context).push(AppRoutes.aiAssistantView);
             },
             isSelected: widget.selectedItem == DrawerItem.aiAssistant,
           ),

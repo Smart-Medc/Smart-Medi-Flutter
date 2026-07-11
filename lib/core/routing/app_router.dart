@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:smart_medi/core/routing/app_routes.dart';
 import 'package:smart_medi/core/routing/auth_guard.dart';
+import 'package:smart_medi/features/ai_assistant/presentation/views/ai_assistant_view.dart';
 import 'package:smart_medi/features/appointment/data/models/get_appointments_models/get_appointments_response.dart';
 import 'package:smart_medi/features/appointment/data/models/get_organizations_models/get_organizations_response.dart';
 import 'package:smart_medi/features/appointment/data/models/post_appointment_models/post_appointment_response.dart';
@@ -576,6 +577,11 @@ abstract class AppRouter {
       GoRoute(
         path: AppRoutes.appointmentDetailsScreen,
         builder: (context, state) => const AppointmentDetailsScreen(),
+        redirect: (context, state) => AuthGuard.checkAuth(state),
+      ),
+      GoRoute(
+        path: AppRoutes.aiAssistantView,
+        builder: (context, state) => const AiAssistantView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
 
