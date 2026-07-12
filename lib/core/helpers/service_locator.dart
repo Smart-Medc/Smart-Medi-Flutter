@@ -17,6 +17,8 @@ import 'package:smart_medi/features/medication_management/data/repos/medication_
 import 'package:smart_medi/features/medication_management/data/repos/medication_management_repo_impl.dart';
 import 'package:smart_medi/features/medical_journal/data/repos/medical_journal_repo.dart';
 import 'package:smart_medi/features/medical_journal/data/repos/medical_journal_repo_impl.dart';
+import 'package:smart_medi/features/organization_feature/organization_sign_up/data/repos/organization_sign_up_repo/organization_sign_up_repo.dart';
+import 'package:smart_medi/features/organization_feature/organization_sign_up/data/repos/organization_sign_up_repo/organization_sign_up_repo_impl.dart';
 
 
 final getIt = GetIt.instance;
@@ -64,5 +66,10 @@ Future<void> setupServiceLocator() async {
    getIt.registerSingleton<DataSharingRepo>(DataSharingRepoImpl(
      apiService: getIt.get<ApiService>(),
    ));
+
+   // organization repositories
+  getIt.registerSingleton<OrganizationSignUpRepo>(OrganizationSignUpRepoImpl(
+    apiService: getIt.get<ApiService>(),
+  ));
 
 }

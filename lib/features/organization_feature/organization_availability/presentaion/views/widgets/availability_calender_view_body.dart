@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
 import 'package:smart_medi/core/utils/app_styles.dart';
-import 'package:smart_medi/core/widgets/app_bar_back_button.dart';
 import 'package:smart_medi/core/widgets/app_header.dart';
+import 'package:smart_medi/core/widgets/custom_app_bar.dart';
 import 'availability_tips_widget.dart';
 import 'calendar_widget.dart';
 import 'weekly_schedule_widget.dart';
@@ -19,7 +19,7 @@ class AvailabilityCalenderViewBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const AppBarBackButton(),
+          const CustomAppBar(),
           SizedBox(height: 20.h),
           const AppHeader(
             title: 'Availability Calendar',

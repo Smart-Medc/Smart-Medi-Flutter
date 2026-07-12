@@ -53,14 +53,19 @@ class DioFactory {
 
           handler.next(options);
         },
-
         onError: (error, handler) async {
           final requestOptions = error.requestOptions;
+          final isAuthRequest =
+              requestOptions.path.contains(ApiEndpoints.login) ||
+                  requestOptions.path.contains(ApiEndpoints.refreshToken);
+
+          if (isAuthRequest) {
+            return handler.next(error);
+          }
 
           if (error.response?.statusCode != 401) {
             return handler.next(error);
           }
-
           if (requestOptions.extra[_refreshRetriedExtraKey] == true) {
             return handler.next(error);
           }

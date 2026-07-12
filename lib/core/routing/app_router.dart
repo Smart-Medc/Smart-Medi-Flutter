@@ -43,6 +43,7 @@ import 'package:smart_medi/features/organization_feature/Appointment%20Requests/
 import 'package:smart_medi/features/organization_feature/Appointment%20Requests/presentation/views/appointment_requests_view.dart';
 import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/organization_dashboard_view.dart';
 import 'package:smart_medi/features/organization_feature/organization_availability/presentaion/views/availability_calender_view.dart';
+import 'package:smart_medi/features/organization_feature/organization_sign_up/presentation/views/organization_sign_up_view.dart';
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/access_patient_data_page_view.dart';
 import 'package:smart_medi/features/organization_feature/patient_data_access/presentation/views/organization_access_patient_data_view.dart';
 
@@ -584,6 +585,8 @@ abstract class AppRouter {
         builder: (context, state) => const AiAssistantView(),
         redirect: (context, state) => AuthGuard.checkAuth(state),
       ),
+      GoRoute(path: AppRoutes.organizationSignUpView,
+      builder: (context, state) => const OrganizationSignUpView()),
 
       // GoRoute(
       //     path: AppRoutes.onboardingView,
