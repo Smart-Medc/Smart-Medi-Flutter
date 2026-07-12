@@ -17,6 +17,7 @@ enum DrawerItem {
   dataSharing,
   notifications,
   settings,
+  organization
 }
 
 class AppDrawer extends StatefulWidget {
@@ -132,7 +133,9 @@ class _AppDrawerState extends State<AppDrawer> {
             title: 'AI Assistant',
             onTap: () {
               Navigator.pop(context);
-              // Navigate to AI assistant
+              // NOTE: add `aiAssistantView` to AppRoutes and register the
+              // route in app_router.dart, then this will work as-is.
+              GoRouter.of(context).push(AppRoutes.aiAssistantView);
             },
             isSelected: widget.selectedItem == DrawerItem.aiAssistant,
           ),
@@ -168,9 +171,17 @@ class _AppDrawerState extends State<AppDrawer> {
             title: 'Settings',
             onTap: () {
               Navigator.pop(context);
-              GoRouter.of(context).push(AppRoutes.organizationDashboardView);
             },
             isSelected: widget.selectedItem == DrawerItem.settings,
+          ),
+          _DrawerItem(
+            icon: Icons.outbox_rounded,
+            title: 'Organization',
+            onTap: () {
+              Navigator.pop(context);
+              GoRouter.of(context).push(AppRoutes.organizationDashboardView);
+            },
+            isSelected: widget.selectedItem == DrawerItem.organization,
           ),
           73.verticalSpace,
           const Divider(thickness: .2),

@@ -12,7 +12,7 @@ class OrganizationDashboardView extends StatelessWidget {
     return const Scaffold(
       backgroundColor: AppColors.whiteBackgroundColor,
       body: OrganizationDashboardBody(),
-      drawer: AppDrawer(selectedItem: DrawerItem.settings),
+      drawer: AppDrawer(selectedItem: DrawerItem.organization),
     );
   }
 }
