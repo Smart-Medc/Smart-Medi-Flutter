@@ -56,6 +56,7 @@ abstract class AppRoutes {
   static const String organizationAvailabilityCalenderView = '/OrganizationAvailabilityCalenderView';
   static const String appointmentRequestsView = '/AppointmentRequestsView';
   static const String appointmentDetailsScreen = '/AppointmentDetailsScreen';
+  static const organizationSignUpView = '/organizationSignUpView';
 
   // ai assistant
   static const String aiAssistantView = '/aiAssistantView';
