@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
-import 'package:smart_medi/core/widgets/app_drawer.dart';
+import 'package:smart_medi/core/widgets/organization_drawer.dart';
 import 'package:smart_medi/features/organization_feature/Dashboard/presentation/views/widgets/organization_dashboard_body.dart';
 
 
@@ -12,7 +12,7 @@ class OrganizationDashboardView extends StatelessWidget {
     return const Scaffold(
       backgroundColor: AppColors.whiteBackgroundColor,
       body: OrganizationDashboardBody(),
-      drawer: AppDrawer(selectedItem: DrawerItem.organization),
+      drawer: OrganizationDrawer(selectedItem: OrganizationDrawerItem.dashboard),
     );
   }
 }

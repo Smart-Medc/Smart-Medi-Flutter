@@ -28,11 +28,16 @@ class LoginBlocListener extends StatelessWidget {
             userType: state.loginResponse.data.user.userType,
             userName: state.loginResponse.data.user.firstName,
             patientId: state.loginResponse.data.user.patientId,
+            organizationId: state.loginResponse.data.user.organizationId,
           );
 
           if (context.mounted) {
             GoRouter.of(context).pop();
-            GoRouter.of(context).pushReplacement(AppRoutes.homeView);
+            if(state.loginResponse.data.user.patientId == null) {
+              GoRouter.of(context).go(AppRoutes.organizationDashboardView);
+            } else{
+              GoRouter.of(context).go(AppRoutes.homeView);
+            }
             context.showSnackBar(const Text('Login Successful'));
           }
         } else if (state is LoginFailure) {

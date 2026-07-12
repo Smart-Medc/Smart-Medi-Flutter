@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_medi/core/utils/app_colors.dart';
+import 'package:smart_medi/core/widgets/organization_drawer.dart';
 import 'widgets/availability_calender_view_body.dart';
 
 class AvailabilityCalenderView extends StatelessWidget {
@@ -11,6 +12,7 @@ class AvailabilityCalenderView extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.whiteBackgroundColor,
         body: AvailabilityCalenderViewBody(),
+        drawer: OrganizationDrawer(selectedItem: OrganizationDrawerItem.availability),
       ),
     );
   }
