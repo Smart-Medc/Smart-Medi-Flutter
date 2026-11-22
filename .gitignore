@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# API Configuration - Contains sensitive endpoints
+lib/core/networking/api_endpoints.dart
+

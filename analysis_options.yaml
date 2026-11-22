@@ -27,8 +27,6 @@ linter:
     prefer_final_locals: true
     prefer_final_in_for_each: true
     use_key_in_widget_constructors: true
-    avoid_stateful_widgets_in_favor_of_hooks: false
-    avoid_unnecessary_this: true
     avoid_dynamic_calls: true
     avoid_type_to_string: true
 
@@ -52,7 +50,6 @@ linter:
     # ====== PERFORMANCE ======
     sized_box_for_whitespace: true
     avoid_unnecessary_containers: true
-    avoid_unnecessary_rebuilds: false
     avoid_multiple_declarations_per_line: true
     prefer_if_elements_to_conditional_expressions: true
 
